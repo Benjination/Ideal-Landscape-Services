@@ -1,0 +1,42 @@
+SOURCE: https://ideallandscapeservices.com/contact-us/
+========================================================================
+
+BUSINESS NAME: Ideal Landscape Services, Inc.
+PHONE:         817-457-7507
+WEBSITE:       https://ideallandscapeservices.com
+FACEBOOK:      https://www.facebook.com/IdealLandscapeServices
+INSTAGRAM:     https://www.instagram.com/ideallandscapeservices/
+COPYRIGHT:     © 2023 Ideal Landscape Services
+BUILT BY:      DRKM Strategies
+
+------------------------------------------------------------------------
+CONTACT FORM FIELDS (from existing contact page)
+------------------------------------------------------------------------
+
+Required fields:
+  - Name
+  - Phone
+  - Email
+  - Street Address
+  - City
+  - ZIP
+
+Optional fields:
+  - Comment / message
+
+Project type checkboxes:
+  - Design Only
+  - Design and Construction
+  - Weekly Maintenance
+  - Irrigation Services
+
+Pre-consult questions:
+  - What neighborhood do you live in?
+  - How did you hear about us?
+  - Timeline for project?
+
+------------------------------------------------------------------------
+NOTE: No physical business address found on the public-facing pages.
+Confirm mailing/service address with David for NAP consistency (needed
+for Google Business Profile and LocalBusiness schema markup).
+------------------------------------------------------------------------

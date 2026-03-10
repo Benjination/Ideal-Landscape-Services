@@ -1,0 +1,179 @@
+═══════════════════════════════════════════════════════════
+FOLLOW-UP QUESTIONS FOR DAVID & TEAM
+═══════════════════════════════════════════════════════════
+Add questions as they come up. Mark answered questions with [ANSWERED] and note the response.
+
+────────────────────────────────────────────────────────
+DOMAIN & EMAIL
+────────────────────────────────────────────────────────
+[ ] Who is the current domain registrar? (GoDaddy, Namecheap, etc.)
+    → Need DNS access at launch to point domain to new host.
+    → Must NOT change MX records so company emails are unaffected.
+
+[ ] What email provider are the company emails on?
+    (e.g., Google Workspace, Microsoft 365, hosting-bundled email)
+    → If Google Workspace or M365, no action needed — emails survive the site move untouched.
+    → If bundled with WPEngine or current host, need to migrate email BEFORE canceling old hosting.
+
+[ ] How many email accounts are active?
+    (e.g., Kathy@, David@, info@, etc.)
+    → Good to know in case an email provider switch is needed down the road.
+
+────────────────────────────────────────────────────────
+HOSTING & CURRENT SETUP
+────────────────────────────────────────────────────────
+[ ] Who currently manages the WPEngine account — David, or the current designer?
+    → Determines who needs to cancel it and when (not until new site is fully live).
+
+[ ] Does David have login access to the current WordPress admin (/wp-admin)?
+    → Needed to export content, images, and blog posts if migrating existing content.
+
+[ ] Does David want to migrate existing blog posts and page content to the new site,
+    or start fresh with new copy and photos?
+
+────────────────────────────────────────────────────────
+DESIGN & CONTENT
+────────────────────────────────────────────────────────
+[ ] Does Ideal have a professional photo library, or will new photos need to be taken?
+    → The Miracle Farms aesthetic REQUIRES high-quality photography. This is the #1
+       factor in achieving that look. Worth budgeting for a photoshoot if needed.
+
+[ ] Does Ideal have any named/featured projects they're proud of?
+    (like Miracle Farms' "Shoreland Overlook", "Fernscape Modern", etc.)
+    → These become portfolio cards on the new site.
+
+[ ] Does Ideal have any certifications, awards, trade memberships, or partner logos?
+    (e.g., TNLA, BBB, NALP, supplier partnerships)
+    → Used in the credentials/logo strip section.
+
+[ ] Which option does David prefer: Custom Build (Next.js + Firebase) or WordPress?
+    → Present both options with the trade-offs before starting any work.
+
+────────────────────────────────────────────────────────
+FEATURES & FUNCTIONALITY
+────────────────────────────────────────────────────────
+[ ] What does the "Pay Online" button currently link to?
+    → Is it an external payment portal (e.g., PayPal, QuickBooks), or does he want
+       payment processing built into the new site? (Built-in = significant added scope.)
+
+[ ] Does David want a live chat or text widget on the new site?
+    (Worx uses one — it's a third-party embed, low effort to add)
+
+[ ] Does David want Google Analytics / Search Console set up or transferred?
+    → If he has existing tracking data, need access to his Google account to transfer the property.
+
+[ ] Is the newsletter/email subscriber list currently being used?
+    → If yes, what platform (Mailchimp, Constant Contact, etc.)? Need to preserve the list.
+
+[ ] Does David want a Google Reviews integration (like Worx uses) to auto-display
+    live reviews, or keep manually curated testimonials?
+
+────────────────────────────────────────────────────────
+SCOPE & TIMELINE
+────────────────────────────────────────────────────────
+[ ] Are there any hard deadlines? (Busy season, upcoming marketing push, etc.)
+
+[ ] Are there any additional features or pages beyond the current site that David
+    wants added? (e.g., online quote form, booking/scheduling, job listings)
+
+[ ] Will David be writing new copy for the site, or does he want help trimming
+    down the existing copy to match the "less words" direction?
+
+────────────────────────────────────────────────────────
+IMAGE LIBRARY & BEFORE/AFTER
+────────────────────────────────────────────────────────
+[ ] The misc/ folder in the scraped image library contains ~99 files that
+    appear to be Facebook-export photos and dated phone shots (e.g.,
+    filenames like 20170320_105522... and 10497451_874980...). Are these
+    job-site documentation photos (before/after or progress shots)?
+    → If YES: These become a "Transformations / Before & After" section on
+      the homepage — one of the highest-engagement features on a landscaping
+      site. We'd want David to identify which project each photo belongs to.
+    → If NO / unidentified: They'll be excluded from the build.
+
+[ ] Can David (or the team) review the projects/ folder and provide names
+    for the unidentified project sets?
+    Sets needing names/context:
+      • P-series (P1010168, P1010218, P1010219, P1130026, P2280077,
+        P7150005rev, P7150006, PA090013, PA090039, PB160054, PB160060, PB160077)
+      • AR-series (AR000502, AR001502)
+      • 8609.jpg
+    These become named portfolio cards on the Projects page (like Miracle
+    Farms' "Shoreland Overlook", etc.). The name and a city/neighborhood
+    label is all that's needed.
+
+[ ] Are there more project photos on the WPEngine server that weren't
+    captured by the web scraper?
+    → The scraper only collected images referenced by live pages. The full
+      WordPress uploads library (accessible via WPEngine SFTP or the
+      WordPress "Export Media Library" plugin) may contain unpublished
+      shoots or archived project photos.
+    → If yes, we should pull those before WPEngine access is lost.
+
+────────────────────────────────────────────────────────
+DESIGN DECISIONS
+────────────────────────────────────────────────────────
+[ ] What should the site's brand tagline be?
+    → "Design — Build — Maintain" (Miracle Farms pattern)
+    → "Your Ideal Outdoors, Built." (more specific)
+    → Something else entirely?
+    Note: This appears in the hero section and possibly in the site's
+    <title> tag — it should reflect how David wants to position the brand.
+
+[ ] After reviewing full-resolution versions of the scraped images, are
+    any of them crisp and high-quality enough for full-viewport hero use?
+    → If not, should we plan a professional photoshoot before launch?
+    → The Miracle Farms aesthetic absolutely depends on hero-quality photos.
+      This is the single biggest factor in hitting that look.
+
+[ ] Does David want to simplify the navigation from 8 links to 6?
+    Proposed: Home | Services | Projects | About | Blog | Contact
+    (FAQ folds into Services as an accordion; Testimonials folds into
+     About or the homepage reviews section)
+    → Or keep Testimonials as a standalone page?
+
+────────────────────────────────────────────────────────
+SEO & REVIEWS
+────────────────────────────────────────────────────────
+[ ] Does Ideal have a claimed and verified Google Business Profile?
+    → If unclaimed, we need to claim it before/during the build.
+    → NAP (Name, Address, Phone) on the website must exactly match GBP.
+
+[ ] Is David open to a live Google review integration on the new site?
+    (Services like NiceJob, Widewail, or EmbedSocial pull real Google/Yelp
+     reviews dynamically — auto-updated, with star ratings and reviewer names)
+    → Alternative: keep manually curated testimonials (more maintenance).
+
+[ ] What are the primary DFW cities/neighborhoods Ideal currently serves?
+    → Used for the "Service Area" section and optional city subpages.
+    → City subpages are low-effort, high local SEO value — each page
+      targets searches like "landscape design in Allen TX" independently.
+
+────────────────────────────────────────────────────────
+BUSINESS INFO (NAP & CONTACT)
+────────────────────────────────────────────────────────
+[ ] What is the business's physical mailing address?
+    → No address appears anywhere on the public-facing website.
+    → This is blocking for two things:
+       1. LocalBusiness schema markup — Google uses the address to
+          associate the site with a geographic area for local search ranking.
+       2. NAP consistency — the Name, Address, Phone on the website must
+          exactly match what's on the Google Business Profile (letter for
+          letter). Mismatches hurt local pack rankings.
+    → If David doesn't want the address publicly visible, we can embed it
+      in the schema markup only (invisible to visitors, readable by Google).
+
+[ ] Is the phone number (817-457-7507) the correct primary number to use
+    on the new site and in all schema/GBP listings?
+
+[ ] The current site footer credits "Designed by: DRKM Strategies." Does
+    David want to keep that credit on the new site, remove it, or replace
+    it with something else?
+
+[ ] Does David know if the current designer (DRKM Strategies) intends to
+    take the site down once the contract ends? And if so, is there a
+    known timeline?
+    → This determines how urgent the content/asset preservation window is.
+      The blog posts, FAQs, testimonials, about copy, and service page copy
+      have all been archived locally, but confirming the timeline helps
+      prioritize what gets built first.

@@ -1,0 +1,109 @@
+═══════════════════════════════════════════════════════════
+STRUCTURE — Custom Build Path (Next.js + Firebase + GitHub)
+═══════════════════════════════════════════════════════════
+This file tracks all structural/infrastructure setup tasks for Option 1.
+Check off items as completed.
+
+────────────────────────────────────────
+1. GITHUB SETUP
+────────────────────────────────────────
+[ ] Create a new GitHub repository (e.g., "ideal-landscape-services")
+[ ] Set repo to Private until launch
+[ ] Initialize with a README and .gitignore (Node template)
+[ ] Create two branches: main (production) and dev (working branch)
+[ ] Enable branch protection on main — require PR to merge
+[ ] Set up GitHub Actions for CI/CD (auto-deploy to Firebase Hosting on push to main)
+    - Action file: .github/workflows/deploy.yml
+    - Trigger: push to main
+    - Steps: install deps → build → firebase deploy
+
+────────────────────────────────────────
+2. NODE / NEXT.JS PROJECT SETUP
+────────────────────────────────────────
+[ ] Install Node.js (LTS) if not already: https://nodejs.org
+[ ] Scaffold Next.js app:
+      npx create-next-app@latest ideal-landscape --typescript --eslint --tailwind --app
+[ ] Confirm it runs locally: npm run dev
+[ ] Set up folder structure:
+      /app              → Next.js App Router pages
+      /components       → Reusable UI components
+      /lib              → Firebase config, utility functions
+      /public           → Static assets (images, icons, fonts)
+      /styles           → Global CSS / Tailwind config
+[ ] Install additional dependencies:
+      npm install firebase
+      npm install @tailwindcss/typography  (for blog content rendering)
+[ ] Commit initial scaffold to dev branch
+
+────────────────────────────────────────
+3. FIREBASE SETUP
+────────────────────────────────────────
+[ ] Go to https://console.firebase.google.com
+[ ] Create a new project: "ideal-landscape-services"
+[ ] Enable Google Analytics (optional but useful for David)
+[ ] Set up Firestore Database
+    - Start in production mode
+    - Region: us-central1 (or nearest)
+    - Collections to create (schema):
+        /posts          → blog posts { title, slug, date, content, imageUrl, published }
+        /testimonials   → { name, location, body, order }
+        /gallery        → { imageUrl, caption, category, order }
+        /contacts       → form submissions { name, email, phone, message, timestamp }
+        /subscribers    → newsletter signups { firstName, lastName, email, phone, date }
+[ ] Set up Firebase Storage
+    - For gallery images and blog post images
+    - Default bucket is fine
+[ ] Set up Firebase Authentication
+    - Enable Email/Password provider only
+    - Create one admin user for David (his email + a strong password)
+[ ] Set up Firebase Hosting
+    - Run: npm install -g firebase-tools
+    - Run: firebase login
+    - Run: firebase init (select Hosting + Firestore + Storage)
+    - Set public directory to: out  (Next.js static export) or use Firebase + Next.js adapter
+[ ] Add Firebase config to Next.js project as environment variables:
+    - Create .env.local (never commit this file)
+    - Variables: NEXT_PUBLIC_FIREBASE_API_KEY, AUTH_DOMAIN, PROJECT_ID, STORAGE_BUCKET,
+                 MESSAGING_SENDER_ID, APP_ID
+    - Add .env.local to .gitignore
+    - Add the same vars as GitHub Actions secrets for CI/CD
+[ ] Write Firestore security rules:
+    - Public read on: posts (published only), testimonials, gallery
+    - Authenticated write on: all collections (admin only)
+    - Write-only on contacts and subscribers (anyone can submit a form)
+
+────────────────────────────────────────
+4. HOSTING & DEPLOYMENT VERIFICATION
+────────────────────────────────────────
+[ ] Confirm local build works: npm run build
+[ ] Manual deploy test: firebase deploy
+[ ] Confirm GitHub Actions workflow triggers on push to main
+[ ] Add custom domain to Firebase Hosting once David provides/purchases it
+    - Firebase Hosting supports custom domains for free (includes SSL)
+[ ] Verify SSL certificate is active on custom domain
+
+────────────────────────────────────────
+5. ADMIN DASHBOARD PREP
+────────────────────────────────────────
+[ ] Create /app/admin route, protected by Firebase Auth check
+[ ] Redirect unauthenticated users to /admin/login
+[ ] Login page: email + password form → signInWithEmailAndPassword()
+[ ] After login, dashboard home shows links to:
+    - Blog post manager
+    - Gallery manager
+    - Testimonials manager
+    - View contact form submissions
+    - View newsletter subscribers
+[ ] Each manager: list view + add/edit/delete forms writing to Firestore
+[ ] Image uploads use Firebase Storage, store download URL in Firestore doc
+
+────────────────────────────────────────
+6. NOTES / DECISIONS PENDING
+────────────────────────────────────────
+- Confirm with David: does he want to keep existing domain (ideallandscapeservices.com)
+  or register a new one? Domain registrar needs to be identified for DNS pointing.
+- Decide on rendering strategy: Next.js static export (simpler) vs. SSR/ISR (better for
+  dynamic blog/gallery content from Firestore). Recommendation: ISR (revalidate on demand).
+- Confirm if David wants Google Analytics connected (Firebase project already has it).
+- Payment button destination: currently links to an external pay portal — confirm if
+  this stays external or if payment processing needs to be integrated.
