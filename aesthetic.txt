@@ -1,0 +1,957 @@
+AESTHETIC DIRECTION — IDEAL LANDSCAPE SERVICES
+Keyword seeds: Logo · Navbar · Shiny Black & White · High Translucency ·
+               Sharp · Professional · Image Forward
+════════════════════════════════════════════════════════════════════════════════
+VERSION 2 — Full specification (March 2026)
+════════════════════════════════════════════════════════════════════════════════
+
+
+COLOR PALETTE — SHINY BLACK & WHITE (WITH ACCENT)
+────────────────────────────────────────────────────────────────────────────────
+Primary palette is high-contrast monochrome. A landscaping site running
+black-and-white as its UI frame stands apart from every competitor still
+using earthy greens and stone everywhere. The photography carries the natural
+color — the chrome does not need to compete with it.
+
+  Deep black    #111111 / #0D0D0D  — navbar, footer, dark sections, overlays
+  Pure white    #FFFFFF            — body bg, light sections, text on dark
+  Accent green  #3C6E47 (approx)   — CTA buttons, nav link hover, active states
+                                     NOWHERE ELSE. The restraint is the style.
+
+No muddy mid-grays as dominant colors. If gray appears, it is near-black or
+near-white only. "Shiny" means polished and intentional — clean high-contrast
+photography, tight grid edges, nothing accidental or cheap.
+
+Note: This is a deliberate shift from the original earth-tone plan. The
+photography provides the warmth and natural color. The UI frame does not.
+
+
+LOGO
+────────────────────────────────────────────────────────────────────────────────
+Two versions required:
+  White version        — dark navbar, dark hero overlay, footer
+  Color/dark version   — white and light section backgrounds
+
+Rules:
+  - No drop shadows on the logo, ever.
+  - No glow, no gradient fill, no outline effect.
+  - Clean vector on background, full stop.
+  - On mobile: scale down proportionally. If the logo has both an icon and
+    a wordmark, consider showing only the icon/mark in the mobile nav to
+    preserve clearspace.
+  - Logo does NOT watermark every page. Nav and footer only.
+
+
+NAVBAR
+────────────────────────────────────────────────────────────────────────────────
+The navbar carries three keywords simultaneously: translucency, shiny black,
+and sharp. It is the densest UI element on the site.
+
+Behavior:
+  Over hero          — fully transparent; hero photo shows behind it
+  On scroll (~80px)  — transitions to frosted glass black (300ms ease)
+  Position           — sticky through all scroll
+
+Frosted glass treatment:
+  background:        rgba(0, 0, 0, 0.65)
+  backdrop-filter:   blur(14px)
+  border-bottom:     1px solid rgba(255, 255, 255, 0.12)
+
+The blur creates depth (page scrolling behind the nav is faintly visible).
+The 1px white border is the "shiny" element — barely visible, just enough
+separation to read as a polished surface.
+
+Contents:
+  Logo (left)              — white version
+  Nav links (right)        — white, sharp sans-serif, no underline
+  "Get a Quote" (far right) — sharp-cornered button (border-radius: 2px max),
+                              filled accent green or white-outlined
+
+Link hover state: accent green color transition. No underline ever.
+
+Mobile behavior:
+  Hamburger icon  — sharp geometry (not a soft icon)
+  Tap → full-height overlay drawer, same frosted glass black
+  Links stacked vertically, large tap targets
+  CTA button large at bottom of drawer
+
+
+TRANSLUCENCY EFFECTS — THREE LOCATIONS ONLY
+────────────────────────────────────────────────────────────────────────────────
+Used sparingly. Translucency is a premium detail, not a surface treatment.
+
+  1. Navbar (primary) — described above
+
+  2. Portfolio card labels — each named project card has a frosted glass
+     strip at the bottom of the photo containing only the project name.
+     On hover, the strip opacity increases or the card lifts slightly.
+     Format: rgba(0, 0, 0, 0.55) + backdrop-filter: blur(8px)
+     NOT a solid black bar — the glass strip lets the photo read through.
+
+  3. Hero text panel (optional) — the headline block can sit inside a
+     subtle dark-glass panel for legibility without killing the photo.
+     Alternative: a bottom-weighted gradient overlay on the full hero
+     (linear-gradient from transparent at top to rgba(0,0,0,0.45) at
+     bottom) — no explicit card shape needed.
+
+What this is NOT:
+  - Heavy frosted panels floating over body content
+  - Glass on form fields or inputs
+  - Translucent section backgrounds that obscure body text
+
+
+TYPOGRAPHY — SHARP
+────────────────────────────────────────────────────────────────────────────────
+One typeface throughout. No serif/sans mix.
+Recommendation: Inter or Plus Jakarta Sans (geometric, sharp, well-hinted)
+
+Scale:
+  Eyebrow labels     12–13px, weight 500, letter-spacing: 0.14em, ALL CAPS
+                     "OUR WORK" / "HOW IT WORKS" / "WHERE WE WORK"
+                     Float above every section headline. All-caps = structure
+                     without adding word count.
+  H1 hero headline   52–72px, weight 700–800, line-height 1.05–1.10
+                     3–6 words maximum. Statement, not explanation.
+  H2 section heads   32–42px, weight 700
+  Body               16–17px, weight 400, line-height 1.65
+                     Generous for readability when text does appear — its
+                     rarity gives it weight.
+
+Rules:
+  - No letter-spacing on headlines or body. Only eyebrow labels track wide.
+  - No italic body text. Italics only for photo captions or light emphasis.
+  - No outline fonts, no gradient text fills, no text-shadow.
+  - Text is white on dark or black on white. Never gray-on-gray.
+
+
+LAYOUT — SHARP, PROFESSIONAL, IMAGE FORWARD
+────────────────────────────────────────────────────────────────────────────────
+Grid:
+  12-column, max-width ~1340px, centered. Sections respect the grid.
+  No elements floating outside it without intentional reason.
+
+Border-radius:
+  Cards, images, section blocks, inputs: 0px (hard corners)
+  Buttons only: 2px maximum
+
+Shadows:
+  No soft blurred drop shadows — ever.
+  Hover state on cards: 1–2px sharp offset box-shadow only.
+  Otherwise no shadow at all.
+
+Section spacing:
+  96–120px top/bottom padding per section.
+  The white space is intentional. It is the Miracle Farms signal.
+  Cramming sections together removes the premium read immediately.
+
+Alternating dark/light sections:
+  White background sections alternate with deep black sections.
+  No earthy stone or beige sections — the old palette is out.
+  Just white and black, alternating with purpose, letting the
+  photography provide all the warmth and color in between.
+
+Image rules:
+  - Images fill containers edge to edge. No inner padding, no border,
+    no border-radius on images.
+  - Project portfolio cards: the photo IS the card. Full bleed,
+    aspect-ratio locked (4:3 or 3:2). Frosted label strip at bottom.
+  - Hero: 100vh, object-fit: cover, center-weighted crop. ONE photo.
+    No carousel, no slider. One dominant image per page.
+  - Service tiles: cropped category photos, dark overlay, icon + label
+    only — no description text in the tile.
+  - Icons: line-weight (1.5px stroke), geometric, consistent sizing.
+    Not soft filled icons.
+
+Copy budget (enforced):
+  Hero:              3–5 word headline + 1 subline + 2 CTA buttons. Done.
+  Section headline:  1 eyebrow label + 1 headline (6 words max) + optional
+                     1–2 sentence subhead. No paragraphs in section intros.
+  Service pages:     2–3 sentences per service. That is the entire page body.
+  Project cards:     Project name only. The photo explains the rest.
+  Homepage:          Zero body copy above the fold. Ever.
+
+
+SUMMARY — THE SIGNAL THIS SITE SENDS
+────────────────────────────────────────────────────────────────────────────────
+Every other DFW landscaping website uses green, stone beige, and paragraph
+copy to explain their services. This site uses black, white, and photography
+to show them. The contrast — visual and strategic — is the competitive
+positioning. A visitor landing here should feel like they found the premium
+option without reading a single word.
+
+
+════════════════════════════════════════════════════════════════════════════════
+DESIGN TOKENS — THE FULL SYSTEM
+════════════════════════════════════════════════════════════════════════════════
+These are the concrete values that define every decision. Every color, size,
+spacing value, and animation in the build traces back here. Once locked, these
+do not drift per component without a documented reason.
+
+────────────────────────────────────────────────────────────────────────────────
+COLORS
+────────────────────────────────────────────────────────────────────────────────
+
+Base surfaces:
+  --color-black        #0D0D0D   Primary dark: navbar, footer, dark sections
+  --color-ink          #111111   Alternate deep black (slightly warmer)
+  --color-white        #FFFFFF   Light sections, body bg, text on dark
+  --color-off-white    #F7F7F5   Subtle warm white — used for service page bgs
+                                  and testimonial section bg only. Not a section
+                                  color in the hero cycle; just a breath above
+                                  pure white to reduce eye fatigue on long pages.
+
+Grays (used only for secondary text and dividers — never as section fills):
+  --color-gray-700     #3A3A3A   Dark secondary text on white sections
+  --color-gray-500     #767676   Caption text, metadata (dates, locations)
+  --color-gray-200     #E0E0E0   Hairline dividers, form borders
+  --color-gray-100     #F2F2F2   Disabled states only
+
+Accent (one color, used with discipline):
+  --color-accent       #3C6E47   Deep green — CTA buttons, nav hover,
+                                  active indicators, checkmarks
+  --color-accent-dark  #2F5538   Hover/pressed state on fill buttons
+  --color-accent-light #D4E8DA   Very rare: success states, tag fills
+                                  Never as section background.
+
+Translucency (named values, not magic numbers):
+  --glass-dark-65      rgba(13, 13, 13, 0.65)   Navbar scrolled state
+  --glass-dark-55      rgba(13, 13, 13, 0.55)   Portfolio card label strip
+  --glass-dark-40      rgba(13, 13, 13, 0.40)   Hero text panel (if used)
+  --glass-dark-30      rgba(13, 13, 13, 0.30)   Service tile overlay
+  --glass-white-08     rgba(255, 255, 255, 0.08) Subtle highlight rule/stroke
+  --glass-white-12     rgba(255, 255, 255, 0.12) Navbar bottom border
+  --glass-white-20     rgba(255, 255, 255, 0.20) Card border on dark bg
+
+Semantic:
+  --color-text-primary    #0D0D0D on white; #FFFFFF on dark
+  --color-text-secondary  #3A3A3A on white; rgba(255,255,255,0.72) on dark
+  --color-text-meta       #767676 on white; rgba(255,255,255,0.50) on dark
+  --color-border          #E0E0E0 on white sections
+  --color-border-dark     rgba(255,255,255,0.12) on black sections
+
+────────────────────────────────────────────────────────────────────────────────
+TYPOGRAPHY
+────────────────────────────────────────────────────────────────────────────────
+
+Typeface decision (choose one, not both):
+  OPTION A: Inter — The safer choice. Universally legible, excellent at all
+    weights, renders perfectly on every OS, very well-hinted for small sizes.
+    Google Fonts, free, no license concern. The most "neutral sharp" option.
+
+  OPTION B: Plus Jakarta Sans — Slightly more character than Inter. Has a
+    small degree of personality in its uppercase letterforms without being
+    loud. Also Google Fonts, free. Recommended if Inter feels too utilitarian
+    once you see it composited with the photography.
+
+  DO NOT MIX typefaces. One family, all weights, everywhere. The discipline
+  of a single typeface is part of the professional signal.
+
+  Fallback stack (CSS):
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system,
+                 BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+Weights used:
+  400   Body copy, captions, nav links (default)
+  500   Eyebrow labels, secondary CTAs, subheadings
+  600   Button labels, trust strip stats
+  700   Section headlines (H2), card titles
+  800   Hero headline (H1) only
+
+Scale — desktop (clamps to mobile values below 768px):
+  --text-eyebrow    12px / 13px, weight 500, letter-spacing: 0.14em, uppercase
+  --text-xs         13px, weight 400, line-height: 1.5   (captions, meta)
+  --text-sm         15px, weight 400, line-height: 1.6   (form labels, tags)
+  --text-base       16px, weight 400, line-height: 1.65  (body copy)
+  --text-md         18px, weight 500, line-height: 1.55  (intro subheads)
+  --text-lg         22px, weight 500, line-height: 1.4   (card titles)
+  --text-xl         28px, weight 700, line-height: 1.25  (H3, sub-section heads)
+  --text-2xl        38px, weight 700, line-height: 1.15  (H2, section headlines)
+  --text-3xl        52px, weight 800, line-height: 1.05  (H1 hero — desktop)
+  --text-hero       clamp(40px, 6vw, 72px)               (H1 — fluid/responsive)
+
+Mobile scale (max-width: 767px):
+  --text-2xl        28px  (H2 collapses to fit single-column)
+  --text-hero       clamp(36px, 10vw, 52px)
+
+Rules that do not change at any breakpoint:
+  - Eyebrow labels: always uppercase, always 0.14em letter-spacing, always 12–13px
+  - Headlines: never italic, never underlined, never gradient-filled
+  - Body: never all-caps, never letter-spacing, never centered on desktop
+    (centered body text is allowed on mobile in a 1-column layout only)
+  - No text-shadow anywhere. Not even 1px on hero photography.
+    (Legibility is handled by the overlay/gradient behind the text, not shadows)
+
+────────────────────────────────────────────────────────────────────────────────
+SPACING SYSTEM — 8PX BASE GRID
+────────────────────────────────────────────────────────────────────────────────
+All spacing is a multiple of 8px. This is enforced for padding, margin, gap,
+and border-width. No 5px, no 10px, no 15px. Use 8, 16, 24, 32, 40, 48, 56,
+64, 80, 96, 112, 128 only.
+
+  --space-1    8px     Tight internal padding (button label padding-top/bottom)
+  --space-2    16px    Default component gap, internal card padding
+  --space-3    24px    Nav height padding, form field spacing
+  --space-4    32px    Between elements within a section
+  --space-5    40px    Mobile section padding top/bottom
+  --space-6    48px    Gap between section headline and content
+  --space-8    64px    Between major subsections within a page
+  --space-10   80px    Section vertical padding on tablet
+  --space-12   96px    Section vertical padding — desktop default
+  --space-16   128px   Hero text vertical offset from top
+
+────────────────────────────────────────────────────────────────────────────────
+LAYOUT GRID
+────────────────────────────────────────────────────────────────────────────────
+  Max content width:   1340px  (wider than typical 1200px — gives photos room)
+  Column count:        12
+  Column gutter:       24px (desktop); 16px (tablet); 0 (mobile — full bleed)
+  Layout margins:      auto (centered)
+  Mobile margin:       20px left/right (not 16 — gives just a bit more breath)
+
+Key breakpoints:
+  Mobile    <768px    Single column, full bleed images, hamburger nav
+  Tablet    768–1023px  2-column, reduced hero text, portrait orientation ok
+  Desktop   1024px+   Full 12-column, all components in final form
+  Wide      1440px+   Max-width container, background fills stretch to edge
+
+Full-bleed rule:
+  Images, hero sections, and the dark alternating sections break OUT of the
+  max-width container and fill the full viewport width. The content inside
+  those sections still respects the 1340px max-width. The visual edge-to-edge
+  is what creates the magazine layout quality.
+
+────────────────────────────────────────────────────────────────────────────────
+BORDER, RADIUS & SHADOW
+────────────────────────────────────────────────────────────────────────────────
+Radius:
+  --radius-none    0px    Cards, images, section blocks, inputs, textareas
+  --radius-btn     2px    Buttons only (barely there — preserves "sharp" feel)
+  --radius-badge   2px    Trust strip badges and credential tags
+
+Shadows:
+  Default:         none   No drop shadows anywhere in resting state
+  Card hover:      0 2px 0 0 rgba(0,0,0,0.8)   Sharp 2px bottom offset —
+                   this reads as the card "pressing" slightly rather than
+                   floating. Evokes physicality, not softness.
+  Button hover:    inset 0 -2px 0 rgba(0,0,0,0.25)   Subtle pressed-in feel
+  Image:           none — images never get shadows
+  Navbar:          none — the glass border handles the separation
+
+Borders:
+  Light section dividers:   1px solid #E0E0E0 (color-gray-200)
+  Dark section dividers:    1px solid rgba(255,255,255,0.12)
+  Focus ring (inputs):      2px solid #3C6E47 (accent), no box-shadow
+                            (do not use browser default blue outline)
+
+────────────────────────────────────────────────────────────────────────────────
+MOTION & ANIMATION
+────────────────────────────────────────────────────────────────────────────────
+This site moves slowly and deliberately. Fast animations read as cheap.
+Every transition should feel like something heavy and intentional settling
+into place.
+
+Global easing:
+  --ease-default    cubic-bezier(0.25, 0.0, 0.25, 1.0)   Most transitions
+  --ease-in-out     cubic-bezier(0.4, 0.0, 0.2, 1.0)     Menu opens/closes
+  --ease-out        cubic-bezier(0.0, 0.0, 0.25, 1.0)    Elements entering view
+
+Durations:
+  --dur-fast        150ms   Hover color changes (text, icon color)
+  --dur-default     250ms   Button bg fills, border color
+  --dur-medium      300ms   Navbar glass transition on scroll
+  --dur-slow        500ms   Menu drawer open/close
+  --dur-reveal      700ms   On-scroll section entry (see below)
+
+DO NOT use:
+  - Bounce or spring easing (too playful)
+  - Infinite spin or pulse animations (never)
+  - Parallax scrolling (high CPU cost, questionable UX value)
+  - Auto-playing hero video (kills mobile battery, slows Core Web Vitals)
+
+On-scroll entry animation:
+  Elements animate in once as they enter the viewport.
+  Pattern: opacity 0→1 + translateY 24px→0 over 700ms ease-out
+  Stagger: 100ms between items in a row (e.g., trust strip badges stagger 1,2,3,4)
+  Triggered by IntersectionObserver at 15% visibility threshold.
+  Does NOT re-animate on scroll back up.
+
+Rotating hero headline (if used):
+  Fade between phrases: opacity 0→1→hold→1→0, 3000ms hold per phrase
+  No slide or wipe — just a clean cross-fade
+  Implementation: CSS animation or lightweight JS, no library needed
+
+
+════════════════════════════════════════════════════════════════════════════════
+COMPONENT SPECIFICATIONS
+════════════════════════════════════════════════════════════════════════════════
+
+────────────────────────────────────────────────────────────────────────────────
+1. PROMO BAR
+────────────────────────────────────────────────────────────────────────────────
+Height:          40px
+Background:      --color-accent (#3C6E47)
+Text:            "Call for a FREE Estimate: 817-457-7507"
+                 14px, weight 500, white, letter-spacing: 0.02em
+                 Phone number is a <a href="tel:+18174577507"> — tappable on mobile
+Alignment:       Centered
+Extra elements:  None. Not a sliding ticker, not a dismiss button.
+                 Absolute minimalism — one line, one action.
+Mobile:          Collapses to 36px; font to 13px. Still one line.
+Position:        Fixed at very top, above the navbar. Scrolls away with page
+                 (it is NOT sticky — only the navbar is sticky).
+
+────────────────────────────────────────────────────────────────────────────────
+2. NAVBAR
+────────────────────────────────────────────────────────────────────────────────
+Height:          72px (desktop); 60px (mobile)
+Position:        Fixed, top: 40px (below promo bar), z-index: 100
+                 When promo bar scrolls away, navbar moves to top: 0
+
+Initial state (over hero):
+  background:    transparent
+  border-bottom: none
+  Logo:          white version
+  Link color:    rgba(255, 255, 255, 0.90)
+
+Scrolled state (triggered at 80px scroll):
+  background:    rgba(13, 13, 13, 0.65)
+  backdrop-filter: blur(14px) saturate(1.2)
+  -webkit-backdrop-filter: blur(14px) saturate(1.2)
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12)
+  transition:    background 300ms var(--ease-in-out),
+                 border-bottom 300ms var(--ease-in-out)
+
+Logo:            Left-aligned, height 36px (desktop), 28px (mobile)
+                 White version in both states when over photo
+                 Dark version only when navbar is scrolled on a light-bg page
+                 (interior pages that don't have a full-bleed hero)
+
+Nav links:       Right-aligned; gap 32px between links
+                 font-size: 14px, weight 500, no underline
+                 color: rgba(255,255,255,0.90) → accent on hover (150ms)
+                 Active page link: accent color, no other indicator (no underline,
+                 no background, no bold weight change)
+
+CTA button:      "Get a Quote" — rightmost, margin-left: 24px
+                 background: #3C6E47
+                 color: #FFFFFF
+                 padding: 10px 20px
+                 border-radius: 2px
+                 font-size: 14px, weight 600
+                 border: none
+                 hover: background #2F5538 (250ms)
+
+Mobile hamburger:
+  Icon:          Three 20px lines, 2px height, 4px gap. White. No rounded ends.
+                 Animates to an X on open (top line rotates +45°, bottom -45°,
+                 middle fades out — 300ms ease-in-out)
+  Drawer:        Full viewport overlay (position: fixed, inset: 0)
+                 background: rgba(13,13,13,0.96) — near-opaque, not glass
+                 (glass blur on a full-screen overlay creates a visual mess)
+                 Links stacked, 32px font-size, 24px gap, left-aligned with 32px margin
+                 CTA button full-width at bottom (48px height)
+                 Open/close: slide in from right, 500ms ease-in-out
+                 (not from top — top-down feels like a dropdown, not a drawer)
+
+────────────────────────────────────────────────────────────────────────────────
+3. HERO SECTION
+────────────────────────────────────────────────────────────────────────────────
+Height:          100vh (minimum 600px, maximum none — clips on ultrawide with
+                 object-position)
+Background:      Single full-bleed photograph
+                 object-fit: cover
+                 object-position: center 40%   (top 40% of image is focal point
+                 — this keeps sky/foliage in frame while anchoring the subject)
+
+Overlay:
+  NOT a flat black overlay. Use a directional gradient:
+  linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.10) 0%,
+    rgba(0,0,0,0.08) 40%,
+    rgba(0,0,0,0.55) 100%
+  )
+  This keeps the top of the photo clean (the navbar floats over it clearly)
+  and darkens the bottom where the text lives. The photo reads as a photo,
+  not as "dark overlay with photo underneath."
+
+Text block:
+  Position:      Absolute, bottom 15% left (desktop); bottom 10% centered (mobile)
+  Content (in order, top to bottom):
+    1. Eyebrow label — "IDEAL LANDSCAPE SERVICES · DFW" — 12px/white/0.14em
+    2. H1 headline  — 3–5 words, weight 800, --text-hero size
+    3. Subline      — 1 line, 18px weight 400, rgba(255,255,255,0.85)
+    4. CTA row      — 2 buttons (see Buttons spec)
+
+  Max-width of text block: 640px on desktop (do not let text span too wide)
+  Stagger entry: animate in at page load, not on scroll
+    Eyebrow:    delay 200ms
+    H1:         delay 400ms
+    Subline:    delay 550ms
+    CTAs:       delay 700ms
+  All use: opacity 0→1 + translateY 16px→0, 600ms ease-out
+
+────────────────────────────────────────────────────────────────────────────────
+4. BUTTONS
+────────────────────────────────────────────────────────────────────────────────
+Two variants only. No 3rd variant without a documented reason.
+
+PRIMARY button (main CTA — "Get a Quote", "Free Estimate", "See Our Work"):
+  background:      #3C6E47
+  color:           #FFFFFF
+  padding:         14px 28px (desktop); 12px 22px (mobile)
+  border-radius:   2px
+  font-size:       15px, weight 600
+  letter-spacing:  0.02em
+  border:          none
+  cursor:          pointer
+  hover:           background #2F5538, transition 250ms
+  active:          background #253F29
+  focus-visible:   outline 2px solid #3C6E47, outline-offset 3px
+
+SECONDARY button (alternate CTA — "See Our Work" when paired with primary):
+  background:      transparent
+  color:           #FFFFFF
+  padding:         13px 27px  (1px less to account for border)
+  border-radius:   2px
+  border:          1px solid rgba(255,255,255,0.70)
+  font-size:       15px, weight 600
+  letter-spacing:  0.02em
+  hover:           border-color rgba(255,255,255,1.0),
+                   background rgba(255,255,255,0.08),
+                   transition 250ms
+
+CTA pair on hero:  PRIMARY and SECONDARY side by side, gap: 16px
+  On mobile (< 480px): stack vertically, each full width, gap: 12px
+
+────────────────────────────────────────────────────────────────────────────────
+5. TRUST SIGNAL STRIP
+────────────────────────────────────────────────────────────────────────────────
+Appears immediately below the hero fold — the first non-photo element.
+
+Background:      --color-black (#0D0D0D)  — hard contrast edge between hero and strip
+Height:          88px desktop; 72px mobile (single row)
+Layout:          4 items, horizontally centered, equal spacing
+                 Dividers: 1px solid rgba(255,255,255,0.15) between each item
+                 NOT card boxes — just text with dividers
+
+Each item:
+  Stat value:    24px, weight 700, white ("35+" / "A+" / "4.9★" / "Licensed")
+  Stat label:    11px, weight 500, rgba(255,255,255,0.55), letter-spacing 0.10em, uppercase
+  ("YEARS IN DFW" / "BBB RATING" / "GOOGLE RATING" / "& INSURED")
+
+Stagger animation on scroll entry:
+  Item 1: delay 0ms / Item 2: delay 100ms / Item 3: delay 200ms / Item 4: delay 300ms
+  opacity 0→1 + translateY 12px→0, 500ms ease-out
+
+Mobile: 2×2 grid if 4 items don't fit in one row; reduce dividers to horizontal
+
+────────────────────────────────────────────────────────────────────────────────
+6. SECTION ANATOMY — THE REPEATING PATTERN
+────────────────────────────────────────────────────────────────────────────────
+Every non-hero section on the site follows the same heading structure:
+
+  [EYEBROW LABEL]         — 12–13px, weight 500, uppercase, 0.14em tracking
+                            accent green on white sections
+                            rgba(255,255,255,0.55) on black sections
+  [SECTION HEADLINE]      — --text-2xl, weight 700, black or white
+  [OPTIONAL SUBHEAD]      — --text-md, weight 400, secondary text color
+                            1–2 sentences ONLY. If it requires 3, cut it.
+
+Spacing from eyebrow to headline: 10px
+Spacing from headline to subhead: 14px
+Spacing from subhead to content:  40–48px
+Section top/bottom padding:       96px (desktop); 64px (tablet); 48px (mobile)
+
+This structure applies to EVERY content section. The rhythm of seeing this
+same pattern creates a sense of order and professionalism even before the
+content reads.
+
+────────────────────────────────────────────────────────────────────────────────
+7. SERVICE TILE GRID
+────────────────────────────────────────────────────────────────────────────────
+Section background: white
+Layout:             3 columns × 2 rows (6 tiles) — desktop
+                    2 columns × 3 rows — tablet
+                    1 column × 6 rows — mobile
+
+Each tile:
+  Size:             Aspect ratio 4:3, min-height 240px
+  Photo:            Full-bleed from that service's image folder
+  Overlay:          --glass-dark-30 (rgba(13,13,13,0.30)) always-on
+                    On hover: --glass-dark-55 (250ms transition)
+  Content:          Centered vertically and horizontally
+                    Icon: 32px line-weight SVG, white, 2px stroke
+                    Label: 17px, weight 600, white, uppercase, 0.10em tracking
+                    Arrow: 16px → icon, white, translates right 4px on hover
+  Border-radius:    0px — tiles butt up against each other with no gap
+                    (grid gap: 2px only — a barely visible seam, not a space)
+  Hover:            overlay darkens + arrow translates + subtle scale(1.02)
+                    all over 250ms
+
+────────────────────────────────────────────────────────────────────────────────
+8. PORTFOLIO / PROJECT CARDS
+────────────────────────────────────────────────────────────────────────────────
+Section background: --color-black — the dark section in the alternating cycle
+
+Layout:             3 cards per row (desktop); 2 (tablet); 1 (mobile)
+                    Grid gap: 16px (not 24 — cards feel like a tight editorial
+                    grid, not a product catalog)
+
+Each card:
+  Border-radius:    0px
+  Aspect ratio:     3:2 (landscape — consistent across all cards)
+  Photo:            Full-bleed, object-fit cover
+  Label strip:      Bottom 25% of card, frosted glass (translucency effect #2)
+                    background: rgba(13,13,13,0.55)
+                    backdrop-filter: blur(8px)
+                    padding: 16px 20px
+                    Content: project name only — 16px, weight 600, white, no caps
+                    Secondary: city or neighborhood — 12px, rgba(255,255,255,0.60)
+  Border:           1px solid rgba(255,255,255,0.10) — barely-there frame
+                    on dark background
+
+  Hover behavior:
+    Photo:           scale(1.04), 400ms ease-out (slight push in)
+    Label strip:     background rgba(13,13,13,0.80) — opacity up 250ms
+    Card border:     rgba(255,255,255,0.30) — brightens 250ms
+    Cursor:          pointer
+
+  Click:             Navigate to individual project gallery page
+  Overflow:          hidden on the card container (clips the scale)
+
+────────────────────────────────────────────────────────────────────────────────
+9. PROCESS STEPS
+────────────────────────────────────────────────────────────────────────────────
+Section background: white
+Layout (desktop):   Single row, 6 steps, connected by a thin 1px line
+                    (--color-gray-200) running through their center
+Layout (mobile):    Vertical stacked list
+
+Each step:
+  Number:           48×48px circle, border: 2px solid #3C6E47 (accent)
+                    Number: 15px, weight 700, accent color
+                    Background: white — circle sits ON TOP of the connecting line
+  Label:            16px, weight 600, --color-black, centered below the circle
+  Description:      13px, weight 400, --color-gray-500, centered, max 60 chars
+  Gap between:      Equal flex spacing — steps are evenly distributed
+
+Connecting line:
+  position: absolute, top: 24px (center of circle vertically)
+  height: 1px, background: --color-gray-200
+  width: 100% (full container width, behind all circles)
+
+────────────────────────────────────────────────────────────────────────────────
+10. WHY CHOOSE US — 3-COLUMN ICON SECTION
+────────────────────────────────────────────────────────────────────────────────
+Section background: --color-black (dark section in the alternating cycle)
+Layout: 3 equal columns, gap: 48px (desktop); stacks to 1 column on mobile
+
+Each column:
+  Icon: 48px SVG, 2px stroke, white
+        Suggested icons: shield-check (Licensed & Insured),
+                         home (Family-Owned), award (Award-Winning)
+  Headline: 18px, weight 700, white
+  Body: 15px, weight 400, rgba(255,255,255,0.72), line-height 1.65
+        1 sentence only.
+  No borders, no card boxes, no shadows — floating content on dark bg
+
+────────────────────────────────────────────────────────────────────────────────
+11. CREDENTIALS LOGO STRIP
+────────────────────────────────────────────────────────────────────────────────
+Section background: --color-off-white (#F7F7F5)
+Height: 100px (desktop); auto (mobile)
+Layout: logos centered horizontally, gap: 48px, all same height (48px)
+        logos are grayscale (filter: grayscale(1)) by default
+        On hover: filter: none (250ms) — color reveals on hover only
+
+This applies to TNLA, Home & Garden Show Awards, BBB, any partner logos.
+The grayscale → color hover is a subtle polish detail. It signals that these
+are real credentials (they have color) while keeping the section visually
+quiet at rest.
+
+────────────────────────────────────────────────────────────────────────────────
+12. LIVE REVIEWS SECTION
+────────────────────────────────────────────────────────────────────────────────
+Section background: white
+Layout: 3 review cards per row (desktop); 1 per row (mobile)
+        Cards do NOT auto-scroll or carousel — static display, most recent 3
+
+Each card:
+  Background:  white
+  Border:      1px solid --color-gray-200
+  Border-radius: 0px
+  Padding:     24px
+  Star rating: 5 gold stars (use ★ or SVG), 14px, color #F5A623
+  Quote:       15px, weight 400, --color-text-primary, line-height 1.6
+               Max 3 lines displayed; overflow hidden (no expand)
+  Reviewer:    13px, weight 600, --color-black
+  Date:        13px, weight 400, --color-gray-500
+  Google logo: 16px Google G logo, bottom-right of card (source attribution)
+
+Stars row: Google rating summary above cards
+  "4.9 ★★★★★   Based on 80+ Google Reviews"
+  18px stat, accent color for stars, gray-500 for the "Based on..." text
+  Aligns center above the card row
+
+────────────────────────────────────────────────────────────────────────────────
+13. BEFORE & AFTER SECTION (pending David confirmation)
+────────────────────────────────────────────────────────────────────────────────
+Section background: --color-black
+
+If reveal-slider style:
+  Two photos (before/after) occupying the same space, divided by a draggable
+  slider handle at 50%.
+  Handle: 2px vertical line, white, with a circular grip (32px diameter,
+  white, with ← → arrows inside, no border-radius on the circle... wait,
+  circles ARE round — the grip is circular, that's its function. The toggle
+  and handle design follow the visual language: high contrast, no decorative
+  frills, just the thing that it is.)
+  Overlay labels: "BEFORE" / "AFTER" — 11px uppercase, 0.14em tracking,
+  white on semi-transparent pill tags (rgba(0,0,0,0.55), padding 4px 10px,
+  border-radius 1px — barely-there)
+
+If side-by-side style (simpler):
+  Two equal photos side by side in same card, labeled above
+  "BEFORE" and "AFTER" in eyebrow label style (accent color on dark bg)
+
+────────────────────────────────────────────────────────────────────────────────
+14. SERVICE AREA MAP
+────────────────────────────────────────────────────────────────────────────────
+Section background: white
+Layout: Map left (60%), city links right (40%)
+
+Map:
+  Embedded Google Maps iframe OR a static map image with city pin marks
+  Height: 400px; no border-radius; no border
+  The map itself is grayscale (CSS filter) so it doesn't clash with the palette
+  (a full-color Google Map has blue water, red markers, green parks — too much)
+
+City links:
+  2-column list of city names
+  14px, weight 500, --color-text-primary
+  On hover: accent color, 150ms
+  Each is a link to its city subpage (/service-area/fort-worth/ etc.)
+
+────────────────────────────────────────────────────────────────────────────────
+15. FINAL CTA BANNER
+────────────────────────────────────────────────────────────────────────────────
+Background: Full-bleed dark landscape photo (NOT the hero photo — choose a
+            different image)
+Overlay: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.65))
+Height: 400px (desktop); 300px (mobile)
+Content: centered both axes
+  Eyebrow:   12px, uppercase, rgba(255,255,255,0.60)
+  H2:        --text-2xl, weight 700, white
+  CTA:       PRIMARY button, centered below
+
+────────────────────────────────────────────────────────────────────────────────
+16. FOOTER
+────────────────────────────────────────────────────────────────────────────────
+Background: --color-black
+Padding: 64px top, 40px bottom
+Layout: 4-column grid (desktop); 2×2 (tablet); stacked (mobile)
+  Col 1: Logo (white, 40px height) + tagline (1 line, 13px, gray-500)
+         + social icons (20px, white, gap 16px, hover accent color)
+  Col 2: Quick Links — nav links (Home, Services, Projects, About, Blog, Contact)
+         13px, weight 400, rgba(255,255,255,0.72), hover white, gap 10px
+  Col 3: Services — 6 service page links (same style as Col 2)
+  Col 4: Contact — address, phone, email, each on its own line
+         13px, rgba(255,255,255,0.72)
+         Phone and email are clickable links
+
+Divider: 1px solid rgba(255,255,255,0.10) above bottom bar
+Bottom bar: Copyright © 2026 Ideal Landscape Services | Privacy Policy
+            12px, rgba(255,255,255,0.40), centered, padding-top: 24px
+
+Social icons: Instagram, Facebook — line-weight SVG icons
+              No background circles, no borders, no fill
+              Just the bare icon, white, 20px, hover accent-color 150ms
+
+────────────────────────────────────────────────────────────────────────────────
+17. FORMS — CONTACT / ESTIMATE REQUEST
+────────────────────────────────────────────────────────────────────────────────
+Section background: white
+
+Input fields:
+  border:         1px solid --color-gray-200
+  border-radius:  0px
+  padding:        13px 16px
+  font-size:      15px, weight 400
+  background:     white
+  color:          --color-black
+  focus:          border-color #3C6E47 (accent), no box-shadow
+  placeholder:    --color-gray-500
+
+Select / dropdown: same as input above
+
+Textarea: same as input; min-height 120px; resize: vertical only
+
+Submit button: PRIMARY button (full spec above), full-width on mobile
+
+Form layout: single column (no side-by-side fields — harder on mobile,
+             adds no value on desktop for a 5-field form)
+
+────────────────────────────────────────────────────────────────────────────────
+18. BLOG CARDS (on /blog index page)
+────────────────────────────────────────────────────────────────────────────────
+Section background: white
+Layout: 3 per row (desktop); 2 (tablet); 1 (mobile)
+Card:
+  Featured image: aspect-ratio 16:9, object-fit cover, no border-radius
+  Category tag:   11px uppercase, 0.12em tracking, accent color, no background
+                  (bare text tag above the headline, not a pill or badge)
+  Post title:     18px, weight 700, --color-black, line-height 1.25
+  Excerpt:        14px, weight 400, --color-gray-500, line-height 1.6, 2 lines max
+  Date:           13px, weight 400, --color-gray-500
+  Read more:      13px, weight 600, accent color, "Read more →" — no button,
+                  just the styled text link
+  Border:         none on the card itself — white on white has no boundary
+                  A 1px top rule (--color-gray-200) separates title area from image
+
+Hover behavior:
+  Title color: #3C6E47 (accent), 150ms
+  Image: scale(1.03) inside clipped container, 350ms ease-out
+
+────────────────────────────────────────────────────────────────────────────────
+19. INDIVIDUAL PROJECT GALLERY PAGE
+────────────────────────────────────────────────────────────────────────────────
+This is a pure photography page — minimal UI, maximum image.
+
+Header: Black bg, project name as H1 (white), location in eyebrow label
+        No content description. The photos are the page.
+
+Gallery layout: Masonry or asymmetric grid
+  Column count: 2 (desktop); 1 (mobile)
+  Grid gap: 4px — a tight grid, not spaced cards
+  Images: no border-radius, no borders, no captions
+  Aspect ratios: intentionally varied (some portrait, some landscape) —
+                 this creates the editorial magazine feel vs. a uniform grid
+
+Lightbox on click:
+  Full-screen black overlay (rgba(0,0,0,0.95))
+  Image centered, max-height 90vh, max-width 90vw
+  Left/right arrows: 32px, white, sharp (not circles)
+  Close: × in top-right, 24px, white
+  No caption in lightbox — just the image
+  Keyboard: arrow keys to navigate, Esc to close
+
+
+════════════════════════════════════════════════════════════════════════════════
+PHOTOGRAPHY DIRECTION
+════════════════════════════════════════════════════════════════════════════════
+The aesthetic lives or dies on photo quality. Every CSS decision above becomes
+irrelevant if the photography is weak. This section defines what a qualifying
+photo looks like versus what gets cut.
+
+HERO PHOTO REQUIREMENTS (full-viewport use)
+  - Native resolution minimum: 1920px wide (ideally 2400px+)
+  - Aspect ratio: naturally 16:9 or wider (landscape orientation)
+  - Depth of field: shallow is not required, but the subject must be clear
+  - Subject: the work — a finished installation, not process shots
+  - Lighting: golden hour or overcast (not harsh midday — creates blown
+    highlights and deep shadows that photograph poorly at full viewport)
+  - Sky/background: a visible sky or natural backdrop is better than a fence
+  - People: no people visible (timeless vs. dated)
+  - Equipment: no tools, hoses, wheelbarrows in frame
+  - Must hold up at any crop point (center-left, center, center-right)
+    — test the photo at a 12:5 crop before committing
+
+HERO BEST CANDIDATES from the scraped library:
+  (These need to be confirmed at full resolution — these are descriptive,
+   not guarantees)
+  water-features/    Spill-Over-Pottery-Water-Feature-with-Magnolias images
+                     Rock-Swimming-Pool-Waterfall.jpg
+  outdoor-living/    Flagstone-Pathway-Pergola-Gazebo.jpg
+                     Stained-Concrete-Gazebo-Outdoor-Living.jpg
+  landscaping/       Colorful-Landscape.jpg
+  lighting/          Any nighttime-lit garden shot — premium feel, rare in
+                     the DFW landscaping niche, immediately differentiating
+
+INTERIOR PAGE HERO (service pages, about, etc.)
+  - Same quality requirements but can be tighter crop / portrait-forward
+  - 1200px wide minimum
+  - These use a shorter hero: 50–60vh instead of 100vh
+
+WHAT GETS CUT:
+  - Any image with a watermark, logo bug, or overlay text from another source
+  - Any image showing Facebook UI (cropped social export)
+  - Any image named with a Facebook ID pattern (1049745...) — these are
+    typically mobile phone exports, rarely hero quality
+  - Any image where the primary subject is out-of-focus relative to the frame
+  - Square photos (they cannot fill a landscape hero without bizarre cropping)
+  - Screenshots or composite images
+
+PHOTOGRAPHY DIRECTION IF A SHOOT IS PLANNED:
+  - Shoot in golden hour (1 hour post-sunrise or 1–2 hrs pre-sunset)
+  - Bring two types of shots per project:
+    1. Wide establishing shot: the whole installation in its environment
+    2. Detail shots: texture of stone, water motion, foliage pattern
+  - Shoot both with and without sun flare (useful for warm/cool variations)
+  - Target 3–5 hero-quality wide shots; 10–15 detail shots per project
+  - RAW files preferred; provide full-resolution JPGs at delivery
+  - Do NOT over-edit: no HDR halos, no saturation pumping, no vignettes
+    The editing goal is "as if you were there on a beautiful day" — not a
+    real estate photo or social media post.
+
+
+════════════════════════════════════════════════════════════════════════════════
+WHAT THIS DESIGN IS NOT
+════════════════════════════════════════════════════════════════════════════════
+These are the specific failure modes to avoid — things that would dilute the
+aesthetic or undermine the premium signal:
+
+  ✕ Earth tones and beige as section backgrounds
+    The natural warmth comes from the photos. The UI frame stays cold and sharp.
+
+  ✕ Rounded corners on cards and images
+    Softness signals consumer tech (mobile apps, social media). Not a premium
+    residential contractor. Hard edges are the design language.
+
+  ✕ Drop shadows on images or cards (the soft, blurred kind)
+    Shadows make things look like they are floating. That is not the feeling.
+    Physicality comes from the sharp offset shadow on hover only.
+
+  ✕ Gradient fills on buttons
+    A gradient button in 2026 reads as a template site. Flat fill, full stop.
+
+  ✕ Stock photography
+    If there are not enough hero-quality photos from the real portfolio, plan
+    a shoot. A stock photo of grass and a generic pergola is immediately read
+    as false by any local client. It destroys trust.
+
+  ✕ Any animation that loops or auto-plays without user intent
+    No rotating banner carousels. No auto-advancing image sliders. No pulsing
+    badge animations. Motion is for transitions and reveals, not decoration.
+
+  ✕ The phrase "Welcome to our website" or any equivalent
+    The site does not explain that it is a website.
+
+  ✕ Showing 8 navigation items
+    The simplified nav (6 links) is not optional — it follows from the
+    "less words" brief. Every item in the nav is a commitment.
+
+  ✕ Sidebar layouts
+    The current site has a sidebar. The new site does not. Sidebars are for
+    blogs with lots of content and internal links to manage. The new site's
+    focus is singular on every page.
+
+  ✕ Paragraph copy in the hero
+    There is exactly one acceptable exception: a single subline (~12 words).
+    Nothing else belongs above the CTAs in the hero.
+
+  ✕ Mixing the accent green into decorative contexts
+    The green is a functional color: CTA buttons, hover, active states.
+    If it starts appearing in decorative dividers, icon fills, section
+    accents, or background tints, the "sharp monochrome with accent" palette
+    collapses into standard landscaping-green.
+
+
+════════════════════════════════════════════════════════════════════════════════
+SUMMARY — THE SIGNAL THIS SITE SENDS
+════════════════════════════════════════════════════════════════════════════════
+Every other DFW landscaping website uses green, stone beige, and paragraph
+copy to explain their services. This site uses black, white, and photography
+to show them. The contrast — visual and strategic — is the competitive
+positioning. A visitor landing here should feel like they found the premium
+option without reading a single word.

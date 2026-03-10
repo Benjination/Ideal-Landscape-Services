@@ -1,0 +1,414 @@
+\documentclass[11pt, letterpaper]{article}
+
+% ── Packages ──────────────────────────────────────────────────────────────────
+\usepackage[margin=1in, top=0.85in, bottom=0.85in]{geometry}
+\usepackage{fontenc}
+\usepackage{inputenc}
+\usepackage{microtype}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{mdframed}
+\usepackage{hyperref}
+\usepackage{amssymb}
+
+% ── Colors ────────────────────────────────────────────────────────────────────
+\definecolor{deepgreen}{RGB}{34, 85, 48}
+\definecolor{lightgreen}{RGB}{224, 240, 228}
+\definecolor{stone}{RGB}{245, 243, 238}
+\definecolor{darkgray}{RGB}{50, 50, 50}
+\definecolor{midgray}{RGB}{110, 110, 110}
+\definecolor{accent}{RGB}{87, 143, 72}
+
+% ── Section styling ───────────────────────────────────────────────────────────
+\titleformat{\section}
+  {\large\bfseries\color{black}}{}{0em}{}[\color{accent}\titlerule]
+\titlespacing{\section}{0pt}{16pt}{6pt}
+
+\titleformat{\subsection}
+  {\normalsize\bfseries\color{darkgray}}{}{0em}{}
+\titlespacing{\subsection}{0pt}{10pt}{3pt}
+
+% ── Header / Footer ───────────────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{{\color{accent}\hrule height 0.4pt}}
+\fancyhead[L]{\small\color{midgray}\textit{Follow-Up Questions --- Option A: Custom Build}}
+\fancyhead[R]{\small\color{midgray}\textit{Ideal Landscape Services}}
+\fancyfoot[C]{\small\color{midgray}\thepage}
+
+% ── List styling ──────────────────────────────────────────────────────────────
+\setlist[itemize]{noitemsep, topsep=3pt, leftmargin=1.4em}
+\setlist[enumerate]{noitemsep, topsep=3pt, leftmargin=1.4em}
+
+% ── Checklist environment ─────────────────────────────────────────────────────
+\newlist{checklist}{itemize}{2}
+\setlist[checklist,1]{label=$\square$, noitemsep, topsep=6pt, leftmargin=1.8em, itemsep=8pt}
+\setlist[checklist,2]{label=$\circ$, noitemsep, topsep=2pt, leftmargin=1.4em, itemsep=1pt}
+
+% ── Note box ──────────────────────────────────────────────────────────────────
+\newmdenv[
+  backgroundcolor=stone,
+  linecolor=midgray,
+  linewidth=0.6pt,
+  innerleftmargin=10pt,
+  innerrightmargin=10pt,
+  innertopmargin=8pt,
+  innerbottommargin=8pt,
+  roundcorner=4pt,
+  skipabove=8pt,
+  skipbelow=8pt
+]{notebox}
+
+% ── Hyperlink styling ─────────────────────────────────────────────────────────
+\hypersetup{colorlinks=true, urlcolor=deepgreen, linkcolor=deepgreen}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\begin{document}
+% ══════════════════════════════════════════════════════════════════════════════
+
+% ── Title block ───────────────────────────────────────────────────────────────
+\begin{center}
+  {\LARGE\bfseries\color{black} Follow-Up Questions}\\[4pt]
+  {\large\color{darkgray} Ideal Landscape Services --- Option A: Custom Build}\\[6pt]
+  {\small\color{midgray} React / Next.js + Firebase \quad·\quad March 2026 \quad·\quad Confidential}
+\end{center}
+
+\vspace{4pt}
+{\color{accent}\hrule height 1.2pt}
+\vspace{10pt}
+
+These questions apply to the \textbf{Custom Build path (Option A)}: a fully
+bespoke React/Next.js site with a Firebase backend and a custom \textbf{/admin
+dashboard} you control without ever touching code or a third-party CMS.
+WordPress-specific questions have been removed. Answers here directly unblock
+the design, development, and launch phases.
+
+\vspace{4pt}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Domain \& Email}
+% ══════════════════════════════════════════════════════════════════════════════
+
+\begin{checklist}
+  \item \textbf{Who is the current domain registrar?}
+    (GoDaddy, Namecheap, Google Domains, etc.)
+    \begin{checklist}
+      \item DNS access is needed at launch to point the domain to Firebase Hosting.
+      \item MX records must \emph{not} change --- company email is completely
+            unaffected by the site move.
+    \end{checklist}
+
+  \item \textbf{What email provider are the company emails on?}
+    (Google Workspace, Microsoft 365, or bundled with the current WPEngine hosting?)
+    \begin{checklist}
+      \item If Google Workspace or M365: no action needed --- emails survive the transition.
+      \item If bundled with WPEngine: email migration must happen \emph{before}
+            WPEngine is canceled.
+    \end{checklist}
+
+  \item \textbf{How many active email accounts are there?}
+    (e.g., kathy@, david@, info@, quotes@, etc.)
+    \begin{checklist}
+      \item Good to know if an email provider switch is ever needed.
+    \end{checklist}
+\end{checklist}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Hosting \& Current Setup}
+% ══════════════════════════════════════════════════════════════════════════════
+
+\begin{checklist}
+  \item \textbf{Who currently manages the WPEngine account --- David, or DRKM Strategies?}
+    \begin{checklist}
+      \item The WPEngine account should be canceled \emph{after} the new site is live,
+            not before. The old site stays up as a reference during the build.
+      \item You (or whoever holds the account) initiate the cancellation.
+    \end{checklist}
+
+  \item \textbf{Do you have a Google account to use for the Firebase project?}
+    \begin{checklist}
+      \item Firebase is tied to a Google/Gmail account. Any Google Workspace or
+            Gmail account works.
+      \item The project is set up under your account so you own the hosting,
+            database, and storage outright.
+      \item Firebase Hosting is free at this site's traffic level. No monthly bill.
+    \end{checklist}
+
+  \item \textbf{Do you want the existing 8 blog posts migrated to the new site?}
+    \begin{checklist}
+      \item All 8 posts have already been archived locally --- full text, dates,
+            and slugs preserved. Nothing is at risk.
+      \item If \textbf{yes}: posts will be reformatted and imported into the new
+            blog system, with 301 redirects from the old URLs.
+      \item If \textbf{no}: the blog launches fresh; new posts follow the SEO
+            content plan.
+    \end{checklist}
+\end{checklist}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Admin Dashboard Scope}
+% ══════════════════════════════════════════════════════════════════════════════
+
+The custom build includes a \textbf{/admin panel} protected by login where you
+or Kathy can update site content in the browser --- no code, no FTP, no plugin
+updates. The following are planned for admin control. Confirm or adjust:
+
+\begin{checklist}
+  \item \textbf{Blog posts} --- Add new posts with title, date, cover image, and body text.
+    \begin{checklist}
+      \item This is the primary use case and is confirmed in scope.
+    \end{checklist}
+
+  \item \textbf{Project / portfolio entries} --- Add new projects with a name, city,
+        photos, and a brief description.
+    \begin{checklist}
+      \item Do you want this in the admin, or is updating projects a
+            build-time task handled by the developer?
+    \end{checklist}
+
+  \item \textbf{Testimonials} --- Should the admin allow adding testimonials,
+        or will the reviews section be powered entirely by the live Google review feed?
+
+  \item \textbf{Gallery images} --- Should service page photos be swappable from
+        the admin, or is a one-time load at launch acceptable?
+
+  \item \textbf{Any other content you or Kathy frequently update?}
+    (Seasonal promotions, pricing callouts, team bios, announcements, etc.)
+\end{checklist}
+
+\begin{notebox}
+\small The admin panel is intentionally minimal --- it only exposes what you
+actually need. More admin features = more build time = higher cost. Being
+specific here keeps scope and budget tight.
+\end{notebox}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Design \& Content}
+% ══════════════════════════════════════════════════════════════════════════════
+
+\begin{checklist}
+  \item \textbf{Does Ideal have a professional photo library, or do new photos
+        need to be taken?}
+    \begin{checklist}
+      \item The Miracle Farms aesthetic \emph{requires} hero-quality photography.
+            This is the single most important factor in hitting that look.
+      \item A professional photoshoot is worth budgeting for if the existing
+            library doesn't have full-viewport-quality shots.
+    \end{checklist}
+
+  \item \textbf{Does Ideal have any named or featured projects?}
+    \begin{checklist}
+      \item Like Miracle Farms' ``Shoreland Overlook'' or ``Fernscape Modern.''
+      \item Named projects become signature portfolio cards on the Projects page.
+    \end{checklist}
+
+  \item \textbf{Does Ideal have certifications, awards, trade memberships, or
+        partner logos to display?}
+    \begin{checklist}
+      \item TNLA membership logo and Home \& Garden Show Award photos have already
+            been found in the scraped image library and are ready to use.
+      \item Any additional credentials? (BBB, NALP, contractor licensing seals, etc.)
+    \end{checklist}
+\end{checklist}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Features \& Functionality}
+% ══════════════════════════════════════════════════════════════════════════════
+
+\begin{checklist}
+  \item \textbf{What does the ``Pay Online'' button currently link to?}
+    \begin{checklist}
+      \item External payment portal (PayPal, QuickBooks Online, etc.) --- easy
+            to replicate with a redirect link.
+      \item Built-in payment processing on the new site --- significant added
+            scope; will adjust the estimate.
+    \end{checklist}
+
+  \item \textbf{Do you want a live chat or text widget on the site?}
+    \begin{checklist}
+      \item Third-party embed (Tidio, JivoChat, etc.) --- low development effort,
+            minimal monthly cost (~\$0--\$20/mo). Similar to what Worx uses.
+    \end{checklist}
+
+  \item \textbf{Do you have existing Google Analytics or Search Console data
+        to transfer?}
+    \begin{checklist}
+      \item If yes: I'll need access to your Google account to transfer the GA4 property.
+      \item If no existing property: new GA4 + Search Console will be set up from
+            scratch at launch.
+    \end{checklist}
+
+  \item \textbf{Is the newsletter/email subscriber list currently active?}
+    \begin{checklist}
+      \item If yes: what platform? (Mailchimp, Constant Contact, etc.)
+      \item The subscriber list must be exported \emph{before} WPEngine is canceled.
+    \end{checklist}
+
+  \item \textbf{Do you want live Google review integration?}
+    \begin{checklist}
+      \item Custom build option: Google Places API --- free at this traffic level,
+            server-rendered in Next.js, no subscription needed.
+      \item Widget alternative: EmbedSocial or Widewail (\$29--\$49/mo) with
+            more display flexibility.
+    \end{checklist}
+\end{checklist}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Scope \& Timeline}
+% ══════════════════════════════════════════════════════════════════════════════
+
+\begin{checklist}
+  \item \textbf{Are there any hard deadlines?}
+    (Busy season, upcoming marketing push, trade show, referral timeline, etc.)
+
+  \item \textbf{Are there features or pages beyond the agreed 11-page plan?}
+    \begin{checklist}
+      \item Examples: online quote calculator, appointment scheduling, job listings,
+            an e-commerce store, a client portal.
+      \item Anything outside the 11-page scope is quoted separately.
+    \end{checklist}
+
+  \item \textbf{Will you write new copy, or would you like help trimming the
+        existing copy to match the ``less words'' direction?}
+    \begin{checklist}
+      \item All existing service page copy, blog posts, FAQs, and testimonials
+            have been archived locally --- the raw material is ready.
+      \item Light copy editing to fit the visual-first style is included in scope.
+    \end{checklist}
+\end{checklist}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Image Library \& Before/After}
+% ══════════════════════════════════════════════════════════════════════════════
+
+\begin{checklist}
+  \item \textbf{Are the unidentified photos in the archive before/after shots or
+        job-site documentation?}
+    \begin{checklist}
+      \item The \texttt{misc/} folder contains $\sim$99 dated photos (e.g.,
+            \texttt{20170320\_105522...}) that appear to be field-taken.
+      \item If confirmed as before/after: these become a
+            \textbf{``Transformations''} feature section on the homepage ---
+            one of the highest-engagement elements on a landscaping site,
+            at no extra cost.
+      \item If unidentified: excluded from the build.
+    \end{checklist}
+
+  \item \textbf{Can you name the unlabeled project photo sets?}
+    \begin{checklist}
+      \item Sets needing labels: P-series (12 photos), AR-series (2 photos), 8609.jpg.
+      \item A project name and city/neighborhood is all that's needed to turn
+            them into named portfolio cards.
+    \end{checklist}
+
+  \item \textbf{Are there more project photos on the WPEngine server that the
+        scraper didn't capture?}
+    \begin{checklist}
+      \item The scraper only collected images referenced by live pages.
+      \item WPEngine SFTP or the WordPress ``Export Media Library'' plugin may
+            surface unpublished shoots or archived jobs.
+      \item These should be retrieved \emph{before} WPEngine access is lost.
+    \end{checklist}
+\end{checklist}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Design Decisions}
+% ══════════════════════════════════════════════════════════════════════════════
+
+\begin{checklist}
+  \item \textbf{What should the site's brand tagline be?}
+    \begin{checklist}
+      \item ``Design --- Build --- Maintain'' \quad (Miracle Farms-style, service-focused)
+      \item ``Your Ideal Outdoors, Built.'' \quad (brand-specific, punchy)
+      \item Something else?
+    \end{checklist}
+    \textit{\small This appears in the hero section and potentially in browser tab titles.}
+
+  \item \textbf{After viewing the image library, are any existing photos
+        hero-quality?}
+    \begin{checklist}
+      \item Hero = full-viewport, sharp at 1920px+ width.
+      \item If not: a photoshoot before launch is the recommended path.
+    \end{checklist}
+
+  \item \textbf{Would you like to simplify navigation from 8 links to 6?}
+    \begin{checklist}
+      \item Proposed: Home $|$ Services $|$ Projects $|$ About $|$ Blog $|$ Contact
+      \item FAQ folds into Services as an accordion section.
+      \item Testimonials folds into About or the homepage reviews strip.
+      \item Alternatively: keep Testimonials as a standalone page.
+    \end{checklist}
+\end{checklist}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{SEO \& Reviews}
+% ══════════════════════════════════════════════════════════════════════════════
+
+\begin{checklist}
+  \item \textbf{Does Ideal have a claimed and verified Google Business Profile?}
+    \begin{checklist}
+      \item If unclaimed: needs to be claimed before or during the build.
+      \item The Name, Address, and Phone on the website must match GBP exactly.
+    \end{checklist}
+
+  \item \textbf{Are you open to live Google review integration?}
+    \begin{checklist}
+      \item Custom build approach: fetch via Google Places API --- free, server-rendered,
+            no third-party subscription.
+      \item Star rating + review count auto-update as new reviews come in.
+    \end{checklist}
+
+  \item \textbf{Which DFW cities and neighborhoods does Ideal currently serve?}
+    \begin{checklist}
+      \item Used for the Service Area section and optional city subpages.
+      \item City subpages independently target local searches like
+            ``landscape design in Allen TX'' --- low build effort, strong SEO return.
+    \end{checklist}
+\end{checklist}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Business Info (NAP \& Contact)}
+% ══════════════════════════════════════════════════════════════════════════════
+
+\begin{checklist}
+  \item \textbf{What is the business's physical mailing address?}
+    \begin{checklist}
+      \item No address appears anywhere on the current site.
+      \item Needed for LocalBusiness schema markup and GBP NAP consistency.
+      \item If you prefer not to display it publicly, it can go in schema
+            markup only --- invisible to visitors, readable by Google.
+    \end{checklist}
+
+  \item \textbf{Confirm: is (817) 457-7507 the correct primary phone number?}
+    \begin{checklist}
+      \item This number is used in the header, footer, CTA buttons, schema
+            markup, and GBP listing.
+    \end{checklist}
+
+  \item \textbf{The current footer credits ``Designed by: DRKM Strategies.''
+    Keep, remove, or replace on the new site?}
+
+  \item \textbf{Do you know if/when DRKM Strategies plans to take the old
+    site down?}
+    \begin{checklist}
+      \item All blog posts, FAQs, testimonials, service copy, and images have
+            been archived --- nothing will be lost when the domain goes dark.
+      \item A confirmed timeline helps prioritize what gets built first.
+    \end{checklist}
+\end{checklist}
+
+\vspace{16pt}
+{\color{accent}\hrule height 0.6pt}
+\vspace{8pt}
+
+\begin{center}
+  \small\color{midgray}
+  These answers directly unblock the next phase of the custom build.\\
+  For the WordPress version of these questions, see \emph{followupWP}.
+\end{center}
+
+\end{document}
