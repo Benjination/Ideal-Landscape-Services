@@ -80,6 +80,23 @@ SCOPE & TIMELINE
     down the existing copy to match the "less words" direction?
 
 ────────────────────────────────────────────────────────
+VIDEO CONTENT
+────────────────────────────────────────────────────────
+[ ] Does Ideal have any video content — YouTube channel, Facebook videos, drone footage,
+    project walkthroughs, or a company intro video?
+    → No videos were found in the scraped site content. Either none existed, or they
+       were loaded in a way the scraper couldn't capture.
+    → If YES: Provide the YouTube channel URL or individual video links so they can
+       be embedded on the relevant pages (homepage hero, About page, service pages, etc.)
+    → Drone footage of completed projects would be extremely high-impact on a
+       photography-forward site like this one.
+
+[ ] Does Ideal have a YouTube channel or Facebook video library?
+    → Facebook: https://www.facebook.com/IdealLandscapeServices (already on file)
+    → Instagram: https://www.instagram.com/ideallandscapeservices/ (already on file)
+    → Worth scrolling both for any video content that could be repurposed.
+
+────────────────────────────────────────────────────────
 IMAGE LIBRARY & BEFORE/AFTER
 ────────────────────────────────────────────────────────
 [ ] The misc/ folder in the scraped image library contains ~99 files that
