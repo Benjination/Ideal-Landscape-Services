@@ -10,7 +10,7 @@
 
 Full website rebuild for **Ideal Landscape Services** — a family-owned DFW landscaping company operating since 1990. The new site targets a **photography-first, editorial-style aesthetic** (inspired by Miracle Farms Landscaping and Worx Landscape) with strong local SEO, minimal copy, and high visual impact.
 
-The existing site (built on WPEngine + WordPress) is being replaced entirely. Both a **custom Next.js + Firebase** build and a **WordPress + Elementor** build have been scoped and proposed. This repository contains all research, planning documents, scraped assets, and the working mockup.
+The existing site (built on WPEngine + WordPress) is being replaced entirely with a **custom Next.js + Firebase** build. This repository contains all research, planning documents, scraped assets, and the working mockup.
 
 ---
 
@@ -65,9 +65,8 @@ Ideal-Landscape-Services/
 │   └── services/                ← Individual service page copy
 │
 ├── LaTex/                       ← Client-facing proposal documents (compile with pdflatex)
-│   ├── proposal.tex             ← Main proposal — both build options, pricing, scope
-│   ├── followupCustom.tex       ← Follow-up Q&A form for Option A (custom build)
-│   └── followupWP.tex           ← Follow-up Q&A form for Option B (WordPress)
+│   ├── proposal.tex             ← Original proposal — both options presented, custom build selected
+│   └── followupCustom.tex       ← Discovery Q&A form for the custom Next.js + Firebase build
 │
 ├── thePlan.txt                  ← Master build plan — page structure, section specs
 ├── aesthetic.txt                ← Full design specification — tokens, components, rules
@@ -75,7 +74,6 @@ Ideal-Landscape-Services/
 ├── followupQs.txt               ← Running list of open questions for the client
 ├── websites.txt                 ← Reference site analyses (Miracle Farms, Worx, etc.)
 ├── structure.txt                ← Technical architecture notes (Next.js + Firebase)
-├── wordpress.txt                ← WordPress build notes and plugin recommendations
 │
 └── .github/
     └── workflows/
@@ -190,31 +188,24 @@ Running list of open client questions across 7 categories: Domain & Email, Hosti
 ### `websites.txt`
 Full analysis of reference websites reviewed during planning — includes Miracle Farms Landscaping (design inspiration), Worx Landscape (structure and conversion optimization reference), and the original ideallandscapeservices.com (full breakdown of current structure, complexity assessment, and rebuild notes).
 
-### `LaTex/` — Client Proposals
+### `LaTex/` — Client Documents
 
-Three LaTeX documents compiled to PDF for client delivery:
+Two LaTeX documents compiled to PDF for client delivery:
 
 | File | Purpose |
 |------|---------|
-| `proposal.tex` | Main proposal — site direction, 11-page scope, Option A vs Option B pricing, SEO section, timeline |
-| `followupCustom.tex` | Discovery Q&A form for Option A (custom Next.js + Firebase build) |
-| `followupWP.tex` | Discovery Q&A form for Option B (WordPress + Elementor build) |
+| `proposal.tex` | Original proposal — both options were presented; client selected the custom build |
+| `followupCustom.tex` | Discovery Q&A form for the custom Next.js + Firebase build |
 
 To compile: `pdflatex proposal.tex` (requires a LaTeX distribution — MacTeX on macOS).
 
 ---
 
-## Build Options
+## Build
 
-### Option A — Custom Build
 **Stack:** Next.js · React · Firebase (Hosting + Firestore + Storage + Auth) · GitHub Actions CI/CD  
 **Scope:** Full 11-page site + client admin panel (blog editor, testimonials, gallery upload)  
 **Estimate:** $1,800 – $2,500
-
-### Option B — WordPress
-**Stack:** WordPress · Elementor · Hello theme · WPEngine or SiteGround hosting  
-**Scope:** Full 11-page site · David manages content himself with no training required  
-**Estimate:** $960 – $1,440
 
 ---
 

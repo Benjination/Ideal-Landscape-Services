@@ -2,12 +2,10 @@
 THE PLAN — IDEAL LANDSCAPE SERVICES WEBSITE REBUILD
 ═══════════════════════════════════════════════════════════
 Last updated: March 2026
-Status: Awaiting David's decision on build option (Custom vs. WordPress)
+Status: Custom Next.js + Firebase build — confirmed March 12, 2026
 
 Note: This plan is written to be stack-agnostic. It describes WHAT to build and
-how it should look/feel. HOW it is built (Next.js or WordPress) is determined
-after David chooses an option. See structure.txt (Option 1) and wordpress.txt
-(Option 2) for the technical checklists once a path is chosen.
+how it should look/feel. HOW it is built is documented in structure.txt.
 
 ════════════════════════════════════════════════════════
 SECTION 1 — CORE DESIGN PHILOSOPHY
@@ -434,8 +432,8 @@ Here's how to achieve strong SEO without writing a wall of copy:
 SECTION 5 — OPEN DECISIONS (blocking thePlan)
 ════════════════════════════════════════════════════════
 
-  [ ] David must choose: Option 1 (Custom Next.js) or Option 2 (WordPress)
-      → Unblocks structure.txt or wordpress.txt as the active build checklist
+  [DONE] David chose Custom Next.js + Firebase (confirmed March 12, 2026)
+      → structure.txt is the active build checklist
 
   [ ] Confirm before/after status of misc/ folder photos
       → Unblocks "Transformations" section on homepage

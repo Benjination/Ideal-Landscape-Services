@@ -46,8 +46,7 @@ DESIGN & CONTENT
     (e.g., TNLA, BBB, NALP, supplier partnerships)
     → Used in the credentials/logo strip section.
 
-[ ] Which option does David prefer: Custom Build (Next.js + Firebase) or WordPress?
-    → Present both options with the trade-offs before starting any work.
+[ANSWERED] Which build option: Custom (Next.js + Firebase) — confirmed March 12, 2026.
 
 ────────────────────────────────────────────────────────
 FEATURES & FUNCTIONALITY
