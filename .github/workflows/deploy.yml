@@ -24,13 +24,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Copy root /images/ subfolders into Website/Actual/images/ so that all
-      # depth-relative paths (images/*, ../images/*, ../../images/*) resolve once
-      # GitHub Pages serves Website/Actual/ as the site root.
-      # -n prevents overwriting logo.png that lives in Actual/images/.
-      - name: Copy project images into site directory
-        run: cp -rn images/. "Website/Actual/images/"
-
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
