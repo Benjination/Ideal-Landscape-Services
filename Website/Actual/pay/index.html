@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pay Online | Ideal Landscape Services — DFW</title>
+  <meta name="description" content="Pay your Ideal Landscape Services invoice online quickly and securely. Serving Fort Worth, Arlington, Mansfield, Southlake, and all DFW.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <!-- PROMO BAR -->
+  <div class="promo-bar">
+    Call Today for a FREE Estimate:&nbsp;<a href="tel:+18174577507">817-457-7507</a>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="../index.html" class="logo">
+        <img src="../images/logo.png"
+             onerror="this.src='../images/team-branding/copy-Ideal-Landscape-2015-Logo-300x100-1.png'"
+             alt="Ideal Landscape Services">
+      </a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../services/index.html">Services</a></li>
+        <li><a href="../projects/index.html">Projects</a></li>
+        <li><a href="../about/index.html">About</a></li>
+        <li><a href="../blog/index.html">Blog</a></li>
+        <li><a href="../contact/index.html">Contact</a></li>
+        <li><a href="index.html" class="active">Pay Online</a></li>
+      </ul>
+      <a href="../contact/index.html" class="btn btn-primary nav-cta">Get a Quote</a>
+      <button class="hamburger" id="hamburger" aria-label="Open navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-drawer" id="mobile-drawer">
+      <a href="../index.html">Home</a>
+      <a href="../services/index.html">Services</a>
+      <a href="../projects/index.html">Projects</a>
+      <a href="../about/index.html">About</a>
+      <a href="../blog/index.html">Blog</a>
+      <a href="../contact/index.html">Contact</a>
+      <a href="index.html">Pay Online</a>
+      <a href="../contact/index.html" class="btn btn-primary">Get a Quote</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero" style="background-image: url('../images/team-branding/banner1-6.jpg');">
+    <div class="page-hero-content">
+      <span class="eyebrow">Client Portal</span>
+      <h1>Pay Online</h1>
+    </div>
+  </section>
+
+  <!-- PAY SECTION -->
+  <section class="pay-section">
+    <div class="container" style="width:100%;">
+      <div class="pay-card">
+        <h2>Pay Your Invoice</h2>
+        <p class="pay-sub">Enter your invoice number and select a payment method below. Your payment is encrypted and processed securely. If you have any questions about your invoice, please call us at <a href="tel:+18174577507" style="color:var(--accent-light);">817-457-7507</a>.</p>
+
+        <form class="pay-form" id="pay-form" novalidate>
+
+          <div>
+            <label style="display:block; font-size:13px; font-weight:600; color:var(--text-secondary); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.08em;">Invoice Number</label>
+            <input type="text" id="invoice-number" name="invoice" placeholder="e.g. INV-2026-0047"
+              style="width:100%; padding:13px 16px; background:var(--slate-900); border:1px solid rgba(255,255,255,0.14); color:var(--white); font-size:15px; font-family:inherit; outline:none; transition:border-color 180ms; box-sizing:border-box;"
+              onfocus="this.style.borderColor='var(--accent-light)'"
+              onblur="this.style.borderColor='rgba(255,255,255,0.14)'"
+              required>
+          </div>
+
+          <div>
+            <label style="display:block; font-size:13px; font-weight:600; color:var(--text-secondary); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.08em;">Payment Method</label>
+            <div class="payment-methods" id="payment-methods">
+              <label class="pay-method selected" id="method-card">
+                <input type="radio" name="method" value="card" checked>
+                <span class="pay-method-icon">💳</span>
+                <span>Credit / Debit Card</span>
+              </label>
+              <label class="pay-method" id="method-check">
+                <input type="radio" name="method" value="check">
+                <span class="pay-method-icon">🏦</span>
+                <span>Check / ACH</span>
+              </label>
+            </div>
+          </div>
+
+          <div id="card-fields">
+            <div style="display:grid; gap:14px;">
+              <div>
+                <label style="display:block; font-size:13px; font-weight:600; color:var(--text-secondary); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.08em;">Name on Card</label>
+                <input type="text" placeholder="Full name" autocomplete="cc-name"
+                  style="width:100%; padding:13px 16px; background:var(--slate-900); border:1px solid rgba(255,255,255,0.14); color:var(--white); font-size:15px; font-family:inherit; outline:none; transition:border-color 180ms; box-sizing:border-box;"
+                  onfocus="this.style.borderColor='var(--accent-light)'"
+                  onblur="this.style.borderColor='rgba(255,255,255,0.14)'">
+              </div>
+              <div>
+                <label style="display:block; font-size:13px; font-weight:600; color:var(--text-secondary); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.08em;">Card Number</label>
+                <input type="text" placeholder="•••• •••• •••• ••••" maxlength="19" autocomplete="cc-number"
+                  id="card-number"
+                  style="width:100%; padding:13px 16px; background:var(--slate-900); border:1px solid rgba(255,255,255,0.14); color:var(--white); font-size:15px; font-family:inherit; outline:none; transition:border-color 180ms; box-sizing:border-box;"
+                  onfocus="this.style.borderColor='var(--accent-light)'"
+                  onblur="this.style.borderColor='rgba(255,255,255,0.14)'">
+              </div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+                <div>
+                  <label style="display:block; font-size:13px; font-weight:600; color:var(--text-secondary); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.08em;">Expiration</label>
+                  <input type="text" placeholder="MM / YY" maxlength="7" autocomplete="cc-exp"
+                    style="width:100%; padding:13px 16px; background:var(--slate-900); border:1px solid rgba(255,255,255,0.14); color:var(--white); font-size:15px; font-family:inherit; outline:none; transition:border-color 180ms; box-sizing:border-box;"
+                    onfocus="this.style.borderColor='var(--accent-light)'"
+                    onblur="this.style.borderColor='rgba(255,255,255,0.14)'">
+                </div>
+                <div>
+                  <label style="display:block; font-size:13px; font-weight:600; color:var(--text-secondary); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.08em;">CVV</label>
+                  <input type="text" placeholder="•••" maxlength="4" autocomplete="cc-csc"
+                    style="width:100%; padding:13px 16px; background:var(--slate-900); border:1px solid rgba(255,255,255,0.14); color:var(--white); font-size:15px; font-family:inherit; outline:none; transition:border-color 180ms; box-sizing:border-box;"
+                    onfocus="this.style.borderColor='var(--accent-light)'"
+                    onblur="this.style.borderColor='rgba(255,255,255,0.14)'">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="ach-fields" style="display:none;">
+            <div style="display:grid; gap:14px;">
+              <div>
+                <label style="display:block; font-size:13px; font-weight:600; color:var(--text-secondary); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.08em;">Account Holder Name</label>
+                <input type="text" placeholder="Full name on account"
+                  style="width:100%; padding:13px 16px; background:var(--slate-900); border:1px solid rgba(255,255,255,0.14); color:var(--white); font-size:15px; font-family:inherit; outline:none; transition:border-color 180ms; box-sizing:border-box;"
+                  onfocus="this.style.borderColor='var(--accent-light)'"
+                  onblur="this.style.borderColor='rgba(255,255,255,0.14)'">
+              </div>
+              <div>
+                <label style="display:block; font-size:13px; font-weight:600; color:var(--text-secondary); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.08em;">Routing Number</label>
+                <input type="text" placeholder="9-digit routing number" maxlength="9"
+                  style="width:100%; padding:13px 16px; background:var(--slate-900); border:1px solid rgba(255,255,255,0.14); color:var(--white); font-size:15px; font-family:inherit; outline:none; transition:border-color 180ms; box-sizing:border-box;"
+                  onfocus="this.style.borderColor='var(--accent-light)'"
+                  onblur="this.style.borderColor='rgba(255,255,255,0.14)'">
+              </div>
+              <div>
+                <label style="display:block; font-size:13px; font-weight:600; color:var(--text-secondary); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.08em;">Account Number</label>
+                <input type="text" placeholder="Account number"
+                  style="width:100%; padding:13px 16px; background:var(--slate-900); border:1px solid rgba(255,255,255,0.14); color:var(--white); font-size:15px; font-family:inherit; outline:none; transition:border-color 180ms; box-sizing:border-box;"
+                  onfocus="this.style.borderColor='var(--accent-light)'"
+                  onblur="this.style.borderColor='rgba(255,255,255,0.14)'">
+              </div>
+            </div>
+          </div>
+
+          <div class="pay-total">
+            <span class="pay-total-label">Amount Due</span>
+            <span class="pay-total-amount" id="pay-amount">—</span>
+          </div>
+
+          <div>
+            <button type="submit" class="btn btn-primary" style="width:100%; padding:16px; font-size:16px; font-weight:700;">Submit Payment</button>
+            <p class="pay-secure">🔒 &nbsp;Secured with 256-bit SSL encryption. Your card data is never stored on our servers.</p>
+          </div>
+
+        </form>
+
+        <div id="pay-success" style="display:none; text-align:center; padding:32px 0;">
+          <div style="font-size:44px; margin-bottom:12px;">✅</div>
+          <h3 style="font-size:20px; font-weight:700; color:var(--white); margin-bottom:8px;">Payment Submitted</h3>
+          <p style="color:var(--text-secondary); font-size:15px;">Thank you! You'll receive a confirmation email shortly. If you have questions, call <a href="tel:+18174577507" style="color:var(--accent-light);">817-457-7507</a>.</p>
+        </div>
+
+        <div style="margin-top:24px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.08); text-align:center;">
+          <p style="font-size:13px; color:var(--text-muted);">Prefer to pay by phone? Call <a href="tel:+18174577507" style="color:var(--accent-light);">817-457-7507</a> during business hours.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <img class="footer-logo"
+               src="../images/logo.png"
+               onerror="this.src='../images/team-branding/copy-Ideal-Landscape-2015-Logo-300x100-1.png'"
+               alt="Ideal Landscape Services">
+          <p class="footer-tagline">Award-winning landscape design, water features &amp; outdoor living for the DFW Metroplex since 1979.</p>
+          <div class="footer-social">
+            <a href="https://www.instagram.com/ideallandscapeservices/" aria-label="Instagram" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5"/>
+                <circle cx="12" cy="12" r="4.5"/>
+                <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+              </svg>
+            </a>
+            <a href="https://www.facebook.com/IdealLandscapeServices" aria-label="Facebook" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div>
+          <p class="footer-col-title">Navigation</p>
+          <div class="footer-links">
+            <a href="../index.html">Home</a>
+            <a href="../services/index.html">Services</a>
+            <a href="../projects/index.html">Projects</a>
+            <a href="../about/index.html">About</a>
+            <a href="../blog/index.html">Blog</a>
+            <a href="../contact/index.html">Contact</a>
+          </div>
+        </div>
+        <div>
+          <p class="footer-col-title">Services</p>
+          <div class="footer-links">
+            <a href="../services/landscape-design/index.html">Landscape Design</a>
+            <a href="../services/water-features/index.html">Water Features</a>
+            <a href="../services/hardscapes/index.html">Hardscapes</a>
+            <a href="../services/outdoor-living/index.html">Outdoor Living</a>
+            <a href="../services/lighting/index.html">Lighting</a>
+            <a href="../services/maintenance/index.html">Maintenance</a>
+          </div>
+        </div>
+        <div>
+          <p class="footer-col-title">Contact</p>
+          <p class="footer-contact-item"><a href="tel:+18174577507">817-457-7507</a></p>
+          <p class="footer-contact-item"><a href="mailto:info@ideallandscapeservices.com">info@ideallandscapeservices.com</a></p>
+          <p class="footer-contact-item">Dallas–Fort Worth Metroplex, TX</p>
+          <p class="footer-contact-item">Mon–Fri &nbsp;·&nbsp; 8:00am – 5:00pm</p>
+          <p class="footer-contact-item" style="margin-top:14px;"><a href="index.html" style="color:var(--accent-light); font-weight:600;">Pay Invoice Online →</a></p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        © 2026 Ideal Landscape Services. All rights reserved.
+        &ensp;·&ensp;
+        <a href="#">Privacy Policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script>
+    // Payment method toggle
+    const methodLabels = document.querySelectorAll('.pay-method');
+    const cardFields = document.getElementById('card-fields');
+    const achFields = document.getElementById('ach-fields');
+
+    methodLabels.forEach(label => {
+      label.addEventListener('click', () => {
+        methodLabels.forEach(l => l.classList.remove('selected'));
+        label.classList.add('selected');
+        const val = label.querySelector('input').value;
+        cardFields.style.display = val === 'card' ? '' : 'none';
+        achFields.style.display  = val === 'check' ? '' : 'none';
+      });
+    });
+
+    // Card number formatting
+    const cardInput = document.getElementById('card-number');
+    if (cardInput) {
+      cardInput.addEventListener('input', function () {
+        let v = this.value.replace(/\D/g, '').slice(0, 16);
+        this.value = v.replace(/(.{4})/g, '$1 ').trim();
+      });
+    }
+
+    // Form submit (placeholder — wire to payment processor)
+    document.getElementById('pay-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      // TODO: Integrate payment processor (Stripe, Square, etc.)
+      document.getElementById('pay-form').style.display = 'none';
+      document.getElementById('pay-success').style.display = 'block';
+    });
+  </script>
+</body>
+</html>

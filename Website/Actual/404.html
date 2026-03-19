@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | Ideal Landscape Services</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .notfound-section {
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 24px;
+      background: var(--slate-700);
+    }
+    .notfound-code {
+      font-size: clamp(72px, 16vw, 160px);
+      font-weight: 800;
+      line-height: 1;
+      color: rgba(255,255,255,0.06);
+      letter-spacing: -0.04em;
+      display: block;
+      margin-bottom: -24px;
+    }
+    .notfound-section h1 {
+      font-size: clamp(24px, 4vw, 36px);
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+    .notfound-section p {
+      font-size: 16px;
+      color: var(--text-secondary);
+      max-width: 440px;
+      margin: 0 auto 32px;
+      line-height: 1.65;
+    }
+    .notfound-links {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PROMO BAR -->
+  <div class="promo-bar">
+    Call Today for a FREE Estimate:&nbsp;<a href="tel:+18174577507">817-457-7507</a>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">
+        <img src="images/logo.png"
+             onerror="this.src='images/team-branding/copy-Ideal-Landscape-2015-Logo-300x100-1.png'"
+             alt="Ideal Landscape Services">
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services/index.html">Services</a></li>
+        <li><a href="projects/index.html">Projects</a></li>
+        <li><a href="about/index.html">About</a></li>
+        <li><a href="blog/index.html">Blog</a></li>
+        <li><a href="contact/index.html">Contact</a></li>
+        <li><a href="pay/index.html">Pay Online</a></li>
+      </ul>
+      <a href="contact/index.html" class="btn btn-primary nav-cta">Get a Quote</a>
+      <button class="hamburger" id="hamburger" aria-label="Open navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-drawer" id="mobile-drawer">
+      <a href="index.html">Home</a>
+      <a href="services/index.html">Services</a>
+      <a href="projects/index.html">Projects</a>
+      <a href="about/index.html">About</a>
+      <a href="blog/index.html">Blog</a>
+      <a href="contact/index.html">Contact</a>
+      <a href="pay/index.html">Pay Online</a>
+      <a href="contact/index.html" class="btn btn-primary">Get a Quote</a>
+    </div>
+  </nav>
+
+  <section class="notfound-section">
+    <div>
+      <span class="notfound-code">404</span>
+      <h1>Page not found.</h1>
+      <p>The page you're looking for doesn't exist or may have moved. Let's get you back on track.</p>
+      <div class="notfound-links">
+        <a href="index.html" class="btn btn-primary">Go Home</a>
+        <a href="contact/index.html" class="btn btn-outline">Get a Quote</a>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
