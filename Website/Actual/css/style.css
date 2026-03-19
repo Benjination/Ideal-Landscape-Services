@@ -13,19 +13,19 @@ ul { list-style: none; }
 
 /* ── Design Tokens ──────────────────────────────────────────────── */
 /*
- * Palette: Deep black + slate gray (aesthetics v2)
+ * Palette: Deep black + neutral gray (aesthetics v2)
  * Dark sections  → --slate-950 / --slate-900  (#0D0D0D / #111111)
- * Light sections → --slate-700                (#2e3d4d — slate replaces white)
- * Cards / inputs → --slate-800                (#1c2b38 — inset on either surface)
+ * Light sections → --slate-700                (#2e2e2e — neutral gray replaces white)
+ * Cards / inputs → --slate-800                (#1e1e1e — inset on either surface)
  */
 :root {
   --slate-950:    #0D0D0D;   /* deep black — navbar, footer */
   --slate-900:    #111111;   /* dark alternating sections */
-  --slate-800:    #1c2b38;   /* cards, inputs, drawers */
-  --slate-700:    #2e3d4d;   /* slate gray — "light" sections */
-  --slate-600:    #2e3d4d;   /* same as 700 (process / area sections) */
-  --slate-500:    #4a6070;
-  --slate-400:    #6a8090;
+  --slate-800:    #1e1e1e;   /* cards, inputs, drawers */
+  --slate-700:    #2e2e2e;   /* neutral gray — "light" sections */
+  --slate-600:    #2e2e2e;   /* same as 700 (process / area sections) */
+  --slate-500:    #4a4a4a;
+  --slate-400:    #6a6a6a;
   --slate-300:    #9ab0bc;
   --slate-200:    #c4d4dc;
   --slate-100:    #e6eef2;
