@@ -273,4 +273,14 @@
     wireGalleryItems();
   }());
 
+  // ── Gallery expand / collapse ──────────────────────────────────
+  document.querySelectorAll('.gallery-expand-btn').forEach(function(btn) {
+    var gallery = btn.previousElementSibling;
+    if (!gallery || !gallery.classList.contains('service-gallery')) return;
+    btn.addEventListener('click', function() {
+      var expanded = gallery.classList.toggle('gallery-expanded');
+      btn.textContent = expanded ? 'Show Less' : btn.dataset.label;
+    });
+  });
+
 })();

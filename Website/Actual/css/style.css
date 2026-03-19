@@ -1651,3 +1651,33 @@ body {
   .lb-prev { left: 4px; }
   .lb-next { right: 4px; }
 }
+
+/* ════════════════════════════════════════════════════════════════
+   GALLERY EXPAND / COLLAPSE
+   ════════════════════════════════════════════════════════════════ */
+
+/* Hide overflow photos until the gallery is expanded.
+   :has() targets the .lb-wrap wrapper after JS runs;
+   direct-child selector catches the bare <img> before JS wraps it. */
+.service-gallery:not(.gallery-expanded) > img.gallery-overflow,
+.service-gallery:not(.gallery-expanded) .lb-wrap:has(img.gallery-overflow) { display: none; }
+
+.gallery-expand-btn {
+  display: block;
+  margin: 20px auto 0;
+  padding: 10px 32px;
+  background: none;
+  border: 1px solid rgba(255,255,255,0.22);
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-family: inherit;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 220ms, color 220ms;
+  border-radius: 2px;
+}
+.gallery-expand-btn:hover {
+  border-color: var(--accent-light);
+  color: var(--accent-light);
+}
