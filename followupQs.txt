@@ -6,41 +6,38 @@ Add questions as they come up. Mark answered questions with [ANSWERED] and note 
 ────────────────────────────────────────────────────────
 DOMAIN & EMAIL
 ────────────────────────────────────────────────────────
-[ ] Who is the current domain registrar? (GoDaddy, Namecheap, etc.)
-    → Need DNS access at launch to point domain to new host.
-    → Must NOT change MX records so company emails are unaffected.
+[ANSWERED] Domain registrar: GoDaddy — $15/year.
+    → DNS access via GoDaddy account needed at launch to point to new hosting.
+    → Must NOT change MX records (Gmail is independent of hosting).
 
-[ ] What email provider are the company emails on?
-    (e.g., Google Workspace, Microsoft 365, hosting-bundled email)
-    → If Google Workspace or M365, no action needed — emails survive the site move untouched.
-    → If bundled with WPEngine or current host, need to migrate email BEFORE canceling old hosting.
+[ANSWERED] Email provider: Gmail — 4 active addresses. No migration required.
+    → Emails are entirely independent of hosting. Unaffected by site move.
 
-[ ] How many email accounts are active?
-    (e.g., Kathy@, David@, info@, etc.)
-    → Good to know in case an email provider switch is needed down the road.
+[ ] PO Box address needed for public display on the contact/service area page.
+    → The physical address (7321 Craig St) is PRIVATE and must not appear on the site.
 
 ────────────────────────────────────────────────────────
 HOSTING & CURRENT SETUP
 ────────────────────────────────────────────────────────
-[ ] Who currently manages the WPEngine account — David, or the current designer?
-    → Determines who needs to cancel it and when (not until new site is fully live).
+[ANSWERED] Hosting is HostPapa ($260/2 years), managed by David directly. Not WPEngine.
+    → HostPapa account should be canceled AFTER the new site is fully live.
+    → Pull any remaining assets from HostPapa file manager before canceling.
 
-[ ] Does David have login access to the current WordPress admin (/wp-admin)?
-    → Needed to export content, images, and blog posts if migrating existing content.
-
-[ ] Does David want to migrate existing blog posts and page content to the new site,
-    or start fresh with new copy and photos?
+[ ] Does David want to migrate the existing blog posts to the new site,
+    or start fresh with new copy? (8 posts are archived locally in blogs/)
 
 ────────────────────────────────────────────────────────
 DESIGN & CONTENT
 ────────────────────────────────────────────────────────
 [ ] Does Ideal have a professional photo library, or will new photos need to be taken?
-    → The Miracle Farms aesthetic REQUIRES high-quality photography. This is the #1
-       factor in achieving that look. Worth budgeting for a photoshoot if needed.
+    → David is reviewing the scraped image library. High-quality hero shots may
+       still be needed. Worth discussing a photoshoot if scraper images are insufficient.
 
-[ ] Does Ideal have any named/featured projects they're proud of?
-    (like Miracle Farms' "Shoreland Overlook", "Fernscape Modern", etc.)
-    → These become portfolio cards on the new site.
+[ ] New logo file (with bees design) needed from client.
+    → PNG or SVG preferred, highest resolution available.
+
+[ANSWERED — PENDING DELIVERY] Named projects will use street names.
+    → David will review the images folder and provide a street name for each project set.
 
 [ ] Does Ideal have any certifications, awards, trade memberships, or partner logos?
     (e.g., TNLA, BBB, NALP, supplier partnerships)
@@ -51,9 +48,13 @@ DESIGN & CONTENT
 ────────────────────────────────────────────────────────
 FEATURES & FUNCTIONALITY
 ────────────────────────────────────────────────────────
-[ ] What does the "Pay Online" button currently link to?
-    → Is it an external payment portal (e.g., PayPal, QuickBooks), or does he want
-       payment processing built into the new site? (Built-in = significant added scope.)
+[ANSWERED] Built-in payment form on the new site.
+    → User enters invoice number + payment amount.
+    → Accepted: Visa, Mastercard, Amex, PayPal.
+
+[ ] Which payment processor? (Stripe, Square, PayPal SDK, etc.)
+    → Determines integration method and per-transaction fees David will pay.
+    → Recommendation: Stripe (cleanest API, supports all major cards + PayPal).
 
 [ ] Does David want a live chat or text widget on the new site?
     (Worx uses one — it's a third-party embed, low effort to add)
@@ -64,16 +65,21 @@ FEATURES & FUNCTIONALITY
 [ ] Is the newsletter/email subscriber list currently being used?
     → If yes, what platform (Mailchimp, Constant Contact, etc.)? Need to preserve the list.
 
-[ ] Does David want a Google Reviews integration (like Worx uses) to auto-display
-    live reviews, or keep manually curated testimonials?
+[ANSWERED] Live Google Reviews via Google Places API.
+    → High ratings prioritized; 1-star reviews will not display.
+    → Google Places API billing required (free up to ~$200/month of usage;
+       negligible for this traffic level, but David should be aware).
 
 ────────────────────────────────────────────────────────
 SCOPE & TIMELINE
 ────────────────────────────────────────────────────────
-[ ] Are there any hard deadlines? (Busy season, upcoming marketing push, etc.)
+[ANSWERED] No hard deadline stated. Agreed timeline: 4–6 weeks from when all
+    client assets (logo, project names, image keywords) are received.
 
-[ ] Are there any additional features or pages beyond the current site that David
-    wants added? (e.g., online quote form, booking/scheduling, job listings)
+[ANSWERED — PARTIAL] Confirmed additional features: admin dashboard (blog, portfolio,
+    testimonials, gallery), image keyword search, pay online, live Google Reviews,
+    before/after fade animation, shaped photo section on homepage.
+    → Storage cost estimate still needed before launch (see ADMIN & STORAGE below).
 
 [ ] Will David be writing new copy for the site, or does he want help trimming
     down the existing copy to match the "less words" direction?
@@ -107,34 +113,27 @@ IMAGE LIBRARY & BEFORE/AFTER
       site. We'd want David to identify which project each photo belongs to.
     → If NO / unidentified: They'll be excluded from the build.
 
-[ ] Can David (or the team) review the projects/ folder and provide names
-    for the unidentified project sets?
-    Sets needing names/context:
+[ANSWERED — PENDING DELIVERY] David will review the images folder and provide
+    street names for all project sets. Sets still needing names:
+      • ashley, clifford, hardy, JOE-TS folders
       • P-series (P1010168, P1010218, P1010219, P1130026, P2280077,
         P7150005rev, P7150006, PA090013, PA090039, PB160054, PB160060, PB160077)
       • AR-series (AR000502, AR001502)
       • 8609.jpg
-    These become named portfolio cards on the Projects page (like Miracle
-    Farms' "Shoreland Overlook", etc.). The name and a city/neighborhood
-    label is all that's needed.
 
-[ ] Are there more project photos on the WPEngine server that weren't
-    captured by the web scraper?
-    → The scraper only collected images referenced by live pages. The full
-      WordPress uploads library (accessible via WPEngine SFTP or the
-      WordPress "Export Media Library" plugin) may contain unpublished
-      shoots or archived project photos.
-    → If yes, we should pull those before WPEngine access is lost.
+[ ] Are there additional photos on the HostPapa server not captured by the scraper?
+    → The scraper only collected images referenced by live pages. HostPapa's file
+      manager or FTP may contain unpublished shoots or older project archives.
+    → Pull any extras before canceling HostPapa after launch.
+
+[ ] Client to provide keyword tags for each image (describing objects/features
+    visible in the photo). Workflow for delivery TBD — spreadsheet recommended.
 
 ────────────────────────────────────────────────────────
 DESIGN DECISIONS
 ────────────────────────────────────────────────────────
-[ ] What should the site's brand tagline be?
-    → "Design — Build — Maintain" (Miracle Farms pattern)
-    → "Your Ideal Outdoors, Built." (more specific)
-    → Something else entirely?
-    Note: This appears in the hero section and possibly in the site's
-    <title> tag — it should reflect how David wants to position the brand.
+[ANSWERED] Brand tagline: "Imagine, Design, Enjoy"
+    → Used in the hero section and the site <title> tag.
 
 [ ] After reviewing full-resolution versions of the scraped images, are
     any of them crisp and high-quality enough for full-viewport hero use?
@@ -151,13 +150,14 @@ DESIGN DECISIONS
 ────────────────────────────────────────────────────────
 SEO & REVIEWS
 ────────────────────────────────────────────────────────
-[ ] Does Ideal have a claimed and verified Google Business Profile?
-    → If unclaimed, we need to claim it before/during the build.
-    → NAP (Name, Address, Phone) on the website must exactly match GBP.
+[IN PROGRESS] Google Business Profile exists and is verified, but DRKM Strategies
+    currently holds primary ownership.
+    → Action required: ownership transfer from DRKM to David's Google account.
+    → See GOOGLE BUSINESS PROFILE — DRKM HANDOVER section at the bottom of this file.
+    → NAP (Name, Address, Phone) on the site must match GBP exactly once transferred.
 
-[ ] Is David open to a live Google review integration on the new site?
-    (Services like NiceJob, Widewail, or EmbedSocial pull real Google/Yelp
-     reviews dynamically — auto-updated, with star ratings and reviewer names)
+[ANSWERED] Live Google Reviews confirmed (Google Places API).
+    → High ratings prioritized; 1-star reviews suppressed. Confirmed March 12, 2026.
     → Alternative: keep manually curated testimonials (more maintenance).
 
 [ ] What are the primary DFW cities/neighborhoods Ideal currently serves?
@@ -179,17 +179,78 @@ BUSINESS INFO (NAP & CONTACT)
     → If David doesn't want the address publicly visible, we can embed it
       in the schema markup only (invisible to visitors, readable by Google).
 
-[ ] Is the phone number (817-457-7507) the correct primary number to use
-    on the new site and in all schema/GBP listings?
+[ANSWERED] 817-457-7507 confirmed as correct primary number.
 
-[ ] The current site footer credits "Designed by: DRKM Strategies." Does
-    David want to keep that credit on the new site, remove it, or replace
-    it with something else?
+[ ] DRKM footer credit on new site — remove, replace, or keep? (Almost certainly
+    remove, since DRKM is being cut from the account.)
 
-[ ] Does David know if the current designer (DRKM Strategies) intends to
-    take the site down once the contract ends? And if so, is there a
-    known timeline?
-    → This determines how urgent the content/asset preservation window is.
-      The blog posts, FAQs, testimonials, about copy, and service page copy
-      have all been archived locally, but confirming the timeline helps
-      prioritize what gets built first.
+[ ] When does DRKM's contract / site management arrangement end?
+    → All critical content has been archived locally. But knowing the timeline
+      helps determine urgency of launching the new build before the old site
+      goes down.
+
+
+════════════════════════════════════════════════════════
+GOOGLE BUSINESS PROFILE — DRKM HANDOVER
+════════════════════════════════════════════════════════
+
+Situation: DRKM Strategies holds primary ownership of the Google Business
+Profile. The profile has all of Ideal's reviews, ratings, photos, and local
+search history — it is extremely valuable and must NOT be abandoned or
+re-created from scratch.
+
+Goal: Transfer primary ownership to David's personal Google account, then
+remove DRKM entirely.
+
+────────────────────────────────────────────────────────
+RECOMMENDED PATH — Ownership Transfer (Easiest, Safest)
+────────────────────────────────────────────────────────
+1. Confirm David has a Gmail/Google account to receive ownership.
+2. Contact DRKM and ask them to:
+     a. Log in to business.google.com
+     b. Go to Business Profile Settings → Managers
+     c. Add David's Gmail address as an Owner (not just Manager)
+     d. OR use the "Transfer primary ownership" option directly
+3. David accepts the ownership invitation (email from Google).
+4. Once David is primary owner, remove DRKM from the managers list.
+5. Total time: ~5 minutes on DRKM's end. Zero downtime, zero data loss.
+
+────────────────────────────────────────────────────────
+BACKUP PATH — Google Ownership Claim (If DRKM Is Unresponsive)
+────────────────────────────────────────────────────────
+1. Go to business.google.com/request-ownership
+2. Search for "Ideal Landscape Services" and click "Request access."
+3. Google will notify the current owner (DRKM). If no response in 7 days,
+   Google allows David to verify and claim the profile independently.
+4. Verification options: phone call to 817-457-7507, email, or video call.
+5. Timeline: 3–7 days. Zero data loss if done through this official process.
+
+────────────────────────────────────────────────────────
+CRITICAL — DO NOT DO THESE
+────────────────────────────────────────────────────────
+- Do NOT create a new Google Business Profile — starts from zero reviews.
+- Do NOT simply "report" or delete the existing listing.
+- Do NOT try to manage both listings simultaneously — Google will merge
+  or penalize duplicate listings.
+
+────────────────────────────────────────────────────────
+OPEN ITEMS
+────────────────────────────────────────────────────────
+[ ] Confirm David has a Gmail address to receive ownership transfer.
+[ ] Reach out to DRKM to initiate transfer (preferred: email with a
+    specific request and the steps above).
+[ ] Confirm transfer is complete before launching new site — GBP NAP
+    must be updated to match new site's address/phone format at launch.
+
+
+════════════════════════════════════════════════════════
+ADMIN DASHBOARD & STORAGE
+════════════════════════════════════════════════════════
+
+[ ] Estimate the total number of images likely to be in the admin gallery
+    at launch and at 2-year growth.
+    → Firebase Storage free tier: 5 GB storage / 1 GB/day download.
+    → At ~150 images averaging 500 KB each = ~75 MB (well within free tier).
+    → If gallery grows to 500+ high-res images, paid tier kicks in at ~$0.026/GB.
+    → Provide David a written cost estimate with low/medium/high scenarios
+      before launch so there are no surprises.
