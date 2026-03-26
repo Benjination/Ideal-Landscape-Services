@@ -1,0 +1,26 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Contact form submissions ──────────────────────────────────────
+    // Public can CREATE (submit a form). Nobody can read/edit/delete
+    // from the client — review submissions in the Firebase Console.
+    match /contact-submissions/{docId} {
+      allow create: if isValidContact(request.resource.data);
+      allow read, update, delete: if false;
+    }
+
+    // ── Deny everything else by default ──────────────────────────────
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // ── Validation helper ────────────────────────────────────────────
+    function isValidContact(data) {
+      return
+        data.name  is string && data.name.size()  > 0 && data.name.size()  <= 120 &&
+        data.email is string && data.email.size() > 0 && data.email.size() <= 254 &&
+        data.phone is string && data.phone.size() > 0 && data.phone.size() <= 30;
+    }
+  }
+}

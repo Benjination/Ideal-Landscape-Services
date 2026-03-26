@@ -1,0 +1,17 @@
+{
+  "name": "ideal-landscapes-functions",
+  "description": "Firebase Cloud Functions for Ideal Landscape Services",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "deploy": "firebase deploy --only functions"
+  },
+  "engines": {
+    "node": "20"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-functions": "^6.0.0",
+    "stripe": "^16.0.0"
+  },
+  "private": true
+}

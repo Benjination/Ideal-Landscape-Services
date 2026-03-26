@@ -9,6 +9,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
+  <!-- Stripe.js — must be loaded from Stripe's CDN for PCI compliance -->
+  <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
 
@@ -21,8 +23,8 @@
   <nav class="navbar" id="navbar">
     <div class="nav-inner">
       <a href="../index.html" class="logo">
-        <img src="../images/logo.png"
-             onerror="this.src='../images/team-branding/copy-Ideal-Landscape-2015-Logo-300x100-1.png'"
+        <img src="../images/logo.jpeg"
+             
              alt="Ideal Landscape Services">
       </a>
       <ul class="nav-links">
@@ -52,7 +54,7 @@
   </nav>
 
   <!-- PAGE HERO -->
-  <section class="page-hero" style="background-image: url('../images/team-branding/banner1-6.jpg');">
+  <section class="page-hero" style="background-image: url('../images/team-branding/banner1.jpg');">
     <div class="page-hero-content">
       <span class="eyebrow">Client Portal</span>
       <h1>Pay Online</h1>
@@ -93,71 +95,31 @@
             </div>
           </div>
 
+          <div>
+            <label style="display:block; font-size:13px; font-weight:600; color:var(--text-secondary); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.08em;">Amount to Pay ($)</label>
+            <input type="number" id="payment-amount" name="amount" placeholder="0.00" min="1" step="0.01"
+              style="width:100%; padding:13px 16px; background:var(--slate-900); border:1px solid rgba(255,255,255,0.14); color:var(--white); font-size:15px; font-family:inherit; outline:none; transition:border-color 180ms; box-sizing:border-box;"
+              onfocus="this.style.borderColor='var(--accent-light)'"
+              onblur="this.style.borderColor='rgba(255,255,255,0.14)'"
+              required>
+          </div>
+
+          <!-- Stripe Card Element — card data is captured securely by Stripe, never touches our server -->
           <div id="card-fields">
-            <div style="display:grid; gap:14px;">
-              <div>
-                <label style="display:block; font-size:13px; font-weight:600; color:var(--text-secondary); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.08em;">Name on Card</label>
-                <input type="text" placeholder="Full name" autocomplete="cc-name"
-                  style="width:100%; padding:13px 16px; background:var(--slate-900); border:1px solid rgba(255,255,255,0.14); color:var(--white); font-size:15px; font-family:inherit; outline:none; transition:border-color 180ms; box-sizing:border-box;"
-                  onfocus="this.style.borderColor='var(--accent-light)'"
-                  onblur="this.style.borderColor='rgba(255,255,255,0.14)'">
+            <div>
+              <label style="display:block; font-size:13px; font-weight:600; color:var(--text-secondary); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.08em;">Card Details</label>
+              <div id="stripe-card-element"
+                style="padding:13px 16px; background:var(--slate-900); border:1px solid rgba(255,255,255,0.14); transition:border-color 180ms;">
               </div>
-              <div>
-                <label style="display:block; font-size:13px; font-weight:600; color:var(--text-secondary); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.08em;">Card Number</label>
-                <input type="text" placeholder="•••• •••• •••• ••••" maxlength="19" autocomplete="cc-number"
-                  id="card-number"
-                  style="width:100%; padding:13px 16px; background:var(--slate-900); border:1px solid rgba(255,255,255,0.14); color:var(--white); font-size:15px; font-family:inherit; outline:none; transition:border-color 180ms; box-sizing:border-box;"
-                  onfocus="this.style.borderColor='var(--accent-light)'"
-                  onblur="this.style.borderColor='rgba(255,255,255,0.14)'">
-              </div>
-              <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
-                <div>
-                  <label style="display:block; font-size:13px; font-weight:600; color:var(--text-secondary); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.08em;">Expiration</label>
-                  <input type="text" placeholder="MM / YY" maxlength="7" autocomplete="cc-exp"
-                    style="width:100%; padding:13px 16px; background:var(--slate-900); border:1px solid rgba(255,255,255,0.14); color:var(--white); font-size:15px; font-family:inherit; outline:none; transition:border-color 180ms; box-sizing:border-box;"
-                    onfocus="this.style.borderColor='var(--accent-light)'"
-                    onblur="this.style.borderColor='rgba(255,255,255,0.14)'">
-                </div>
-                <div>
-                  <label style="display:block; font-size:13px; font-weight:600; color:var(--text-secondary); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.08em;">CVV</label>
-                  <input type="text" placeholder="•••" maxlength="4" autocomplete="cc-csc"
-                    style="width:100%; padding:13px 16px; background:var(--slate-900); border:1px solid rgba(255,255,255,0.14); color:var(--white); font-size:15px; font-family:inherit; outline:none; transition:border-color 180ms; box-sizing:border-box;"
-                    onfocus="this.style.borderColor='var(--accent-light)'"
-                    onblur="this.style.borderColor='rgba(255,255,255,0.14)'">
-                </div>
-              </div>
+              <div id="card-errors" style="color:#ff6b6b; font-size:13px; margin-top:6px; min-height:18px;" role="alert"></div>
             </div>
           </div>
 
           <div id="ach-fields" style="display:none;">
-            <div style="display:grid; gap:14px;">
-              <div>
-                <label style="display:block; font-size:13px; font-weight:600; color:var(--text-secondary); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.08em;">Account Holder Name</label>
-                <input type="text" placeholder="Full name on account"
-                  style="width:100%; padding:13px 16px; background:var(--slate-900); border:1px solid rgba(255,255,255,0.14); color:var(--white); font-size:15px; font-family:inherit; outline:none; transition:border-color 180ms; box-sizing:border-box;"
-                  onfocus="this.style.borderColor='var(--accent-light)'"
-                  onblur="this.style.borderColor='rgba(255,255,255,0.14)'">
-              </div>
-              <div>
-                <label style="display:block; font-size:13px; font-weight:600; color:var(--text-secondary); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.08em;">Routing Number</label>
-                <input type="text" placeholder="9-digit routing number" maxlength="9"
-                  style="width:100%; padding:13px 16px; background:var(--slate-900); border:1px solid rgba(255,255,255,0.14); color:var(--white); font-size:15px; font-family:inherit; outline:none; transition:border-color 180ms; box-sizing:border-box;"
-                  onfocus="this.style.borderColor='var(--accent-light)'"
-                  onblur="this.style.borderColor='rgba(255,255,255,0.14)'">
-              </div>
-              <div>
-                <label style="display:block; font-size:13px; font-weight:600; color:var(--text-secondary); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.08em;">Account Number</label>
-                <input type="text" placeholder="Account number"
-                  style="width:100%; padding:13px 16px; background:var(--slate-900); border:1px solid rgba(255,255,255,0.14); color:var(--white); font-size:15px; font-family:inherit; outline:none; transition:border-color 180ms; box-sizing:border-box;"
-                  onfocus="this.style.borderColor='var(--accent-light)'"
-                  onblur="this.style.borderColor='rgba(255,255,255,0.14)'">
-              </div>
-            </div>
-          </div>
-
-          <div class="pay-total">
-            <span class="pay-total-label">Amount Due</span>
-            <span class="pay-total-amount" id="pay-amount">—</span>
+            <p style="color:var(--text-secondary); font-size:14px; padding:16px; background:var(--slate-900); border:1px solid rgba(255,255,255,0.1);">
+              To pay by ACH / bank transfer, please call us at
+              <a href="tel:+18174577507" style="color:var(--accent-light);">817-457-7507</a> and we will process it over the phone.
+            </p>
           </div>
 
           <div>
@@ -187,8 +149,8 @@
       <div class="footer-grid">
         <div>
           <img class="footer-logo"
-               src="../images/logo.png"
-               onerror="this.src='../images/team-branding/copy-Ideal-Landscape-2015-Logo-300x100-1.png'"
+               src="../images/logo.jpeg"
+               
                alt="Ideal Landscape Services">
           <p class="footer-tagline">Award-winning landscape design, water features &amp; outdoor living for the DFW Metroplex since 1979.</p>
           <div class="footer-social">
@@ -247,10 +209,46 @@
 
   <script src="../js/main.js"></script>
   <script>
+    // ── Stripe configuration ─────────────────────────────────────────────────
+    // Replace the value below with the client's Stripe PUBLISHABLE key.
+    // Found at: https://dashboard.stripe.com/apikeys  → "Publishable key"
+    // Format: pk_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    const STRIPE_PUBLISHABLE_KEY = 'pk_test_51TFKmCIFuLetC4pEIqrj64PY14PRSUjQmRiuBW51ubhfhrf2ZJ15IQxmGpHN7FXWH6QjT7uaQx2ho0U5lCnVXFTy00f0dTpuIM';
+
+    const stripe     = Stripe(STRIPE_PUBLISHABLE_KEY);
+    const elements   = stripe.elements();
+
+    // Style Stripe's hosted card input to match the site design
+    const cardElement = elements.create('card', {
+      style: {
+        base: {
+          color: '#ffffff',
+          fontFamily: '"Plus Jakarta Sans", sans-serif',
+          fontSize: '15px',
+          fontWeight: '400',
+          '::placeholder': { color: 'rgba(255,255,255,0.35)' },
+          iconColor: 'rgba(255,255,255,0.6)'
+        },
+        invalid: { color: '#ff6b6b', iconColor: '#ff6b6b' }
+      }
+    });
+    cardElement.mount('#stripe-card-element');
+
+    // Live border highlight on the Stripe element wrapper
+    cardElement.on('focus', () => {
+      document.getElementById('stripe-card-element').style.borderColor = 'var(--accent-light)';
+    });
+    cardElement.on('blur', () => {
+      document.getElementById('stripe-card-element').style.borderColor = 'rgba(255,255,255,0.14)';
+    });
+    cardElement.on('change', (event) => {
+      document.getElementById('card-errors').textContent = event.error ? event.error.message : '';
+    });
+
     // Payment method toggle
     const methodLabels = document.querySelectorAll('.pay-method');
-    const cardFields = document.getElementById('card-fields');
-    const achFields = document.getElementById('ach-fields');
+    const cardFields   = document.getElementById('card-fields');
+    const achFields    = document.getElementById('ach-fields');
 
     methodLabels.forEach(label => {
       label.addEventListener('click', () => {
@@ -262,21 +260,70 @@
       });
     });
 
-    // Card number formatting
-    const cardInput = document.getElementById('card-number');
-    if (cardInput) {
-      cardInput.addEventListener('input', function () {
-        let v = this.value.replace(/\D/g, '').slice(0, 16);
-        this.value = v.replace(/(.{4})/g, '$1 ').trim();
-      });
-    }
-
-    // Form submit (placeholder — wire to payment processor)
-    document.getElementById('pay-form').addEventListener('submit', function (e) {
+    // Form submit — tokenises card via Stripe, then sends to Firebase Cloud Function
+    document.getElementById('pay-form').addEventListener('submit', async function(e) {
       e.preventDefault();
-      // TODO: Integrate payment processor (Stripe, Square, etc.)
-      document.getElementById('pay-form').style.display = 'none';
-      document.getElementById('pay-success').style.display = 'block';
+
+      const invoiceNumber = document.getElementById('invoice-number').value.trim();
+      const amountVal     = document.getElementById('payment-amount').value.trim();
+      const errEl         = document.getElementById('card-errors');
+
+      if (!invoiceNumber || !amountVal || parseFloat(amountVal) <= 0) {
+        errEl.textContent = 'Please fill in all required fields.';
+        return;
+      }
+
+      const submitBtn       = this.querySelector('[type="submit"]');
+      submitBtn.disabled    = true;
+      submitBtn.textContent = 'Processing…';
+      errEl.textContent     = '';
+
+      // Tokenise the card — card data never touches our server
+      const { paymentMethod, error } = await stripe.createPaymentMethod({
+        type: 'card',
+        card: cardElement
+      });
+
+      if (error) {
+        errEl.textContent     = error.message;
+        submitBtn.disabled    = false;
+        submitBtn.textContent = 'Submit Payment';
+        return;
+      }
+
+      // ── Firebase Cloud Function ───────────────────────────────────────────
+      // This function creates and confirms the PaymentIntent server-side using
+      // the Stripe Secret Key (which must never be exposed in the browser).
+      // Deploy: firebase deploy --only functions
+      try {
+        const res = await fetch(
+          'https://us-central1-ideal-landscapes-services.cloudfunctions.net/createPayment',
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              paymentMethodId: paymentMethod.id,
+              invoiceNumber,
+              amountCents: Math.round(parseFloat(amountVal) * 100)
+            })
+          }
+        );
+
+        const result = await res.json();
+
+        if (result.success) {
+          document.getElementById('pay-form').style.display    = 'none';
+          document.getElementById('pay-success').style.display = 'block';
+        } else {
+          errEl.textContent     = result.message || 'Payment failed. Please try again or call 817-457-7507.';
+          submitBtn.disabled    = false;
+          submitBtn.textContent = 'Submit Payment';
+        }
+      } catch {
+        errEl.textContent     = 'Unable to reach payment server. Please call us at 817-457-7507.';
+        submitBtn.disabled    = false;
+        submitBtn.textContent = 'Submit Payment';
+      }
     });
   </script>
 </body>
