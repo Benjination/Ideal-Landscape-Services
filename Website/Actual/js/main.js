@@ -5,15 +5,20 @@
 (function () {
   'use strict';
 
-  /* ── Navbar: scroll glass + promo-bar slide ──────────────────── */
-  const navbar  = document.getElementById('navbar');
-  const PROMO_H = 40;
+  /* ── Navbar: scroll glass + homepage expand/collapse ───────── */
+  const navbar     = document.getElementById('navbar');
+  const isHomePage = document.body.classList.contains('page-home');
+  const PROMO_H    = 40;
 
   function updateNav() {
     const y = window.scrollY;
     if (navbar) {
-      navbar.style.top = Math.max(0, PROMO_H - y) + 'px';
-      navbar.classList.toggle('scrolled', y > 20);
+      // On other pages, slide navbar up as promo bar scrolls out
+      if (!isHomePage) {
+        navbar.style.top = Math.max(0, PROMO_H - y) + 'px';
+      }
+      // Homepage collapses at 80px (after expanded nav clears); others at 20px
+      navbar.classList.toggle('scrolled', y > (isHomePage ? 80 : 20));
     }
   }
   window.addEventListener('scroll', updateNav, { passive: true });

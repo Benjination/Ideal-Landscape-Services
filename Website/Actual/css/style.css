@@ -184,6 +184,7 @@ body {
   align-items: center;
   transition: background 280ms var(--ease-in-out),
               border-bottom 280ms var(--ease-in-out),
+              height 350ms var(--ease-in-out),
               top 200ms linear;
 }
 .navbar.scrolled {
@@ -204,6 +205,7 @@ body {
 .logo img {
   height: 40px;
   width: auto;
+  transition: height 350ms var(--ease-in-out);
 }
 .nav-links {
   display: flex;
@@ -294,6 +296,60 @@ body {
 @media (max-width: 767px) {
   .nav-inner { padding: 0 20px; }
   .container  { padding: 0 20px; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   HOMEPAGE — EXPANDED NAVBAR
+   Scoped to .page-home so no other page is affected.
+   ════════════════════════════════════════════════════════════════ */
+
+/* Remove promo-bar offset — homepage has no promo bar */
+.page-home .navbar { top: 0; }
+
+/* Mobile drawer needs less top padding without the promo bar */
+.page-home .mobile-drawer { padding-top: 82px; }
+
+/* Phone sub-row — hidden everywhere except desktop homepage */
+.nav-phone     { display: none; }
+.nav-phone a   { color: inherit; }
+
+@media (min-width: 901px) {
+  /* Tall transparent state when user is at top of page */
+  .page-home .navbar:not(.scrolled) {
+    height: 110px;
+  }
+  .page-home .navbar:not(.scrolled) .logo img {
+    height: 52px;
+  }
+
+  /* Phone sub-row */
+  .page-home .nav-phone {
+    display: block;
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.42);
+    white-space: nowrap;
+    transition: opacity 280ms var(--ease-in-out),
+                transform 280ms var(--ease-in-out);
+  }
+  .page-home .nav-phone a {
+    color: rgba(255, 255, 255, 0.55);
+    transition: color 160ms;
+  }
+  .page-home .nav-phone a:hover { color: rgba(255, 255, 255, 0.85); }
+
+  /* Phone fades out as navbar collapses */
+  .page-home .navbar.scrolled .nav-phone {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-5px);
+    pointer-events: none;
+  }
 }
 
 /* ════════════════════════════════════════════════════════════════
