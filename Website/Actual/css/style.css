@@ -1179,7 +1179,7 @@ body {
   grid-template-columns: 2.2fr 1fr 1fr 1.8fr;
   gap: 48px;
 }
-.footer-logo { height: 34px; filter: brightness(0) invert(1); margin-bottom: 16px; }
+.footer-logo { height: 70px; filter: brightness(0) invert(1) opacity(0.72); margin-bottom: 16px; }
 .footer-tagline {
   font-size: 13px;
   color: var(--text-muted);
