@@ -40,7 +40,7 @@ ul { list-style: none; }
   --accent-light: #4d8a5a;
 
   /* Text */
-  --text-primary:   #ffffff;
+  --text-primary:   rgba(255, 255, 255, 0.88);
   --text-secondary: rgba(255,255,255,0.75);
   --text-muted:     rgba(255,255,255,0.44);
 
@@ -157,7 +157,7 @@ body {
    PROMO BAR
    ════════════════════════════════════════════════════════════════ */
 .promo-bar {
-  background: var(--accent);
+  background: var(--slate-950);
   height: 40px;
   display: flex;
   align-items: center;
