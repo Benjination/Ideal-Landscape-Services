@@ -207,12 +207,6 @@ body {
   width: auto;
   transition: height 350ms var(--ease-in-out);
 }
-/* Navbar only: crop top/bottom by forcing a landscape ratio */
-.navbar .logo img {
-  aspect-ratio: 2.8 / 1;
-  object-fit: cover;
-  object-position: center 46%;
-}
 .nav-links {
   display: flex;
   align-items: center;
