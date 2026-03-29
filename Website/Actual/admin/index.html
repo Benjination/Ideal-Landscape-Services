@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Ideal Landscape Services</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; border: none; font: inherit; }
+
+    :root {
+      --bg:         #0d0d0d;
+      --surface:    #1a1a1a;
+      --surface-2:  #222222;
+      --border:     rgba(255,255,255,0.10);
+      --text:       #ffffff;
+      --text-muted: rgba(255,255,255,0.50);
+      --accent:     #3c6e47;
+      --accent-l:   #4d8a5a;
+      --danger:     #c0392b;
+      --radius:     4px;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Login screen ─────────────────────────────────────────── */
+    #login-screen {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
+    }
+    .login-card {
+      width: 100%;
+      max-width: 420px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 48px 40px 40px;
+    }
+    .login-card .wordmark {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
+      color: var(--accent-l);
+      margin-bottom: 28px;
+      display: block;
+    }
+    .login-card h1 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 32px;
+    }
+    .field { margin-bottom: 18px; }
+    .field label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 7px;
+    }
+    .field input {
+      width: 100%;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 15px;
+      padding: 12px 14px;
+      border-radius: var(--radius);
+      outline: none;
+      transition: border-color 160ms;
+    }
+    .field input:focus { border-color: var(--accent-l); }
+    #login-error {
+      font-size: 13px;
+      color: #e57373;
+      margin-bottom: 14px;
+      min-height: 18px;
+    }
+    .btn-full {
+      width: 100%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 14px;
+      border-radius: var(--radius);
+      transition: background 180ms;
+    }
+    .btn-full:hover { background: #2f5538; }
+    .btn-full:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* ── Dashboard ────────────────────────────────────────────── */
+    #dashboard { display: none; }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      height: 58px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .topbar-brand {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent-l);
+    }
+    .topbar-right { display: flex; align-items: center; gap: 16px; }
+    #user-email { font-size: 13px; color: var(--text-muted); }
+    .btn-signout {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: none;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: color 160ms, border-color 160ms;
+    }
+    .btn-signout:hover { color: var(--text); border-color: rgba(255,255,255,0.3); }
+
+    .dashboard-body {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 48px 32px 80px;
+    }
+    .dashboard-body h2 {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    /* ── Cards (each admin module) ──────────────────────────── */
+    .admin-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 28px 24px;
+      margin-bottom: 20px;
+    }
+    .admin-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .admin-card-header h3 {
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .admin-card-header .badge {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 100px;
+      background: rgba(255,255,255,0.08);
+      color: var(--text-muted);
+    }
+    .admin-card-header .badge.on {
+      background: rgba(77, 138, 90, 0.18);
+      color: var(--accent-l);
+    }
+
+    /* Toggle switch */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .toggle-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      user-select: none;
+    }
+    .toggle {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+    .toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+    .toggle-track {
+      position: absolute;
+      inset: 0;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      cursor: pointer;
+      transition: background 180ms, border-color 180ms;
+    }
+    .toggle-track::after {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.35);
+      top: 3px;
+      left: 3px;
+      transition: transform 180ms, background 180ms;
+    }
+    .toggle input:checked + .toggle-track {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    .toggle input:checked + .toggle-track::after {
+      transform: translateX(20px);
+      background: #fff;
+    }
+
+    /* Textarea */
+    .admin-card textarea {
+      width: 100%;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+      line-height: 1.6;
+      padding: 12px 14px;
+      border-radius: var(--radius);
+      resize: vertical;
+      min-height: 72px;
+      outline: none;
+      transition: border-color 160ms;
+      margin-bottom: 16px;
+    }
+    .admin-card textarea:focus { border-color: var(--accent-l); }
+    .char-hint {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: -12px;
+      margin-bottom: 16px;
+    }
+
+    /* Save bar */
+    .save-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .btn-save {
+      background: var(--accent);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 10px 22px;
+      border-radius: var(--radius);
+      transition: background 180ms;
+    }
+    .btn-save:hover { background: #2f5538; }
+    .btn-save:disabled { opacity: 0.45; cursor: not-allowed; }
+    .save-status {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--accent-l);
+      letter-spacing: 0.04em;
+      min-width: 120px;
+      transition: opacity 300ms;
+    }
+
+    /* Coming soon placeholder cards */
+    .placeholder-card {
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      opacity: 0.55;
+    }
+    .placeholder-card .ph-icon {
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .placeholder-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+    .placeholder-card p  { font-size: 13px; color: var(--text-muted); }
+  </style>
+</head>
+<body>
+
+  <!-- ── LOGIN ─────────────────────────────────────────────────── -->
+  <div id="login-screen">
+    <div class="login-card">
+      <span class="wordmark">Ideal Landscape Services</span>
+      <h1>Admin Login</h1>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" autocomplete="username" placeholder="you@example.com">
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" autocomplete="current-password" placeholder="••••••••">
+      </div>
+      <p id="login-error"></p>
+      <button class="btn-full" id="login-btn">Sign In</button>
+    </div>
+  </div>
+
+  <!-- ── DASHBOARD ─────────────────────────────────────────────── -->
+  <div id="dashboard">
+    <header class="topbar">
+      <span class="topbar-brand">ILS Admin</span>
+      <div class="topbar-right">
+        <span id="user-email"></span>
+        <button class="btn-signout" id="signout-btn">Sign Out</button>
+      </div>
+    </header>
+
+    <div class="dashboard-body">
+      <h2>Content Management</h2>
+
+      <!-- Banner Module -->
+      <div class="admin-card" id="banner-card">
+        <div class="admin-card-header">
+          <h3>Announcement Banner</h3>
+          <span class="badge" id="banner-badge">Off</span>
+        </div>
+
+        <div class="toggle-row">
+          <label class="toggle" for="banner-active">
+            <input type="checkbox" id="banner-active">
+            <span class="toggle-track"></span>
+          </label>
+          <span class="toggle-label" for="banner-active">Show banner on homepage</span>
+        </div>
+
+        <textarea id="banner-message" maxlength="200"
+          placeholder="Welcome to the new Ideal Landscape Services website — we're glad you're here."></textarea>
+        <p class="char-hint"><span id="char-count">0</span> / 200 characters</p>
+
+        <div class="save-row">
+          <button class="btn-save" id="banner-save">Save Changes</button>
+          <span class="save-status" id="banner-status"></span>
+        </div>
+      </div>
+
+      <!-- Placeholder: Blog Posts -->
+      <div class="placeholder-card">
+        <span class="ph-icon">📝</span>
+        <div>
+          <h3>Blog Posts</h3>
+          <p>Coming soon — add, edit, and publish blog articles from here.</p>
+        </div>
+      </div>
+
+      <!-- Placeholder: Projects -->
+      <div class="placeholder-card">
+        <span class="ph-icon">🌿</span>
+        <div>
+          <h3>Projects Gallery</h3>
+          <p>Coming soon — upload project photos and manage the gallery.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import {
+      db, auth,
+      signInWithEmailAndPassword,
+      signOut,
+      onAuthStateChanged
+    } from '../js/firebase-init.js';
+
+    import {
+      doc, getDoc, setDoc
+    } from 'https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js';
+
+    /* ── Auth state ─────────────────────────────────────────── */
+    const loginScreen = document.getElementById('login-screen');
+    const dashboard   = document.getElementById('dashboard');
+    const userEmailEl = document.getElementById('user-email');
+
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        loginScreen.style.display = 'none';
+        dashboard.style.display   = 'block';
+        userEmailEl.textContent   = user.email;
+        loadBannerConfig();
+      } else {
+        loginScreen.style.display = 'flex';
+        dashboard.style.display   = 'none';
+      }
+    });
+
+    /* ── Login ──────────────────────────────────────────────── */
+    const loginBtn   = document.getElementById('login-btn');
+    const emailInput = document.getElementById('email');
+    const passInput  = document.getElementById('password');
+    const loginError = document.getElementById('login-error');
+
+    loginBtn.addEventListener('click', async () => {
+      loginError.textContent = '';
+      loginBtn.disabled = true;
+      loginBtn.textContent = 'Signing in…';
+      try {
+        await signInWithEmailAndPassword(auth, emailInput.value.trim(), passInput.value);
+      } catch (err) {
+        loginError.textContent = 'Invalid email or password.';
+        loginBtn.disabled = false;
+        loginBtn.textContent = 'Sign In';
+      }
+    });
+
+    // Allow Enter key to submit
+    [emailInput, passInput].forEach(el => {
+      el.addEventListener('keydown', e => { if (e.key === 'Enter') loginBtn.click(); });
+    });
+
+    /* ── Sign out ───────────────────────────────────────────── */
+    document.getElementById('signout-btn').addEventListener('click', () => signOut(auth));
+
+    /* ── Banner module ──────────────────────────────────────── */
+    const bannerRef     = doc(db, 'siteConfig', 'banner');
+    const activeToggle  = document.getElementById('banner-active');
+    const messageInput  = document.getElementById('banner-message');
+    const charCount     = document.getElementById('char-count');
+    const bannerBadge   = document.getElementById('banner-badge');
+    const saveBtn       = document.getElementById('banner-save');
+    const saveStatus    = document.getElementById('banner-status');
+
+    function updateBadge(active) {
+      bannerBadge.textContent = active ? 'Live' : 'Off';
+      bannerBadge.className   = 'badge' + (active ? ' on' : '');
+    }
+
+    messageInput.addEventListener('input', () => {
+      charCount.textContent = messageInput.value.length;
+    });
+
+    activeToggle.addEventListener('change', () => {
+      updateBadge(activeToggle.checked);
+    });
+
+    async function loadBannerConfig() {
+      try {
+        const snap = await getDoc(bannerRef);
+        if (snap.exists()) {
+          const { active, message } = snap.data();
+          activeToggle.checked    = !!active;
+          messageInput.value      = message || '';
+          charCount.textContent   = (message || '').length;
+          updateBadge(!!active);
+        }
+      } catch (err) {
+        saveStatus.textContent = 'Could not load banner data.';
+      }
+    }
+
+    saveBtn.addEventListener('click', async () => {
+      saveBtn.disabled     = true;
+      saveStatus.textContent = 'Saving…';
+      try {
+        await setDoc(bannerRef, {
+          active:  activeToggle.checked,
+          message: messageInput.value.trim()
+        });
+        saveStatus.textContent = 'Saved ✓';
+        setTimeout(() => { saveStatus.textContent = ''; }, 3000);
+      } catch (err) {
+        saveStatus.textContent = 'Error — could not save.';
+      } finally {
+        saveBtn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+THINGS NEEDED FROM CLIENT
+=========================
+Last updated: March 29, 2026
+
+PAYMENTS
+--------
+- Authorize.net Simple Checkout full payment URL (including payButtonID parameter)
+  - Client logs into Authorize.net Merchant Interface → Account → Simple Checkout
+  - Copy the full link from the configured payment button
+
+ADMIN PANEL
+-----------
+- Confirm email address David wants to use for admin login
+- Decide on a strong password for that account
+  - Once confirmed, we enable Email/Password Auth in Firebase Console and create the user
+  - The admin panel will be live at: /admin/ on the site
+

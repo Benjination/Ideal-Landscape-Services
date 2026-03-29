@@ -462,6 +462,15 @@
     </div>
   </footer>
 
+  <!-- ANNOUNCEMENT BANNER — shown only when active in Firebase -->
+  <div id="announcement-banner" role="status" aria-live="polite" aria-label="Site announcement">
+    <div class="banner-track">
+      <div class="banner-text" id="banner-text"></div>
+    </div>
+    <button class="banner-dismiss" id="banner-dismiss" aria-label="Dismiss announcement">&#x2715;</button>
+  </div>
+
   <script src="js/main.js"></script>
+  <script type="module" src="js/announcement-banner.js"></script>
 </body>
 </html>

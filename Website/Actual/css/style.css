@@ -1680,3 +1680,103 @@ body {
   border-color: var(--accent-light);
   color: var(--accent-light);
 }
+
+/* ════════════════════════════════════════════════════════════════
+   ANNOUNCEMENT BANNER
+   Bottom-pinned. Frosted dark glass. Elegant ticker scroll.
+   Only rendered on homepage when siteConfig/banner.active = true.
+   ════════════════════════════════════════════════════════════════ */
+#announcement-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 44px;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  background: rgba(8, 8, 8, 0.86);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+  overflow: hidden;
+
+  /* slide up on entry */
+  transform: translateY(100%);
+  transition: transform 600ms cubic-bezier(0.0, 0.0, 0.25, 1.0);
+}
+#announcement-banner.visible {
+  transform: translateY(0);
+}
+
+/* Left accent stroke — like a gallery label divider */
+#announcement-banner::before {
+  content: '';
+  display: block;
+  flex-shrink: 0;
+  width: 2px;
+  height: 18px;
+  background: var(--accent-light);
+  margin: 0 20px 0 22px;
+  opacity: 0.75;
+}
+
+/* Scrolling ticker track */
+.banner-track {
+  flex: 1;
+  overflow: hidden;
+  min-width: 0;
+  mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+}
+
+/* The moving text — duplicated in JS so it loops seamlessly */
+.banner-text {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: banner-scroll 60s linear infinite;
+  will-change: transform;
+}
+.banner-text span {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+  padding-right: 90px; /* gap between repetitions */
+}
+/* separator diamond between message repetitions */
+.banner-text span::after {
+  content: '◆';
+  font-size: 7px;
+  color: var(--accent-light);
+  margin-left: 90px;
+  vertical-align: 1px;
+  opacity: 0.7;
+}
+
+@keyframes banner-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Dismiss button */
+.banner-dismiss {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.38);
+  transition: color 180ms;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: inherit;
+}
+.banner-dismiss:hover { color: rgba(255, 255, 255, 0.82); }
+
+/* Push body content up so footer isn't hidden behind the banner */
+body.banner-open { padding-bottom: 44px; }
