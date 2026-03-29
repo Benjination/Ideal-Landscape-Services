@@ -314,9 +314,13 @@ body {
 .nav-phone a   { color: inherit; }
 
 @media (min-width: 901px) {
-  /* Tall transparent state when user is at top of page */
+  /* Tall glass state when user is at top of page */
   .page-home .navbar:not(.scrolled) {
     height: 110px;
+    background: var(--glass-nav);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.10);
   }
   .page-home .navbar:not(.scrolled) .logo img {
     height: 52px;
@@ -1747,14 +1751,14 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 44px;
+  height: 68px;
   z-index: 300;
   display: flex;
   align-items: center;
-  background: rgba(8, 8, 8, 0.86);
+  background: rgba(8, 8, 8, 0.90);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-top: 1px solid rgba(255, 255, 255, 0.10);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
   overflow: hidden;
 
   /* slide up on entry */
@@ -1770,11 +1774,11 @@ body {
   content: '';
   display: block;
   flex-shrink: 0;
-  width: 2px;
-  height: 18px;
+  width: 3px;
+  height: 28px;
   background: var(--accent-light);
-  margin: 0 20px 0 22px;
-  opacity: 0.75;
+  margin: 0 22px 0 26px;
+  opacity: 0.85;
 }
 
 /* Scrolling ticker track */
@@ -1794,12 +1798,11 @@ body {
   will-change: transform;
 }
 .banner-text span {
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 500;
-  letter-spacing: 0.20em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.72);
-  padding-right: 90px; /* gap between repetitions */
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.88);
+  padding-right: 100px; /* gap between repetitions */
 }
 /* separator diamond between message repetitions */
 .banner-text span::after {
@@ -1822,9 +1825,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  font-size: 15px;
+  width: 54px;
+  height: 68px;
+  font-size: 20px;
   color: rgba(255, 255, 255, 0.38);
   transition: color 180ms;
   cursor: pointer;
@@ -1835,4 +1838,4 @@ body {
 .banner-dismiss:hover { color: rgba(255, 255, 255, 0.82); }
 
 /* Push body content up so footer isn't hidden behind the banner */
-body.banner-open { padding-bottom: 44px; }
+body.banner-open { padding-bottom: 68px; }
