@@ -203,7 +203,7 @@ body {
 }
 .logo { display: flex; align-items: center; flex-shrink: 0; }
 .logo img {
-  height: 40px;
+  height: 60px;
   width: auto;
   transition: height 350ms var(--ease-in-out);
 }
@@ -323,7 +323,7 @@ body {
     border-bottom: 1px solid rgba(255, 255, 255, 0.10);
   }
   .page-home .navbar:not(.scrolled) .logo img {
-    height: 52px;
+    height: 92px;
   }
 
   /* Phone sub-row */
