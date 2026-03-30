@@ -1574,6 +1574,10 @@ body {
 }
 .blog-modal-body ul, .blog-modal-body ol { margin: 0 0 16px 20px; }
 .blog-modal-body li { margin-bottom: 8px; }
+.blog-modal-featured-img {
+  width: 100%; height: auto; display: block;
+  border-radius: 6px; margin-bottom: 22px; object-fit: contain;
+}
 .blog-modal-body a { color: var(--accent-light); transition: color 140ms; }
 .blog-modal-body a:hover { color: var(--text-white); }
 .blog-modal-body strong { color: var(--text-white); font-weight: 600; }

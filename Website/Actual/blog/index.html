@@ -409,8 +409,11 @@
     var p = ALL_POSTS[current];
     titleEl.textContent = p.title;
     metaEl.innerHTML    = buildMeta(p);
-    // Dynamic posts: show description as body if no explicit body
-    bodyEl.innerHTML    = p.body || '<p>' + escHtml(p.desc || '') + '</p>';
+    var imgSrc  = p.image || p.imageUrl || '';
+    var imgHtml = imgSrc
+      ? '<img src="' + imgSrc + '" alt="" class="blog-modal-featured-img">'
+      : '';
+    bodyEl.innerHTML = imgHtml + (p.body || '<p>' + escHtml(p.desc || '') + '</p>');
     prevBtn.disabled    = current === 0;
     nextBtn.disabled    = current === ALL_POSTS.length - 1;
     bodyEl.scrollTop    = 0;

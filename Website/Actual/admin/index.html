@@ -398,6 +398,27 @@
       transition: border-color 160ms, color 160ms;
     }
     .btn-icon-delete:hover { border-color: var(--danger); color: var(--danger); }
+    .btn-icon-edit {
+      background: none; border: 1px solid var(--border); color: var(--text-muted);
+      border-radius: var(--radius); padding: 5px 9px; font-size: 13px;
+      transition: border-color 160ms, color 160ms;
+    }
+    .btn-icon-edit:hover { border-color: var(--accent-l); color: var(--accent-l); }
+    .btn-pub-toggle {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 100px; cursor: pointer; border: none;
+      transition: background 160ms, color 160ms;
+    }
+    .btn-pub-toggle.live  { background: rgba(77,138,90,0.18); color: var(--accent-l); }
+    .btn-pub-toggle.draft { background: rgba(255,255,255,0.06); color: var(--text-muted); }
+    .btn-pub-toggle.live:hover  { background: rgba(77,138,90,0.30); }
+    .btn-pub-toggle.draft:hover { background: rgba(255,255,255,0.12); }
+    .btn-cancel {
+      background: none; border: 1px solid var(--border); color: var(--text-muted);
+      padding: 8px 16px; border-radius: var(--radius); font-size: 13px; font-weight: 500;
+      transition: border-color 160ms, color 160ms;
+    }
+    .btn-cancel:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
     .blog-empty { font-size: 13px; color: var(--text-muted); text-align: center; padding: 18px 0; }
     .blog-upload-progress {
       height: 3px; background: var(--surface-2); border-radius: 2px;
@@ -534,6 +555,7 @@
 
         <div class="save-row" style="margin-top:16px;">
           <button class="btn-save" id="blog-add-btn">Add Post</button>
+          <button class="btn-cancel" id="blog-cancel-btn" style="display:none;">Cancel</button>
           <span class="save-status" id="blog-status"></span>
         </div>
 
@@ -567,7 +589,7 @@
 
     import {
       doc, getDoc, setDoc,
-      collection, addDoc, getDocs, deleteDoc,
+      collection, addDoc, getDocs, deleteDoc, updateDoc,
       serverTimestamp
     } from 'https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js';
 
@@ -680,8 +702,11 @@
     const blogStatus    = document.getElementById('blog-status');
     const blogPostList  = document.getElementById('blog-post-list');
     const blogEmpty     = document.getElementById('blog-empty');
-    const blogCountBadge = document.getElementById('blog-count-badge');
-    const blogTitleIn   = document.getElementById('blog-title');
+    const blogCountBadge    = document.getElementById('blog-count-badge');
+    let   currentEditId       = null;
+    let   currentEditImageUrl = '';
+    const blogCancelBtn     = document.getElementById('blog-cancel-btn');
+    const blogTitleIn       = document.getElementById('blog-title');
     const blogDateIn    = document.getElementById('blog-date');
     const blogDescIn    = document.getElementById('blog-desc');
     const blogPublishIn = document.getElementById('blog-publish');
@@ -723,6 +748,38 @@
       imageThumb.style.display = 'none';
       uploadProgress.style.display = 'none';
       uploadBar.style.width = '0%';
+      currentEditId = null;
+      currentEditImageUrl = '';
+      blogAddBtn.textContent = 'Add Post';
+      blogCancelBtn.style.display = 'none';
+    }
+
+    blogCancelBtn.addEventListener('click', resetBlogForm);
+
+    function populateFormForEdit(post) {
+      blogTitleIn.value     = post.title   || '';
+      blogDateIn.value      = post.dateStr || '';
+      blogDescIn.value      = post.desc    || '';
+      blogPublishIn.checked = !!post.published;
+      blogImageIn.value     = '';
+      uploadFilename.textContent   = '';
+      uploadFilename.style.display = 'none';
+      uploadProgress.style.display = 'none';
+      uploadBar.style.width = '0%';
+      if (post.imageUrl) {
+        imageThumb.src             = post.imageUrl;
+        imageThumb.style.display   = 'block';
+        uploadPrompt.style.display = 'none';
+      } else {
+        imageThumb.src             = '';
+        imageThumb.style.display   = 'none';
+        uploadPrompt.style.display = 'block';
+      }
+      currentEditId       = post.id;
+      currentEditImageUrl = post.imageUrl || '';
+      blogAddBtn.textContent      = 'Update Post';
+      blogCancelBtn.style.display = 'inline-block';
+      document.getElementById('blog-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     async function loadBlogPosts() {
@@ -767,9 +824,17 @@
         const actions = document.createElement('div');
         actions.className = 'blog-post-actions';
 
-        const badge = document.createElement('span');
-        badge.className = post.published ? 'badge-live' : 'badge-draft';
-        badge.textContent = post.published ? 'Live' : 'Draft';
+        const toggleBtn = document.createElement('button');
+        toggleBtn.className = 'btn-pub-toggle ' + (post.published ? 'live' : 'draft');
+        toggleBtn.textContent = post.published ? 'Live' : 'Draft';
+        toggleBtn.title = post.published ? 'Click to unpublish' : 'Click to publish';
+        toggleBtn.addEventListener('click', () => togglePublished(post.id, post.published));
+
+        const editBtn = document.createElement('button');
+        editBtn.className = 'btn-icon-edit';
+        editBtn.title = 'Edit post';
+        editBtn.innerHTML = '&#9998;';
+        editBtn.addEventListener('click', () => populateFormForEdit(post));
 
         const delBtn = document.createElement('button');
         delBtn.className = 'btn-icon-delete';
@@ -777,7 +842,8 @@
         delBtn.innerHTML = '&#x2715;';
         delBtn.addEventListener('click', () => deleteBlogPost(post.id));
 
-        actions.appendChild(badge);
+        actions.appendChild(toggleBtn);
+        actions.appendChild(editBtn);
         actions.appendChild(delBtn);
         item.appendChild(thumb);
         item.appendChild(info);
@@ -805,6 +871,16 @@
       }
     }
 
+    async function togglePublished(id, currentState) {
+      try {
+        await updateDoc(doc(db, 'blogPosts', id), { published: !currentState });
+        await loadBlogPosts();
+      } catch (err) {
+        blogStatus.textContent = 'Error updating post.';
+        setTimeout(() => { blogStatus.textContent = ''; }, 3000);
+      }
+    }
+
     blogAddBtn.addEventListener('click', async () => {
       const title   = blogTitleIn.value.trim();
       const dateVal = blogDateIn.value;
@@ -817,14 +893,13 @@
       if (!desc)    { blogStatus.textContent = 'Description is required.'; return; }
 
       blogAddBtn.disabled = true;
-      blogStatus.textContent = 'Saving…';
+      blogStatus.textContent = currentEditId ? 'Updating…' : 'Saving…';
 
       try {
-        let imageUrl = '';
+        let imageUrl = currentEditId ? currentEditImageUrl : '';
         if (file) {
-          // Upload to Firebase Storage
           uploadProgress.style.display = 'block';
-          const fileName   = Date.now() + '_' + file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+          const fileName = Date.now() + '_' + file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
           const sRef = storageRef(storage, 'blog-images/' + fileName);
           const task = uploadBytesResumable(sRef, file);
           imageUrl = await new Promise((resolve, reject) => {
@@ -839,16 +914,18 @@
           });
         }
 
-        await addDoc(blogColRef, {
-          title,
-          dateStr:   dateVal,
-          desc,
-          published: publish,
-          imageUrl,
-          createdAt: serverTimestamp()
-        });
-
-        blogStatus.textContent = 'Post added ✓';
+        if (currentEditId) {
+          await updateDoc(doc(db, 'blogPosts', currentEditId), {
+            title, dateStr: dateVal, desc, published: publish, imageUrl
+          });
+          blogStatus.textContent = 'Post updated ✓';
+        } else {
+          await addDoc(blogColRef, {
+            title, dateStr: dateVal, desc, published: publish, imageUrl,
+            createdAt: serverTimestamp()
+          });
+          blogStatus.textContent = 'Post added ✓';
+        }
         setTimeout(() => { blogStatus.textContent = ''; }, 3000);
         resetBlogForm();
         await loadBlogPosts();
