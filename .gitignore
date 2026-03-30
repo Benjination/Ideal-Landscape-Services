@@ -1,0 +1,40 @@
+# ── macOS ────────────────────────────────────────────────────────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ── Node / Firebase Functions ────────────────────────────────────────────────
+node_modules/
+functions/node_modules/
+functions/.env
+functions/.env.*
+.env
+.env.*
+
+# ── Firebase local state ─────────────────────────────────────────────────────
+.firebase/
+.firebaserc
+
+# ── Python virtual environment ───────────────────────────────────────────────
+.venv/
+__pycache__/
+*.pyc
+
+# ── Client & business documents ─────────────────────────────────────────────
+Client_Feedback.txt
+needs-from-client.txt
+followupQs.txt
+thePlan.txt
+websites.txt
+aesthetic.txt
+structure.txt
+Email_Draft_03-12-2026.txt
+Email_Draft_*.txt
+SEO.txt
+Image_Keywords.csv
+Image_Keywords.xlsx
+NewLogo.jpeg
+LaTex/
+
+# ── Mockup / scratch work ─────────────────────────────────────────────────────
+Website/Mockup/
