@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plant Repository | Ideal Landscape Services — DFW</title>
+  <meta name="description" content="Browse our plant library — native grasses, flowering perennials, trees, and shrubs used in our landscape projects across the DFW Metroplex.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    /* ── Plants page ───────────────────────────────────────────── */
+    .plants-section { padding: 64px 0 80px; }
+
+    .plants-search-wrap {
+      position: relative;
+      max-width: 480px;
+      margin-bottom: 48px;
+    }
+    .plants-search-wrap svg {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      color: #888; pointer-events: none;
+    }
+    .plants-search-input {
+      width: 100%; padding: 11px 16px 11px 40px;
+      border: 1px solid #d6d6d6; border-radius: 6px;
+      font-family: inherit; font-size: 14px;
+      background: #fff; color: #222;
+      outline: none; transition: border-color .15s;
+      box-sizing: border-box;
+    }
+    .plants-search-input:focus { border-color: #4d8a5a; }
+
+    /* alpha section */
+    .plants-alpha-section { margin-bottom: 48px; }
+    .plants-alpha-heading {
+      font-size: 13px; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: #4d8a5a;
+      border-bottom: 2px solid #4d8a5a;
+      padding-bottom: 6px; margin-bottom: 20px;
+    }
+
+    /* card grid */
+    .plants-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 1024px) { .plants-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 680px)  { .plants-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 420px)  { .plants-grid { grid-template-columns: 1fr; } }
+
+    /* plant card */
+    .plant-card {
+      border-radius: 8px; overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,.08);
+      cursor: pointer;
+    }
+    .plant-card-img-wrap {
+      position: relative; overflow: hidden;
+      background: #e8ede9;
+    }
+    .plant-card-img-wrap img {
+      width: 100%; display: block;
+      aspect-ratio: 3/4; object-fit: cover;
+      transition: transform 380ms ease;
+    }
+    .plant-card:hover .plant-card-img-wrap img { transform: scale(1.04); }
+    .plant-card-overlay {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 48px 14px 14px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.75));
+      font-size: 15px; font-weight: 700; color: #fff;
+      letter-spacing: .01em; transition: opacity 260ms;
+      pointer-events: none;
+    }
+    .plant-card:hover .plant-card-overlay { opacity: 0; }
+
+    /* card without image */
+    .plant-card-no-img {
+      background: #f4f7f4; aspect-ratio: 3/4;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .plant-card-no-img span {
+      font-size: 15px; font-weight: 600; color: #4d8a5a;
+      text-align: center; padding: 16px;
+    }
+
+    /* details panel */
+    .plant-details-panel {
+      margin-top: 8px; padding: 10px 12px;
+      font-size: 13px; color: #555; line-height: 1.55;
+      background: #f9faf9; border-radius: 0 0 8px 8px;
+      display: none;
+    }
+    .plant-card.open .plant-details-panel { display: block; }
+
+    /* no-image placeholder leaf icon colour */
+    .plant-leaf-icon { color: #b5cdb8; }
+
+    /* draft / empty states */
+    .plants-draft {
+      text-align: center; padding: 80px 20px;
+      color: #888; font-size: 15px;
+    }
+    .plants-draft strong { display: block; font-size: 22px; color: #333; margin-bottom: 10px; }
+    .plants-empty {
+      color: #888; font-size: 14px; padding: 32px 0;
+    }
+
+    /* ── Plant lightbox ────────────────────────────────────────── */
+    .plant-lightbox {
+      position: fixed; inset: 0; z-index: 1000;
+      background: rgba(0,0,0,0.88);
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px 16px;
+      opacity: 0; visibility: hidden;
+      transition: opacity 220ms ease, visibility 220ms ease;
+    }
+    .plant-lightbox.open {
+      opacity: 1; visibility: visible;
+    }
+    .plant-lightbox-inner {
+      position: relative;
+      max-width: 560px; width: 100%;
+      max-height: 90vh;
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      transform: scale(0.94);
+      transition: transform 220ms ease;
+    }
+    .plant-lightbox.open .plant-lightbox-inner {
+      transform: scale(1);
+    }
+    .plant-lightbox-img {
+      width: 100%;
+      max-height: 60vh;
+      object-fit: contain;
+      background: #1a1a1a;
+      display: block;
+    }
+    .plant-lightbox-no-img {
+      width: 100%;
+      height: 220px;
+      background: #e8ede9;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .plant-lightbox-body {
+      padding: 20px 24px;
+      overflow-y: auto;
+    }
+    .plant-lightbox-name {
+      font-size: 20px; font-weight: 700; color: #1a2e1a;
+      margin: 0 0 10px;
+    }
+    .plant-lightbox-details {
+      font-size: 14px; color: #555; line-height: 1.65;
+      margin: 0;
+    }
+    .plant-lightbox-close {
+      position: absolute; top: 12px; right: 12px;
+      width: 34px; height: 34px;
+      background: rgba(0,0,0,0.5); color: #fff;
+      border: none; border-radius: 50%;
+      cursor: pointer; font-size: 18px; line-height: 1;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 140ms;
+    }
+    .plant-lightbox-close:hover { background: rgba(0,0,0,0.8); }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="../index.html" class="logo">
+        <img src="../images/logoRect.png" alt="Ideal Landscape Services">
+      </a>
+      <a href="tel:+18174577507" class="nav-call">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.17 6.18l1.8-1.8a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7a2 2 0 011.72 2.02z"/></svg>
+        <span>Call Today &middot; 817-457-7507</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../services/index.html">Services</a></li>
+        <li><a href="../projects/index.html">Projects</a></li>
+        <li><a href="../about/index.html">About</a></li>
+        <li><a href="../blog/index.html">Blog</a></li>
+        <li><a href="index.html" class="active">Plants</a></li>
+        <li><a href="../contact/index.html">Contact</a></li>
+        <li><form method="post" action="https://Simplecheckout.authorize.net/payment/CatalogPayment.aspx" target="_blank" style="display:contents;"><input type="hidden" name="LinkId" value="87975206-91e3-4f2a-b649-e46057b5d783" /><button type="submit" class="nav-pay-btn">Pay Online</button></form></li>
+      </ul>
+      <a href="../contact/index.html" class="btn btn-primary nav-cta">Get a Quote</a>
+      <button class="hamburger" id="hamburger" aria-label="Open navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-drawer" id="mobile-drawer">
+      <a href="../index.html">Home</a>
+      <a href="../services/index.html">Services</a>
+      <a href="../projects/index.html">Projects</a>
+      <a href="../about/index.html">About</a>
+      <a href="../blog/index.html">Blog</a>
+      <a href="index.html">Plants</a>
+      <a href="../contact/index.html">Contact</a>
+      <form method="post" action="https://Simplecheckout.authorize.net/payment/CatalogPayment.aspx" target="_blank"><input type="hidden" name="LinkId" value="87975206-91e3-4f2a-b649-e46057b5d783" /><button type="submit" class="mobile-pay-btn">Pay Online</button></form>
+      <a href="../contact/index.html" class="btn btn-primary">Get a Quote</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero" style="background-image: url('../images/landscaping/Colorful-Landscape.jpg');">
+    <div class="page-hero-content">
+      <span class="eyebrow">Plant Library</span>
+      <h1>Our Plants</h1>
+    </div>
+  </section>
+
+  <!-- PLANTS SECTION -->
+  <section class="plants-section">
+    <div class="container">
+      <p class="section-sub" style="margin-top:-8px; max-width:600px; margin-bottom:32px;">
+        Native grasses, flowering perennials, specimen trees, and Texas-tough shrubs — the plants we love working with across the DFW Metroplex.
+      </p>
+
+      <!-- search — hidden until live -->
+      <div class="plants-search-wrap" id="search-wrap" style="display:none;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input class="plants-search-input" id="plant-search" type="search" placeholder="Search plants…" autocomplete="off">
+      </div>
+
+      <div id="plants-grid">
+        <!-- rendered by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- PLANT LIGHTBOX -->
+  <div class="plant-lightbox" id="plant-lightbox" role="dialog" aria-modal="true" aria-label="Plant detail">
+    <div class="plant-lightbox-inner" id="plant-lightbox-inner">
+      <button class="plant-lightbox-close" id="plant-lightbox-close" aria-label="Close">&#x2715;</button>
+      <!-- content injected by JS -->
+    </div>
+  </div>
+
+  <!-- CTA BANNER -->
+  <section class="cta-banner animate-in" style="background-image: url('../images/landscaping/Front-Yard-Landscape-Design.jpg');">
+    <div class="cta-banner-overlay"></div>
+    <div class="container cta-banner-content">
+      <h2>Want these plants in your yard?</h2>
+      <p>Contact us for a free landscape consultation today.</p>
+      <div style="display:flex; gap:16px; flex-wrap:wrap; justify-content:center;">
+        <a href="../contact/index.html" class="btn btn-primary">Get a Free Estimate</a>
+        <a href="tel:+18174577507" class="btn btn-outline">817-457-7507</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <img class="footer-logo" src="../images/logoRect.png" alt="Ideal Landscape Services">
+          <p class="footer-tagline">Award-winning landscape design, water features &amp; outdoor living for the DFW Metroplex since 1979.</p>
+          <div class="footer-social">
+            <a href="https://www.instagram.com/ideallandscapeservices/" aria-label="Instagram" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5"/>
+                <circle cx="12" cy="12" r="4.5"/>
+                <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+              </svg>
+            </a>
+            <a href="https://www.facebook.com/IdealLandscapeServices" aria-label="Facebook" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div>
+          <p class="footer-col-title">Navigation</p>
+          <div class="footer-links">
+            <a href="../index.html">Home</a>
+            <a href="../services/index.html">Services</a>
+            <a href="../projects/index.html">Projects</a>
+            <a href="../about/index.html">About</a>
+            <a href="../blog/index.html">Blog</a>
+            <a href="../contact/index.html">Contact</a>
+          </div>
+        </div>
+        <div>
+          <p class="footer-col-title">Services</p>
+          <div class="footer-links">
+            <a href="../services/landscape-design/index.html">Landscape Design</a>
+            <a href="../services/water-features/index.html">Water Features</a>
+            <a href="../services/hardscapes/index.html">Hardscapes</a>
+            <a href="../services/outdoor-living/index.html">Outdoor Living</a>
+            <a href="../services/lighting/index.html">Lighting</a>
+            <a href="../services/maintenance/index.html">Maintenance</a>
+          </div>
+        </div>
+        <div>
+          <p class="footer-col-title">Contact</p>
+          <p class="footer-contact-item"><a href="tel:+18174577507">817-457-7507</a></p>
+          <p class="footer-contact-item">Dallas–Fort Worth Metroplex, TX</p>
+          <p class="footer-contact-item">Mon–Fri &nbsp;·&nbsp; 8:00am – 5:00pm</p>
+          <form method="post" action="https://Simplecheckout.authorize.net/payment/CatalogPayment.aspx" target="_blank" style="margin-top:14px;"><input type="hidden" name="LinkId" value="87975206-91e3-4f2a-b649-e46057b5d783" /><button type="submit" class="footer-pay-btn">Pay Invoice Online →</button></form>
+          <div class="AuthorizeNetSeal" style="margin-top:10px;"><script type="text/javascript" language="javascript">var ANS_customer_id="816114e4-ae4e-439c-addd-64b4aa6bbd2b";</script><script type="text/javascript" language="javascript" src="//verify.authorize.net:443/anetseal/seal.js"></script></div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        © 2026 Ideal Landscape Services. All rights reserved.
+        &ensp;·&ensp;
+        <a href="#">Privacy Policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+
+  <script type="module">
+    import { initializeApp }   from 'https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js';
+    import { getFirestore, doc, getDoc, collection, getDocs }
+      from 'https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js';
+
+    const firebaseConfig = {
+      apiKey:            "AIzaSyDvtzjI5RCjkfVwLVZuP87S5BxQUNNovFc",
+      authDomain:        "ideal-landscapes-services.firebaseapp.com",
+      projectId:         "ideal-landscapes-services",
+      storageBucket:     "ideal-landscapes-services.firebasestorage.app",
+      messagingSenderId: "405135052623",
+      appId:             "1:405135052623:web:cd1b8a4ea4c39e23663f3a"
+    };
+
+    const app = initializeApp(firebaseConfig, 'plants-app');
+    const db  = getFirestore(app);
+
+    const gridEl      = document.getElementById('plants-grid');
+    const searchWrap  = document.getElementById('search-wrap');
+    const searchInput = document.getElementById('plant-search');
+
+    var allPlants = [];
+
+    /* ── Load ─────────────────────────────────────────────────── */
+    async function init() {
+      try {
+        const liveSnap = await getDoc(doc(db, 'siteConfig', 'plants'));
+        const isLive   = liveSnap.exists() && liveSnap.data().live === true;
+
+        if (!isLive) {
+          gridEl.innerHTML =
+            '<div class="plants-draft">' +
+            '<strong>Coming Soon</strong>' +
+            'Our plant library is being prepared. Check back soon!' +
+            '</div>';
+          return;
+        }
+
+        const snap = await getDocs(collection(db, 'plants'));
+        allPlants  = [];
+        snap.forEach(d => allPlants.push({ id: d.id, ...d.data() }));
+        allPlants.sort((a, b) => a.name.localeCompare(b.name));
+
+        searchWrap.style.display = 'block';
+        renderGrid('');
+
+        searchInput.addEventListener('input', () => renderGrid(searchInput.value.trim().toLowerCase()));
+      } catch (err) {
+        gridEl.innerHTML = '<p class="plants-empty">Could not load plants — please try again later.</p>';
+      }
+    }
+
+    /* ── Render ───────────────────────────────────────────────── */
+    function renderGrid(query) {
+      const filtered = query
+        ? allPlants.filter(p => p.name.toLowerCase().includes(query))
+        : allPlants;
+
+      gridEl.innerHTML = '';
+
+      if (filtered.length === 0) {
+        gridEl.innerHTML = '<p class="plants-empty">No plants match your search.</p>';
+        return;
+      }
+
+      if (query) {
+        // flat grid when searching
+        const grid = document.createElement('div');
+        grid.className = 'plants-grid';
+        filtered.forEach(p => grid.appendChild(makeCard(p)));
+        gridEl.appendChild(grid);
+      } else {
+        // alpha-grouped sections
+        const groups = {};
+        filtered.forEach(p => {
+          const letter = p.name[0].toUpperCase();
+          if (!groups[letter]) groups[letter] = [];
+          groups[letter].push(p);
+        });
+        Object.keys(groups).sort().forEach(letter => {
+          const section = document.createElement('div');
+          section.className = 'plants-alpha-section';
+
+          const heading = document.createElement('div');
+          heading.className = 'plants-alpha-heading';
+          heading.textContent = letter;
+
+          const grid = document.createElement('div');
+          grid.className = 'plants-grid';
+          groups[letter].forEach(p => grid.appendChild(makeCard(p)));
+
+          section.appendChild(heading);
+          section.appendChild(grid);
+          gridEl.appendChild(section);
+        });
+      }
+    }
+
+    /* ── Card ─────────────────────────────────────────────────── */
+    function makeCard(plant) {
+      const card = document.createElement('div');
+      card.className = 'plant-card';
+
+      const imgWrap = document.createElement('div');
+      imgWrap.className = 'plant-card-img-wrap';
+
+      if (plant.imageUrl) {
+        const img = document.createElement('img');
+        img.src = plant.imageUrl;
+        img.alt = plant.name;
+        img.loading = 'lazy';
+
+        const overlay = document.createElement('div');
+        overlay.className = 'plant-card-overlay';
+        overlay.textContent = plant.name;
+
+        imgWrap.appendChild(img);
+        imgWrap.appendChild(overlay);
+      } else {
+        imgWrap.innerHTML =
+          '<div class="plant-card-no-img">' +
+          '<svg class="plant-leaf-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">' +
+          '<path d="M17 8C8 10 5.9 16.17 3.82 19.5c-1.13 1.86.22 4.5 2.89 3.88C10 22.5 19 17 21 10c-2 0-5 .5-7 3"/>' +
+          '<path d="M3.82 19.5c1.13-5 4.5-10 9.68-12"/>' +
+          '</svg>' +
+          '<span>' + escHtml(plant.name) + '</span>' +
+          '</div>';
+      }
+
+      card.appendChild(imgWrap);
+      card.addEventListener('click', () => openLightbox(plant));
+
+      return card;
+    }
+
+    /* ── Lightbox ─────────────────────────────────────────────── */
+    const lightbox      = document.getElementById('plant-lightbox');
+    const lightboxInner = document.getElementById('plant-lightbox-inner');
+    const lightboxClose = document.getElementById('plant-lightbox-close');
+
+    function openLightbox(plant) {
+      // Clear previous content (keep the close button)
+      Array.from(lightboxInner.children).forEach(el => {
+        if (el !== lightboxClose) el.remove();
+      });
+
+      if (plant.imageUrl) {
+        const img = document.createElement('img');
+        img.className = 'plant-lightbox-img';
+        img.src = plant.imageUrl;
+        img.alt = plant.name;
+        lightboxInner.insertBefore(img, lightboxClose.nextSibling);
+      } else {
+        const noImg = document.createElement('div');
+        noImg.className = 'plant-lightbox-no-img';
+        noImg.innerHTML =
+          '<svg class="plant-leaf-icon" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">' +
+          '<path d="M17 8C8 10 5.9 16.17 3.82 19.5c-1.13 1.86.22 4.5 2.89 3.88C10 22.5 19 17 21 10c-2 0-5 .5-7 3"/>' +
+          '<path d="M3.82 19.5c1.13-5 4.5-10 9.68-12"/></svg>';
+        lightboxInner.insertBefore(noImg, lightboxClose.nextSibling);
+      }
+
+      const body = document.createElement('div');
+      body.className = 'plant-lightbox-body';
+
+      const name = document.createElement('p');
+      name.className = 'plant-lightbox-name';
+      name.textContent = plant.name;
+      body.appendChild(name);
+
+      if (plant.details) {
+        const details = document.createElement('p');
+        details.className = 'plant-lightbox-details';
+        details.textContent = plant.details;
+        body.appendChild(details);
+      }
+
+      lightboxInner.appendChild(body);
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      lightboxClose.focus();
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+    function escHtml(str) {
+      return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    init();
+  </script>
+</body>
+</html>
