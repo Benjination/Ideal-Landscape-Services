@@ -235,6 +235,29 @@ body {
 .nav-links a:hover::after,
 .nav-links a.active::after { transform: scaleX(1); }
 .nav-links a.active { color: var(--text-white); }
+.nav-pay-btn {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.85);
+  transition: color 140ms;
+  position: relative;
+  padding-bottom: 2px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+.nav-pay-btn::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent-light);
+  transform: scaleX(0);
+  transition: transform 200ms var(--ease-out);
+}
+.nav-pay-btn:hover { color: var(--text-white); }
+.nav-pay-btn:hover::after { transform: scaleX(1); }
 .nav-cta { margin-left: 20px; padding: 10px 20px; font-size: 14px; }
 
 /* Call Today inline nav element */
@@ -298,6 +321,22 @@ body {
 }
 .mobile-drawer a:last-of-type { border-bottom: none; }
 .mobile-drawer a:hover { color: var(--text-white); }
+.mobile-pay-btn {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  padding: 12px 0;
+  border: none;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  width: 100%;
+  display: block;
+  transition: color 140ms;
+}
+.mobile-pay-btn:hover { color: var(--text-white); }
 .mobile-drawer .btn-primary {
   margin-top: 28px;
   width: 100%;
@@ -1241,6 +1280,20 @@ body {
 }
 .footer-contact-item a { color: rgba(255,255,255,0.55); transition: color 140ms; }
 .footer-contact-item a:hover { color: var(--text-white); }
+.footer-pay-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent-light);
+  padding: 0;
+  transition: color 140ms;
+}
+.footer-pay-btn:hover { color: var(--text-white); }
+.AuthorizeNetSeal { line-height: 0; }
+.AuthorizeNetSeal img { display: block; }
 .footer-bottom {
   border-top: 1px solid rgba(255,255,255,0.07);
   margin-top: 56px;

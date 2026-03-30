@@ -15,3 +15,22 @@ ADMIN PANEL
   - Once confirmed, we enable Email/Password Auth in Firebase Console and create the user
   - The admin panel will be live at: /admin/ on the site
 
+CONTACT FORM EMAIL NOTIFICATIONS
+---------------------------------
+Currently sending to a test Gmail. To switch to David and Kathy's email:
+
+1. Each person who will receive the emails needs to generate a Gmail App Password:
+   - Log into the Gmail account at myaccount.google.com
+   - Go to Security → 2-Step Verification (must be enabled first)
+   - At the bottom: App passwords → create one named "Firebase"
+   - Copy the 16-character password it generates
+
+2. Provide their Gmail address and App Password so we can update the Firebase Extension:
+   - Firebase Console → Extensions → Trigger Email from Firestore → Reconfigure
+   - New SMTP URI format: smtps://their.email%40gmail.com:APP_PASSWORD@smtp.gmail.com:465
+   - Note: the @ in the email address must be written as %40
+
+3. To send to multiple recipients, the notifyNewContact function in functions/index.js
+   needs the "to" field updated to an array:
+     to: ["david@gmail.com", "kathy@gmail.com"]
+
