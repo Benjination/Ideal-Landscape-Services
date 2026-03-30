@@ -446,6 +446,87 @@
     }
     .placeholder-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
     .placeholder-card p  { font-size: 13px; color: var(--text-muted); }
+    /* ── Plant Repository ──────────────────────────────────── */
+    .plant-go-live-row {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+      padding: 12px 14px; background: var(--surface-2);
+      border-radius: var(--radius); border: 1px solid var(--border);
+    }
+    .plant-go-live-row span { font-size: 13px; color: var(--text-muted); }
+    .plant-controls { display: flex; gap: 10px; margin-bottom: 18px; align-items: center; flex-wrap: wrap; }
+    .plant-search {
+      flex: 1; min-width: 180px; background: var(--surface-2);
+      border: 1px solid var(--border); color: var(--text-white);
+      border-radius: var(--radius); padding: 8px 12px; font-size: 13px;
+    }
+    .plant-search::placeholder { color: var(--text-muted); }
+    .plant-alpha-section { margin-bottom: 20px; }
+    .plant-alpha-heading {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--accent-l); border-bottom: 1px solid var(--border);
+      padding-bottom: 5px; margin-bottom: 8px;
+    }
+    .plant-list { display: flex; flex-direction: column; gap: 4px; }
+    .plant-list-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 12px; background: var(--surface-2); border-radius: var(--radius);
+      border: 1px solid transparent; cursor: pointer;
+      transition: border-color 140ms, background 140ms;
+    }
+    .plant-list-item:hover, .plant-list-item.selected {
+      border-color: var(--accent-l); background: rgba(77,138,90,0.08);
+    }
+    .plant-list-item-name { font-size: 13px; font-weight: 500; }
+    .plant-list-actions { display: flex; gap: 6px; opacity: 0; transition: opacity 140ms; }
+    .plant-list-item:hover .plant-list-actions { opacity: 1; }
+    .plant-preview {
+      margin-top: 20px; padding: 20px; background: var(--surface-2);
+      border-radius: var(--radius); border: 1px solid var(--border);
+    }
+    .plant-preview-img-wrap {
+      position: relative; border-radius: var(--radius); overflow: hidden;
+      max-width: 460px;
+    }
+    .plant-preview-img-wrap img {
+      width: 100%; display: block; aspect-ratio: 4/3; object-fit: cover;
+    }
+    .plant-name-overlay {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 36px 16px 14px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.72));
+      font-size: 18px; font-weight: 700; color: #fff; letter-spacing: 0.01em;
+      transition: opacity 220ms; pointer-events: none;
+    }
+    .plant-preview-img-wrap:hover .plant-name-overlay { opacity: 0; }
+    .plant-preview-name { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+    .plant-preview-details {
+      font-size: 13px; color: var(--text-muted); line-height: 1.7;
+      white-space: pre-wrap; margin-top: 10px;
+    }
+    .plant-preview-actions { display: flex; gap: 10px; margin-top: 16px; }
+    .plant-form-wrap {
+      margin-top: 20px; padding: 20px; background: var(--surface-2);
+      border-radius: var(--radius); border: 1px solid var(--border);
+    }
+    .plant-form-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 16px;
+    }
+    .plant-form-img-preview {
+      width: 120px; aspect-ratio: 4/3; object-fit: cover;
+      border-radius: var(--radius); border: 1px solid var(--border);
+      display: none; margin-bottom: 10px;
+    }
+    .plant-paste-zone {
+      border: 2px dashed var(--border); border-radius: var(--radius);
+      padding: 12px 16px; font-size: 12px; color: var(--text-muted);
+      text-align: center; cursor: pointer; outline: none;
+      transition: border-color .15s, color .15s; margin-top: 6px;
+    }
+    .plant-paste-zone:focus, .plant-paste-zone:hover { border-color: var(--accent-l); color: var(--accent-l); }
+    .plant-paste-zone.has-image { border-color: var(--accent-l); color: var(--accent-l); }
+    .plant-empty { font-size: 13px; color: var(--text-muted); padding: 24px 0; text-align: center; }
+
     /* Projects admin */
     .proj-coll-list { display: flex; flex-direction: column; gap: 8px; }
     .proj-coll-row {
@@ -635,6 +716,34 @@
           <span class="save-status" id="proj-status"></span>
         </div>
       </div>
+
+      <!-- Plant Repository -->
+      <div class="admin-card" id="plants-card">
+        <div class="admin-card-header">
+          <h3>Plant Repository</h3>
+          <span class="badge" id="plant-count-badge" style="margin-right:4px;">— plants</span>
+          <span class="badge" id="plant-live-badge">Draft</span>
+        </div>
+
+        <div class="plant-go-live-row">
+          <label class="toggle" for="plant-live-toggle">
+            <input type="checkbox" id="plant-live-toggle">
+            <span class="toggle-track"></span>
+          </label>
+          <span>Publish Plants page to the website</span>
+          <span class="save-status" id="plant-live-status" style="margin-left:auto;"></span>
+        </div>
+
+        <div class="plant-controls">
+          <input type="text" class="plant-search" id="plant-search" placeholder="Search plants by name…" autocomplete="off">
+          <button class="btn-save" id="plant-add-btn" style="white-space:nowrap;">+ Add Plant</button>
+        </div>
+
+        <div id="plant-list"><p class="plant-empty">Loading…</p></div>
+        <div id="plant-preview" style="display:none;" class="plant-preview"></div>
+        <div id="plant-form-wrap" style="display:none;" class="plant-form-wrap"></div>
+      </div>
+
     </div>
   </div>
 
@@ -669,6 +778,7 @@
         loadBannerConfig();
         loadBlogPosts();
         loadProjects();
+        loadPlants();
       } else {
         loginScreen.style.display = 'flex';
         dashboard.style.display   = 'none';
@@ -959,9 +1069,12 @@
         let imageUrl = currentEditId ? currentEditImageUrl : '';
         if (file) {
           uploadProgress.style.display = 'block';
-          const fileName = Date.now() + '_' + file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+          blogStatus.textContent = 'Resizing…';
+          const blob = await resizeImage(file);
+          blogStatus.textContent = currentEditId ? 'Updating…' : 'Saving…';
+          const fileName = Date.now() + '_' + file.name.replace(/[^a-zA-Z0-9._-]/g, '_').replace(/\.[^.]+$/, '') + '.jpg';
           const sRef = storageRef(storage, 'blog-images/' + fileName);
-          const task = uploadBytesResumable(sRef, file);
+          const task = uploadBytesResumable(sRef, blob, { contentType: 'image/jpeg' });
           imageUrl = await new Promise((resolve, reject) => {
             task.on('state_changed',
               snap => {
@@ -1239,6 +1352,32 @@
       return tile;
     }
 
+    /* Resize a File to max 1400px wide/tall, JPEG 85%, returns a Blob */
+    function resizeImage(file, maxPx = 1400, quality = 0.85) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onerror = reject;
+        reader.onload = e => {
+          const img = new Image();
+          img.onerror = reject;
+          img.onload = () => {
+            let { width, height } = img;
+            if (width > maxPx || height > maxPx) {
+              if (width >= height) { height = Math.round(height * maxPx / width);  width = maxPx; }
+              else                 { width  = Math.round(width  * maxPx / height); height = maxPx; }
+            }
+            const canvas = document.createElement('canvas');
+            canvas.width = width; canvas.height = height;
+            canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+            canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('Canvas toBlob failed')),
+              'image/jpeg', quality);
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
     function makeUploadSection(collId) {
       const wrap = document.createElement('div');
       wrap.className = 'proj-upload-section';
@@ -1281,9 +1420,11 @@
         uploadStatus.textContent = 'Uploading…';
         try {
           for (const file of files) {
-            const fileName = Date.now() + '_' + file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+            uploadStatus.textContent = `Resizing & uploading (${Array.from(files).indexOf(file)+1}/${files.length})…`;
+            const blob = await resizeImage(file);
+            const fileName = Date.now() + '_' + file.name.replace(/[^a-zA-Z0-9._-]/g, '_').replace(/\.[^.]+$/, '') + '.jpg';
             const sRef = storageRef(storage, 'project-images/' + fileName);
-            const task = uploadBytesResumable(sRef, file);
+            const task = uploadBytesResumable(sRef, blob, { contentType: 'image/jpeg' });
             const url = await new Promise((resolve, reject) => {
               task.on('state_changed', null, reject, async () => {
                 resolve(await getDownloadURL(task.snapshot.ref));
@@ -1321,6 +1462,363 @@
         projStatus.textContent = 'Error — could not add.';
       } finally { projAddCollBtn.disabled = false; }
     });
+
+    /* ── Plant Repository module ────────────────────────────── */
+    var allPlants         = [];
+    var selectedPlantId   = null;
+    var plantEditingId    = null;
+
+    const plantListEl     = document.getElementById('plant-list');
+    const plantPreviewEl  = document.getElementById('plant-preview');
+    const plantFormWrap   = document.getElementById('plant-form-wrap');
+    const plantSearchIn   = document.getElementById('plant-search');
+    const plantAddBtn     = document.getElementById('plant-add-btn');
+    const plantLiveToggle = document.getElementById('plant-live-toggle');
+    const plantLiveBadge  = document.getElementById('plant-live-badge');
+    const plantLiveStatus = document.getElementById('plant-live-status');
+    const plantCountBadge = document.getElementById('plant-count-badge');
+
+    function updatePlantLiveBadge(live) {
+      plantLiveBadge.textContent = live ? 'Live' : 'Draft';
+      plantLiveBadge.className   = 'badge' + (live ? ' on' : '');
+    }
+
+    plantLiveToggle.addEventListener('change', async () => {
+      const live = plantLiveToggle.checked;
+      updatePlantLiveBadge(live);
+      plantLiveStatus.textContent = 'Saving…';
+      plantLiveStatus.style.color = '';
+      try {
+        await setDoc(doc(db, 'siteConfig', 'plants'), { live }, { merge: true });
+        plantLiveStatus.textContent = live ? 'Published ✓' : 'Unpublished ✓';
+        plantLiveStatus.style.color = 'var(--accent-l)';
+        setTimeout(() => { plantLiveStatus.textContent = ''; plantLiveStatus.style.color = ''; }, 3000);
+      } catch(err) {
+        console.error('Plant live toggle save failed:', err);
+        // revert toggle + badge to previous state
+        plantLiveToggle.checked = !live;
+        updatePlantLiveBadge(!live);
+        plantLiveStatus.textContent = 'Save failed — ' + (err.code || err.message || 'unknown error');
+        plantLiveStatus.style.color = 'var(--danger)';
+        setTimeout(() => { plantLiveStatus.textContent = ''; plantLiveStatus.style.color = ''; }, 6000);
+      }
+    });
+
+    async function loadPlants() {
+      try {
+        const liveSnap = await getDoc(doc(db, 'siteConfig', 'plants'));
+        const live = liveSnap.exists() ? liveSnap.data().live === true : false;
+        plantLiveToggle.checked = live;
+        updatePlantLiveBadge(live);
+
+        const snap = await getDocs(collection(db, 'plants'));
+        allPlants = [];
+        snap.forEach(d => allPlants.push({ id: d.id, ...d.data() }));
+        allPlants.sort((a, b) => a.name.localeCompare(b.name));
+        plantCountBadge.textContent = allPlants.length + ' plant' + (allPlants.length === 1 ? '' : 's');
+        renderPlantList();
+      } catch(err) {
+        plantListEl.innerHTML = '<p class="plant-empty">Could not load plants.</p>';
+      }
+    }
+
+    function renderPlantList() {
+      const query    = plantSearchIn.value.trim().toLowerCase();
+      const filtered = query
+        ? allPlants.filter(p => p.name.toLowerCase().includes(query))
+        : allPlants;
+
+      plantListEl.innerHTML = '';
+
+      if (filtered.length === 0) {
+        plantListEl.innerHTML = '<p class="plant-empty">' +
+          (query ? 'No plants match your search.' : 'No plants yet. Add one using the button above.') +
+          '</p>';
+        return;
+      }
+
+      if (query) {
+        const list = document.createElement('div');
+        list.className = 'plant-list';
+        filtered.forEach(p => list.appendChild(makePlantListItem(p)));
+        plantListEl.appendChild(list);
+      } else {
+        const groups = {};
+        filtered.forEach(p => {
+          const letter = p.name[0].toUpperCase();
+          if (!groups[letter]) groups[letter] = [];
+          groups[letter].push(p);
+        });
+        Object.keys(groups).sort().forEach(letter => {
+          const section = document.createElement('div');
+          section.className = 'plant-alpha-section';
+          const heading = document.createElement('div');
+          heading.className = 'plant-alpha-heading';
+          heading.textContent = letter;
+          const list = document.createElement('div');
+          list.className = 'plant-list';
+          groups[letter].forEach(p => list.appendChild(makePlantListItem(p)));
+          section.appendChild(heading);
+          section.appendChild(list);
+          plantListEl.appendChild(section);
+        });
+      }
+    }
+
+    function makePlantListItem(plant) {
+      const item = document.createElement('div');
+      item.className = 'plant-list-item' + (plant.id === selectedPlantId ? ' selected' : '');
+      item.dataset.id = plant.id;
+
+      const nameEl = document.createElement('span');
+      nameEl.className = 'plant-list-item-name';
+      nameEl.textContent = plant.name;
+
+      const actions = document.createElement('div');
+      actions.className = 'plant-list-actions';
+
+      const editBtn = document.createElement('button');
+      editBtn.className = 'btn-pub-toggle live';
+      editBtn.textContent = 'Edit';
+      editBtn.style.cssText = 'font-size:11px; padding:3px 10px;';
+      editBtn.addEventListener('click', e => { e.stopPropagation(); showPlantForm(plant); });
+
+      const delBtn = document.createElement('button');
+      delBtn.className = 'btn-icon-delete';
+      delBtn.innerHTML = '&#x2715;';
+      delBtn.title = 'Delete plant';
+      delBtn.addEventListener('click', async e => {
+        e.stopPropagation();
+        if (!confirm('Delete "' + plant.name + '"?')) return;
+        try {
+          await deleteDoc(doc(db, 'plants', plant.id));
+          if (selectedPlantId === plant.id) { selectedPlantId = null; hidePlantPreview(); }
+          allPlants = allPlants.filter(p => p.id !== plant.id);
+          renderPlantList();
+        } catch(err) {
+          plantLiveStatus.textContent = 'Delete failed.';
+          setTimeout(() => { plantLiveStatus.textContent = ''; }, 3000);
+        }
+      });
+
+      actions.appendChild(editBtn);
+      actions.appendChild(delBtn);
+      item.appendChild(nameEl);
+      item.appendChild(actions);
+
+      item.addEventListener('click', () => {
+        selectedPlantId = plant.id;
+        hidePlantForm();
+        renderPlantList();
+        showPlantPreview(plant);
+      });
+
+      return item;
+    }
+
+    function showPlantPreview(plant) {
+      plantPreviewEl.style.display = 'block';
+      plantPreviewEl.innerHTML = '';
+
+      if (plant.imageUrl) {
+        const wrap = document.createElement('div');
+        wrap.className = 'plant-preview-img-wrap';
+        const img = document.createElement('img');
+        img.src = plant.imageUrl; img.alt = plant.name; img.loading = 'lazy';
+        const overlay = document.createElement('div');
+        overlay.className = 'plant-name-overlay';
+        overlay.textContent = plant.name;
+        wrap.appendChild(img); wrap.appendChild(overlay);
+        plantPreviewEl.appendChild(wrap);
+      } else {
+        const nameEl = document.createElement('div');
+        nameEl.className = 'plant-preview-name';
+        nameEl.textContent = plant.name;
+        plantPreviewEl.appendChild(nameEl);
+      }
+
+      if (plant.details) {
+        const details = document.createElement('div');
+        details.className = 'plant-preview-details';
+        details.textContent = plant.details;
+        plantPreviewEl.appendChild(details);
+      }
+
+      const actions = document.createElement('div');
+      actions.className = 'plant-preview-actions';
+      const editBtn = document.createElement('button');
+      editBtn.className = 'btn-save';
+      editBtn.style.cssText = 'font-size:12px; padding:6px 16px;';
+      editBtn.textContent = 'Edit';
+      editBtn.addEventListener('click', () => showPlantForm(plant));
+      const closeBtn = document.createElement('button');
+      closeBtn.className = 'btn-cancel';
+      closeBtn.style.cssText = 'font-size:12px; padding:6px 16px; background:none; border:1px solid var(--border); color:var(--text-muted); border-radius:var(--radius); cursor:pointer;';
+      closeBtn.textContent = 'Close';
+      closeBtn.addEventListener('click', () => { selectedPlantId = null; hidePlantPreview(); renderPlantList(); });
+      actions.appendChild(editBtn); actions.appendChild(closeBtn);
+      plantPreviewEl.appendChild(actions);
+    }
+
+    function hidePlantPreview() { plantPreviewEl.style.display = 'none'; plantPreviewEl.innerHTML = ''; }
+
+    function showPlantForm(plant) {
+      plantEditingId = plant ? plant.id : null;
+      hidePlantPreview();
+      selectedPlantId = null;
+      renderPlantList();
+      plantFormWrap.style.display = 'block';
+      plantFormWrap.innerHTML = '';
+
+      const title = document.createElement('p');
+      title.className = 'plant-form-title';
+      title.textContent = plant ? 'Edit Plant' : 'Add New Plant';
+
+      // Image preview (if editing)
+      const imgPreview = document.createElement('img');
+      imgPreview.className = 'plant-form-img-preview';
+      if (plant && plant.imageUrl) { imgPreview.src = plant.imageUrl; imgPreview.style.display = 'block'; }
+
+      // Name
+      const nameField = document.createElement('div');
+      nameField.className = 'field';
+      const nameLbl = document.createElement('label'); nameLbl.textContent = 'Plant Name';
+      const nameIn = document.createElement('input');
+      nameIn.type = 'text'; nameIn.maxLength = 100;
+      nameIn.placeholder = 'e.g. Live Oak';
+      nameIn.value = plant ? plant.name : plantSearchIn.value.trim();
+      nameField.appendChild(nameLbl); nameField.appendChild(nameIn);
+
+      // Details
+      const detailField = document.createElement('div');
+      detailField.className = 'field';
+      const detailLbl = document.createElement('label'); detailLbl.textContent = 'Details (optional)';
+      const detailTA = document.createElement('textarea');
+      detailTA.rows = 4; detailTA.placeholder = 'Sun requirements, growth habit, care notes…';
+      detailTA.value = plant ? (plant.details || '') : '';
+      detailTA.style.resize = 'vertical';
+      detailField.appendChild(detailLbl); detailField.appendChild(detailTA);
+
+      // Image upload
+      let pastedBlob = null;
+
+      const imgField = document.createElement('div');
+      imgField.className = 'field';
+      const imgLbl = document.createElement('label');
+      imgLbl.textContent = plant && plant.imageUrl ? 'Replace Image (optional)' : 'Image (optional)';
+      const fileIn = document.createElement('input');
+      fileIn.type = 'file'; fileIn.accept = 'image/*';
+      fileIn.className = 'proj-upload-file';
+      fileIn.addEventListener('change', () => {
+        if (fileIn.files[0]) {
+          pastedBlob = null;
+          const url = URL.createObjectURL(fileIn.files[0]);
+          imgPreview.src = url; imgPreview.style.display = 'block';
+          pasteZone.textContent = 'Or paste an image (⌘V / Ctrl+V)';
+          pasteZone.classList.remove('has-image');
+        }
+      });
+
+      const pasteZone = document.createElement('div');
+      pasteZone.className = 'plant-paste-zone';
+      pasteZone.tabIndex = 0;
+      pasteZone.textContent = 'Or paste an image (⌘V / Ctrl+V)';
+      pasteZone.title = 'Click here, then paste a copied image from your browser';
+      pasteZone.addEventListener('paste', e => {
+        const items = e.clipboardData && e.clipboardData.items;
+        if (!items) return;
+        for (const item of Array.from(items)) {
+          if (item.type.startsWith('image/')) {
+            const blob = item.getAsFile();
+            if (blob) {
+              pastedBlob = blob;
+              imgPreview.src = URL.createObjectURL(blob);
+              imgPreview.style.display = 'block';
+              pasteZone.textContent = 'Image pasted ✓ — paste again to replace';
+              pasteZone.classList.add('has-image');
+              e.preventDefault();
+            }
+            break;
+          }
+        }
+      });
+
+      imgField.appendChild(imgLbl); imgField.appendChild(imgPreview); imgField.appendChild(fileIn); imgField.appendChild(pasteZone);
+
+      // Save / Cancel row
+      const saveRow = document.createElement('div');
+      saveRow.className = 'save-row';
+      const saveBtn = document.createElement('button');
+      saveBtn.className = 'btn-save';
+      saveBtn.textContent = plant ? 'Update Plant' : 'Save Plant';
+      const cancelBtn = document.createElement('button');
+      cancelBtn.className = 'btn-cancel';
+      cancelBtn.style.cssText = 'background:none; border:1px solid var(--border); color:var(--text-muted); border-radius:var(--radius); padding:7px 16px; cursor:pointer; font-size:13px; margin-left:8px;';
+      cancelBtn.textContent = 'Cancel';
+      const statusEl = document.createElement('span');
+      statusEl.className = 'save-status';
+      statusEl.style.marginLeft = '12px';
+      saveRow.appendChild(saveBtn); saveRow.appendChild(cancelBtn); saveRow.appendChild(statusEl);
+
+      plantFormWrap.appendChild(title);
+      plantFormWrap.appendChild(nameField);
+      plantFormWrap.appendChild(detailField);
+      plantFormWrap.appendChild(imgField);
+      plantFormWrap.appendChild(saveRow);
+
+      cancelBtn.addEventListener('click', hidePlantForm);
+
+      saveBtn.addEventListener('click', async () => {
+        const name = nameIn.value.trim();
+        if (!name) { statusEl.textContent = 'Name is required.'; return; }
+        saveBtn.disabled = true;
+        statusEl.textContent = (fileIn.files[0] || pastedBlob) ? 'Resizing…' : 'Saving…';
+
+        try {
+          let imageUrl = plant ? (plant.imageUrl || '') : '';
+          const sourceFile = fileIn.files[0] || pastedBlob;
+          if (sourceFile) {
+            statusEl.textContent = 'Resizing…';
+            const blob = await resizeImage(sourceFile);
+            const baseName = fileIn.files[0]
+              ? fileIn.files[0].name.replace(/[^a-zA-Z0-9._-]/g, '_').replace(/\.[^.]+$/, '')
+              : 'pasted';
+            const fname = Date.now() + '_' + baseName + '.jpg';
+            const sRef = storageRef(storage, 'plant-images/' + fname);
+            const task = uploadBytesResumable(sRef, blob, { contentType: 'image/jpeg' });
+            imageUrl = await new Promise((res, rej) => {
+              task.on('state_changed', null, rej, async () => res(await getDownloadURL(task.snapshot.ref)));
+            });
+          }
+
+          const data = { name, nameLower: name.toLowerCase(), details: detailTA.value.trim(), imageUrl, updatedAt: serverTimestamp() };
+          if (plantEditingId) {
+            await updateDoc(doc(db, 'plants', plantEditingId), data);
+            statusEl.textContent = 'Updated ✓';
+          } else {
+            data.createdAt = serverTimestamp();
+            await addDoc(collection(db, 'plants'), data);
+            statusEl.textContent = 'Saved ✓';
+          }
+
+          setTimeout(() => { statusEl.textContent = ''; }, 2500);
+          if (!plantEditingId) { plantSearchIn.value = ''; }
+          await loadPlants();
+          hidePlantForm();
+        } catch(err) {
+          statusEl.textContent = 'Error — could not save.';
+        } finally { saveBtn.disabled = false; }
+      });
+    }
+
+    function hidePlantForm() {
+      plantEditingId = null;
+      plantFormWrap.style.display = 'none';
+      plantFormWrap.innerHTML = '';
+    }
+
+    plantSearchIn.addEventListener('input', renderPlantList);
+    plantAddBtn.addEventListener('click', () => { hidePlantPreview(); showPlantForm(null); });
   </script>
 </body>
 </html>
