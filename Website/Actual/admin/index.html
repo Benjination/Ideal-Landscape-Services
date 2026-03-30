@@ -295,6 +295,118 @@
       transition: opacity 300ms;
     }
 
+    /* ── Blog module ─────────────────────────────────────────── */
+    .blog-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    @media (max-width: 560px) { .blog-form-grid { grid-template-columns: 1fr; } }
+    .blog-form-grid .field,
+    .blog-field-full { margin-bottom: 0; }
+    .blog-field-full { margin-bottom: 14px; }
+    .admin-card input[type='text'],
+    .admin-card input[type='date'] {
+      width: 100%;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+      padding: 10px 12px;
+      border-radius: var(--radius);
+      outline: none;
+      transition: border-color 160ms;
+    }
+    .admin-card input[type='text']:focus,
+    .admin-card input[type='date']:focus { border-color: var(--accent-l); }
+    /* date picker icon tint */
+    .admin-card input[type='date']::-webkit-calendar-picker-indicator { filter: invert(0.7); cursor: pointer; }
+    .admin-card textarea.blog-desc {
+      width: 100%;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+      line-height: 1.6;
+      padding: 10px 12px;
+      border-radius: var(--radius);
+      resize: vertical;
+      min-height: 72px;
+      outline: none;
+      transition: border-color 160ms;
+    }
+    .admin-card textarea.blog-desc:focus { border-color: var(--accent-l); }
+    .image-upload-area {
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+      background: var(--surface-2);
+      padding: 18px 14px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 160ms;
+      position: relative;
+      overflow: hidden;
+    }
+    .image-upload-area:hover { border-color: var(--accent-l); }
+    .image-upload-area input[type='file'] {
+      position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+    }
+    .image-upload-area .upload-prompt { font-size: 13px; color: var(--text-muted); pointer-events: none; }
+    .image-upload-area .upload-filename { font-size: 13px; color: var(--accent-l); pointer-events: none; }
+    .image-preview-thumb {
+      width: 100%; max-height: 120px; object-fit: cover; border-radius: var(--radius);
+      margin-top: 8px; display: none;
+    }
+    .blog-form-divider {
+      border: none; border-top: 1px solid var(--border); margin: 20px 0;
+    }
+    /* Post list */
+    .blog-post-list { display: flex; flex-direction: column; gap: 10px; }
+    .blog-post-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 14px;
+    }
+    .blog-post-thumb {
+      width: 52px; height: 40px; border-radius: 3px; object-fit: cover; flex-shrink: 0;
+      background: var(--surface);
+    }
+    .blog-post-info { flex: 1; min-width: 0; }
+    .blog-post-info .pi-title { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .blog-post-info .pi-meta  { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+    .blog-post-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .badge-draft {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 2px 8px; border-radius: 100px;
+      background: rgba(255,255,255,0.06); color: var(--text-muted);
+    }
+    .badge-live {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 2px 8px; border-radius: 100px;
+      background: rgba(77,138,90,0.18); color: var(--accent-l);
+    }
+    .btn-icon-delete {
+      background: none; border: 1px solid var(--border); color: var(--text-muted);
+      border-radius: var(--radius); padding: 5px 9px; font-size: 13px;
+      transition: border-color 160ms, color 160ms;
+    }
+    .btn-icon-delete:hover { border-color: var(--danger); color: var(--danger); }
+    .blog-empty { font-size: 13px; color: var(--text-muted); text-align: center; padding: 18px 0; }
+    .blog-upload-progress {
+      height: 3px; background: var(--surface-2); border-radius: 2px;
+      margin-top: 6px; overflow: hidden; display: none;
+    }
+    .blog-upload-progress-bar {
+      height: 100%; background: var(--accent-l); width: 0%; transition: width 200ms;
+    }
+
     /* Coming soon placeholder cards */
     .placeholder-card {
       background: var(--surface);
@@ -373,12 +485,64 @@
         </div>
       </div>
 
-      <!-- Placeholder: Blog Posts -->
-      <div class="placeholder-card">
-        <span class="ph-icon">📝</span>
-        <div>
+      <!-- Blog Posts Module -->
+      <div class="admin-card" id="blog-card">
+        <div class="admin-card-header">
           <h3>Blog Posts</h3>
-          <p>Coming soon — add, edit, and publish blog articles from here.</p>
+          <span class="badge on" id="blog-count-badge">0 posts</span>
+        </div>
+
+        <!-- Create form -->
+        <div class="blog-form-grid">
+          <div>
+            <div class="field" style="margin-bottom:14px;">
+              <label for="blog-title">Title</label>
+              <input type="text" id="blog-title" placeholder="Enter blog title" maxlength="120">
+            </div>
+            <div class="field" style="margin-bottom:14px;">
+              <label for="blog-date">Date</label>
+              <input type="date" id="blog-date">
+            </div>
+          </div>
+          <div>
+            <label class="field" style="display:block; font-size:11px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-muted); margin-bottom:7px;">Cover Image</label>
+            <div class="image-upload-area" id="image-upload-area">
+              <input type="file" id="blog-image" accept="image/*">
+              <p class="upload-prompt" id="upload-prompt">Click to choose an image</p>
+              <p class="upload-filename" id="upload-filename" style="display:none;"></p>
+              <img id="image-preview-thumb" class="image-preview-thumb" alt="">
+            </div>
+          </div>
+        </div>
+
+        <div class="blog-field-full">
+          <label style="display:block; font-size:11px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-muted); margin-bottom:7px;" for="blog-desc">Description / Excerpt</label>
+          <textarea class="blog-desc" id="blog-desc" placeholder="Short description shown on the blog card…" maxlength="400"></textarea>
+        </div>
+
+        <div class="toggle-row" style="margin-bottom:0;">
+          <label class="toggle" for="blog-publish">
+            <input type="checkbox" id="blog-publish" checked>
+            <span class="toggle-track"></span>
+          </label>
+          <span class="toggle-label">Publish immediately</span>
+        </div>
+
+        <div class="blog-upload-progress" id="blog-upload-progress">
+          <div class="blog-upload-progress-bar" id="blog-upload-bar"></div>
+        </div>
+
+        <div class="save-row" style="margin-top:16px;">
+          <button class="btn-save" id="blog-add-btn">Add Post</button>
+          <span class="save-status" id="blog-status"></span>
+        </div>
+
+        <hr class="blog-form-divider">
+
+        <!-- Existing dynamic posts list -->
+        <p style="font-size:11px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-muted); margin-bottom:12px;">Published Posts</p>
+        <div class="blog-post-list" id="blog-post-list">
+          <p class="blog-empty" id="blog-empty">No posts yet — add one above.</p>
         </div>
       </div>
 
@@ -395,15 +559,21 @@
 
   <script type="module">
     import {
-      db, auth,
+      db, auth, storage,
       signInWithEmailAndPassword,
       signOut,
       onAuthStateChanged
     } from '../js/firebase-init.js';
 
     import {
-      doc, getDoc, setDoc
+      doc, getDoc, setDoc,
+      collection, addDoc, getDocs, deleteDoc,
+      serverTimestamp
     } from 'https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js';
+
+    import {
+      ref as storageRef, uploadBytesResumable, getDownloadURL
+    } from 'https://www.gstatic.com/firebasejs/11.0.0/firebase-storage.js';
 
     /* ── Auth state ─────────────────────────────────────────── */
     const loginScreen = document.getElementById('login-screen');
@@ -416,6 +586,7 @@
         dashboard.style.display   = 'block';
         userEmailEl.textContent   = user.email;
         loadBannerConfig();
+        loadBlogPosts();
       } else {
         loginScreen.style.display = 'flex';
         dashboard.style.display   = 'none';
@@ -500,6 +671,193 @@
         saveStatus.textContent = 'Error — could not save.';
       } finally {
         saveBtn.disabled = false;
+      }
+    });
+
+    /* ── Blog module ──────────────────────────────────────────── */
+    const blogColRef    = collection(db, 'blogPosts');
+    const blogAddBtn    = document.getElementById('blog-add-btn');
+    const blogStatus    = document.getElementById('blog-status');
+    const blogPostList  = document.getElementById('blog-post-list');
+    const blogEmpty     = document.getElementById('blog-empty');
+    const blogCountBadge = document.getElementById('blog-count-badge');
+    const blogTitleIn   = document.getElementById('blog-title');
+    const blogDateIn    = document.getElementById('blog-date');
+    const blogDescIn    = document.getElementById('blog-desc');
+    const blogPublishIn = document.getElementById('blog-publish');
+    const blogImageIn   = document.getElementById('blog-image');
+    const uploadPrompt  = document.getElementById('upload-prompt');
+    const uploadFilename = document.getElementById('upload-filename');
+    const imageThumb    = document.getElementById('image-preview-thumb');
+    const uploadProgress = document.getElementById('blog-upload-progress');
+    const uploadBar      = document.getElementById('blog-upload-bar');
+
+    // Auto-fill today's date
+    blogDateIn.value = new Date().toISOString().slice(0, 10);
+
+    // Image preview
+    blogImageIn.addEventListener('change', () => {
+      const file = blogImageIn.files[0];
+      if (!file) return;
+      uploadPrompt.style.display  = 'none';
+      uploadFilename.style.display = 'block';
+      uploadFilename.textContent  = file.name;
+      const reader = new FileReader();
+      reader.onload = e => {
+        imageThumb.src = e.target.result;
+        imageThumb.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    });
+
+    function resetBlogForm() {
+      blogTitleIn.value   = '';
+      blogDescIn.value    = '';
+      blogDateIn.value    = new Date().toISOString().slice(0, 10);
+      blogPublishIn.checked = true;
+      blogImageIn.value   = '';
+      uploadPrompt.style.display   = 'block';
+      uploadFilename.style.display = 'none';
+      uploadFilename.textContent   = '';
+      imageThumb.src   = '';
+      imageThumb.style.display = 'none';
+      uploadProgress.style.display = 'none';
+      uploadBar.style.width = '0%';
+    }
+
+    async function loadBlogPosts() {
+      try {
+        const snap = await getDocs(blogColRef);
+        const posts = [];
+        snap.forEach(d => posts.push({ id: d.id, ...d.data() }));
+        posts.sort((a, b) => (b.dateStr || '').localeCompare(a.dateStr || ''));
+        renderBlogList(posts);
+      } catch (err) {
+        blogStatus.textContent = 'Could not load posts.';
+      }
+    }
+
+    function renderBlogList(posts) {
+      blogCountBadge.textContent = posts.length + ' post' + (posts.length !== 1 ? 's' : '');
+      if (posts.length === 0) {
+        blogEmpty.style.display = 'block';
+        blogPostList.querySelectorAll('.blog-post-item').forEach(el => el.remove());
+        return;
+      }
+      blogEmpty.style.display = 'none';
+      blogPostList.querySelectorAll('.blog-post-item').forEach(el => el.remove());
+      posts.forEach(post => {
+        const item = document.createElement('div');
+        item.className = 'blog-post-item';
+        item.dataset.id = post.id;
+
+        const thumb = document.createElement('img');
+        thumb.className = 'blog-post-thumb';
+        thumb.src = post.imageUrl || '';
+        thumb.alt = '';
+        if (!post.imageUrl) thumb.style.background = 'var(--surface)';
+
+        const info = document.createElement('div');
+        info.className = 'blog-post-info';
+        const dateLabel = post.dateStr
+          ? new Date(post.dateStr + 'T12:00:00').toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' })
+          : '';
+        info.innerHTML = `<p class="pi-title">${escHtml(post.title)}</p><p class="pi-meta">${escHtml(dateLabel)}</p>`;
+
+        const actions = document.createElement('div');
+        actions.className = 'blog-post-actions';
+
+        const badge = document.createElement('span');
+        badge.className = post.published ? 'badge-live' : 'badge-draft';
+        badge.textContent = post.published ? 'Live' : 'Draft';
+
+        const delBtn = document.createElement('button');
+        delBtn.className = 'btn-icon-delete';
+        delBtn.title = 'Delete post';
+        delBtn.innerHTML = '&#x2715;';
+        delBtn.addEventListener('click', () => deleteBlogPost(post.id));
+
+        actions.appendChild(badge);
+        actions.appendChild(delBtn);
+        item.appendChild(thumb);
+        item.appendChild(info);
+        item.appendChild(actions);
+        blogPostList.appendChild(item);
+      });
+    }
+
+    function escHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    async function deleteBlogPost(id) {
+      if (!confirm('Delete this blog post? This cannot be undone.')) return;
+      try {
+        await deleteDoc(doc(db, 'blogPosts', id));
+        await loadBlogPosts();
+      } catch (err) {
+        blogStatus.textContent = 'Error deleting post.';
+        setTimeout(() => { blogStatus.textContent = ''; }, 3000);
+      }
+    }
+
+    blogAddBtn.addEventListener('click', async () => {
+      const title   = blogTitleIn.value.trim();
+      const dateVal = blogDateIn.value;
+      const desc    = blogDescIn.value.trim();
+      const publish = blogPublishIn.checked;
+      const file    = blogImageIn.files[0];
+
+      if (!title)   { blogStatus.textContent = 'Title is required.'; return; }
+      if (!dateVal) { blogStatus.textContent = 'Date is required.';  return; }
+      if (!desc)    { blogStatus.textContent = 'Description is required.'; return; }
+
+      blogAddBtn.disabled = true;
+      blogStatus.textContent = 'Saving…';
+
+      try {
+        let imageUrl = '';
+        if (file) {
+          // Upload to Firebase Storage
+          uploadProgress.style.display = 'block';
+          const fileName   = Date.now() + '_' + file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+          const sRef = storageRef(storage, 'blog-images/' + fileName);
+          const task = uploadBytesResumable(sRef, file);
+          imageUrl = await new Promise((resolve, reject) => {
+            task.on('state_changed',
+              snap => {
+                const pct = (snap.bytesTransferred / snap.totalBytes) * 100;
+                uploadBar.style.width = pct + '%';
+              },
+              err => reject(err),
+              async () => { resolve(await getDownloadURL(task.snapshot.ref)); }
+            );
+          });
+        }
+
+        await addDoc(blogColRef, {
+          title,
+          dateStr:   dateVal,
+          desc,
+          published: publish,
+          imageUrl,
+          createdAt: serverTimestamp()
+        });
+
+        blogStatus.textContent = 'Post added ✓';
+        setTimeout(() => { blogStatus.textContent = ''; }, 3000);
+        resetBlogForm();
+        await loadBlogPosts();
+      } catch (err) {
+        blogStatus.textContent = 'Error — could not save.';
+      } finally {
+        blogAddBtn.disabled = false;
+        uploadProgress.style.display = 'none';
+        uploadBar.style.width = '0%';
       }
     });
   </script>

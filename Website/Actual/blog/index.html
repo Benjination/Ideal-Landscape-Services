@@ -64,88 +64,8 @@
     <div class="container">
       <p class="section-sub" style="margin-top:-8px; max-width:580px;">Texas lawn care guides, outdoor design ideas, and seasonal maintenance tips from our team at Ideal Landscape Services.</p>
 
-      <div class="blog-grid">
-
-        <!-- Post 1 -->
-        <a class="blog-card animate-in" href="#mulch-too-mulch">
-          <div class="blog-card-image" style="background-image: url('../images/maintenance/too-much.jpg');"></div>
-          <div class="blog-card-body">
-            <p class="blog-card-meta">March 20, 2015 &nbsp;·&nbsp; Maintenance</p>
-            <p class="blog-card-title">Mulch, Too Mulch!</p>
-            <p class="blog-card-excerpt">There is an ongoing debate over how much mulch is too much or too little. A well-applied 3-inch layer provides the protection soil and plants need without inhibiting natural growth...</p>
-          </div>
-        </a>
-
-        <!-- Post 2 -->
-        <a class="blog-card animate-in" href="#what-is-scalping">
-          <div class="blog-card-image" style="background-image: url('../images/maintenance/scalping.jpg');"></div>
-          <div class="blog-card-body">
-            <p class="blog-card-meta">April 13, 2015 &nbsp;·&nbsp; Lawn Care</p>
-            <p class="blog-card-title">What is Scalping Anyway?</p>
-            <p class="blog-card-excerpt">Scalping is mainly intended for Bermuda and St. Augustine grass here in the south. Mowing at the lowest setting allows the sun to raise soil temperature and encourage new spring growth...</p>
-          </div>
-        </a>
-
-        <!-- Post 3 -->
-        <a class="blog-card animate-in" href="#xeriscape-design-tips">
-          <div class="blog-card-image" style="background-image: url('../images/landscaping/Palm-Trees-Xeriscape-Decorative-Rock.jpg');"></div>
-          <div class="blog-card-body">
-            <p class="blog-card-meta">March 28, 2017 &nbsp;·&nbsp; Design</p>
-            <p class="blog-card-title">Xeriscape Design Tips for Texas</p>
-            <p class="blog-card-excerpt">31% of water used by the average Texas family goes to outdoor irrigation — sometimes over 50% in summer. Xeriscape landscaping reduces water use while maintaining beautiful landscapes year-round...</p>
-          </div>
-        </a>
-
-        <!-- Post 4 -->
-        <a class="blog-card animate-in" href="#texas-landscaping-ideas">
-          <div class="blog-card-image" style="background-image: url('../images/maintenance/Low-Maintenance-Landscape.jpg');"></div>
-          <div class="blog-card-body">
-            <p class="blog-card-meta">April 26, 2017 &nbsp;·&nbsp; Design</p>
-            <p class="blog-card-title">Top 3 Low Maintenance Landscaping Ideas</p>
-            <p class="blog-card-excerpt">Spring is the best time to update your yard. Some landscape styles need minimal care and still produce stunning results — here are our top ideas for keeping your Texas lawn beautiful with less work...</p>
-          </div>
-        </a>
-
-        <!-- Post 5 -->
-        <a class="blog-card animate-in" href="#summertime-tips">
-          <div class="blog-card-image" style="background-image: url('../images/landscaping/Lush-Green-Lawn.jpg');"></div>
-          <div class="blog-card-body">
-            <p class="blog-card-meta">June 22, 2017 &nbsp;·&nbsp; Lawn Care</p>
-            <p class="blog-card-title">Summertime Lawn Maintenance Tips for Texas Homeowners</p>
-            <p class="blog-card-excerpt">Why not keep the grass greener on your side of the fence? The warm days of summer can stress your lawn significantly. These quick tips will help you keep it healthy all season...</p>
-          </div>
-        </a>
-
-        <!-- Post 6 -->
-        <a class="blog-card animate-in" href="#water-fountain-functionality">
-          <div class="blog-card-image" style="background-image: url('../images/water-features/Garden-Water-Fountain.jpg');"></div>
-          <div class="blog-card-body">
-            <p class="blog-card-meta">September 1, 2017 &nbsp;·&nbsp; Water Features</p>
-            <p class="blog-card-title">How Does a Water Fountain Work?</p>
-            <p class="blog-card-excerpt">Water fountains are becoming more popular in Texas outdoor landscaping. They add art, relaxation, and financial value to your home. Here's how these amazing landscape features actually function...</p>
-          </div>
-        </a>
-
-        <!-- Post 7 -->
-        <a class="blog-card animate-in" href="#drought-lawn-care">
-          <div class="blog-card-image" style="background-image: url('../images/maintenance/Dry-River-Rock-Bed-with-Native-Grasses.jpg');"></div>
-          <div class="blog-card-body">
-            <p class="blog-card-meta">July 17, 2018 &nbsp;·&nbsp; Lawn Care</p>
-            <p class="blog-card-title">Drought Lawn Care</p>
-            <p class="blog-card-excerpt">In Fort Worth, we like manicured green lawns. Managing drought conditions with water restrictions in place requires planning well before your lawn gets stressed. Here's what you need to know...</p>
-          </div>
-        </a>
-
-        <!-- Post 8 -->
-        <a class="blog-card animate-in" href="#foundation-irrigation">
-          <div class="blog-card-image" style="background-image: url('../images/maintenance/Irrigation-Sage-Rosemary.jpg');"></div>
-          <div class="blog-card-body">
-            <p class="blog-card-meta">October 15, 2018 &nbsp;·&nbsp; Irrigation</p>
-            <p class="blog-card-title">3 Tips for Irrigating Your Home's Foundation</p>
-            <p class="blog-card-excerpt">Ensuring proper moisture levels in the soil around your foundation is critically important in Texas, where expansive clay soil conditions can cause costly foundation problems over time...</p>
-          </div>
-        </a>
-
+      <div class="blog-grid" id="blog-grid">
+        <!-- Posts rendered by JS -->
       </div>
     </div>
   </section>
@@ -229,5 +149,355 @@
   </footer>
 
   <script src="../js/main.js"></script>
+
+  <!-- BLOG READER MODAL -->
+  <div class="blog-modal-overlay" id="blogOverlay" role="dialog" aria-modal="true" aria-labelledby="blogModalTitle">
+    <button class="blog-side-btn blog-side-prev" id="blogPrev" aria-label="Previous article">&#8592;</button>
+    <div class="blog-modal" id="blogModal">
+      <div class="blog-modal-header">
+        <span class="blog-modal-meta-tag" id="blogModalMeta"></span>
+        <button class="blog-modal-close" id="blogModalClose" aria-label="Close article">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <h2 class="blog-modal-title" id="blogModalTitle"></h2>
+      <div class="blog-modal-divider"></div>
+      <div class="blog-modal-body" id="blogModalBody"></div>
+    </div>
+    <button class="blog-side-btn blog-side-next" id="blogNext" aria-label="Next article">&#8594;</button>
+  </div>
+
+  <script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js';
+  import { getFirestore, collection, getDocs } from 'https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js';
+
+  const firebaseConfig = {
+    apiKey:            "AIzaSyDvtzjI5RCjkfVwLVZuP87S5BxQUNNovFc",
+    authDomain:        "ideal-landscapes-services.firebaseapp.com",
+    projectId:         "ideal-landscapes-services",
+    storageBucket:     "ideal-landscapes-services.firebasestorage.app",
+    messagingSenderId: "405135052623",
+    appId:             "1:405135052623:web:cd1b8a4ea4c39e23663f3a"
+  };
+  const app = initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
+
+  /* ── Hardcoded posts ─────────────────────────────────────────── */
+  // dateStr used for sorting (YYYY-MM-DD). source:'hardcoded' keeps them below dynamic posts on tie.
+  var HARDCODED = [
+    {
+      dateStr: '2015-03-20',
+      source:  'hardcoded',
+      title:   "Mulch, Too Mulch!",
+      meta:    "March 20, 2015 &nbsp;&middot;&nbsp; Maintenance",
+      excerpt: "There is an ongoing debate over how much mulch is too much or too little. A well-applied 3-inch layer provides the protection soil and plants need without inhibiting natural growth...",
+      image:   "../images/maintenance/too-much.jpg",
+      body:    `<p>There is an ongoing debate over how much mulch is too much or too little. At what point is mulch counterproductive? Some say 1&ndash;2 inches, while others declare 4 inches is a must. We believe somewhere in the middle is the best way to go.</p>
+<p>Too little mulch will not do anything to discourage weed growth. Alternately, too much blocks adequate water and oxygen exchange at the root of the plants, forcing them to grow into the mulch as opposed to down in the soil where the nutrients are.</p>
+<p>A good 3-inch layer of mulch will provide the protection the soil and plants need to thrive without inhibiting their natural growth.</p>`
+    },
+    {
+      dateStr: '2015-04-13',
+      source:  'hardcoded',
+      title:   "What is Scalping Anyway?",
+      meta:    "April 13, 2015 &nbsp;&middot;&nbsp; Lawn Care",
+      excerpt: "Scalping is mainly intended for Bermuda and St. Augustine grass here in the south. Mowing at the lowest setting allows the sun to raise soil temperature and encourage new spring growth...",
+      image:   "../images/maintenance/scalping.jpg",
+      body:    `<p>Scalping is not beneficial for all grass types. It is mainly intended for Bermuda and St. Augustine grass here in the south. The term "scalping" simply means mowing your grass on the lowest setting on your lawn mower.</p>
+<p>Cutting the lawn down low allows the warmth of the sun to raise the soil temperature and encourage new growth. Scalping also helps remove any thatch, or dry dormant grass, that could be holding too much moisture &mdash; which may eventually lead to various lawn diseases later in the spring.</p>
+<p>Just be careful when planning to scalp that there are no more cold fronts or freezes headed your way, as scalping too soon may have adverse effects on your lawn.</p>`
+    },
+    {
+      dateStr: '2017-03-28',
+      source:  'hardcoded',
+      title:   "Xeriscape Design Tips for Texas",
+      meta:    "March 28, 2017 &nbsp;&middot;&nbsp; Design",
+      excerpt: "31% of water used by the average Texas family goes to outdoor irrigation — sometimes over 50% in summer. Xeriscape landscaping reduces water use while maintaining beautiful landscapes year-round...",
+      image:   "../images/landscaping/Palm-Trees-Xeriscape-Decorative-Rock.jpg",
+      body:    `<p>Daily, 31% of water used in an average Texas family is dedicated to outdoor use or landscape irrigation &mdash; a figure that can exceed 50% during summer. According to the EPA, 50% of the water we use outdoors is wasted due to evaporation and inefficient watering methods. Xeriscape landscaping is a remarkable solution.</p>
+<p>Xeriscaping is not only environmentally friendly but, when done right, it can save time and money &mdash; all while maintaining beautiful landscapes year-round.</p>
+<h3>Our 7 Xeriscape Design Tips</h3>
+<p>To implement a great xeriscape, carefully examine your landscape area and make a design based on your creative needs and water-use budget.</p>
+<h3>1. Regional and Native Plants</h3>
+<p>Determine which plants perform best in your area. Native plants require minimal water beyond normal rainfall, rarely need additional fertilizers, and are mostly resistant to local pests and diseases.</p>
+<h3>2. Limit Your Lawn / Turf Area</h3>
+<p>While maintaining a reasonable turf open space can work for visual appeal, it is wise to use water-conserving species. Give us a call at <a href="tel:+18174577507">817-457-7507</a> for recommendations, or consult your local garden center.</p>
+<h3>3. Group Plants by Their Water Needs</h3>
+<p>Grouping like plants together enhances visual appearance, helps you avoid over-watering, and helps you establish an irrigation system that prevents evaporation during warm weather.</p>
+<h3>4. Soil Improvement</h3>
+<p>Providing an efficient amount of organic material creates a healthy environment for your plants. This aids aeration and quick drainage while also storing water for drier periods.</p>
+<h3>5. Implement an Irrigation System Based on Plant Needs</h3>
+<p>Group together plants that survive on the same amount of water. Drip-type irrigation and soaker hoses are considered the most efficient because they deliver water directly to the plant roots.</p>
+<h3>6. Proper Mulching</h3>
+<p>Mulching is one of the most important features of a xeriscape design. Mulch slows evaporation, adds aesthetic value, and reduces weeds. Organic mulch will slowly enhance your soil as it decomposes over time.</p>
+<h3>7. Low Maintenance Planning</h3>
+<p>Good planning up front dramatically reduces ongoing maintenance. From time to time, check the thickness of the mulch, cover bare soil, and remove weeds. For a free estimate, call us at <a href="tel:+18174577507">817-457-7507</a>.</p>`
+    },
+    {
+      dateStr: '2017-04-26',
+      source:  'hardcoded',
+      title:   "Top 3 Low Maintenance Landscaping Ideas",
+      meta:    "April 26, 2017 &nbsp;&middot;&nbsp; Design",
+      excerpt: "Spring is the best time to update your yard. Some landscape styles need minimal care and still produce stunning results — here are our top ideas for keeping your Texas lawn beautiful with less work...",
+      image:   "../images/maintenance/Low-Maintenance-Landscape.jpg",
+      body:    `<p>Spring is the best time to get out and work on your yard &mdash; it is not too cold, and not yet too hot. However, some homeowners have limited time. While some landscape styles require a lot of care, there are stylish alternatives that require less work and deliver equally impressive results.</p>
+<h3>1. Implement a Xeriscape Design</h3>
+<p>Xeriscape is a landscaping style that requires little to no irrigation. It is a favorite of many Texans because it reduces water use and the time spent caring for plants. Most xeriscape plants can survive with minimal to no maintenance. <a href="../services/landscape-design/index.html">Learn more about our design services.</a></p>
+<h3>2. Use Mulch or Stones Instead of Grass When Possible</h3>
+<p>Mulch adds color and texture to your yard while reducing mowing and watering time. Depending on the look you want, pea gravel or crushed stones can be a great alternative. They are available in different sizes and colors &mdash; just choose a size appropriate for typical wind conditions in your area.</p>
+<h3>3. Use Native Plants</h3>
+<p>Plants already accustomed to your climate rarely need watering or extra care. While selecting plants, consider mixing species by blooming season so your yard looks vibrant all year. Edging creates attractive clean borders between your lawn and flower beds, reducing pruning time.</p>
+<p>For creative Texas landscaping ideas or plant-related questions, give us a call at <a href="tel:+18174577507">817-457-7507</a>.</p>`
+    },
+    {
+      dateStr: '2017-06-22',
+      source:  'hardcoded',
+      title:   "Summertime Lawn Maintenance Tips for Texas Homeowners",
+      meta:    "June 22, 2017 &nbsp;&middot;&nbsp; Lawn Care",
+      excerpt: "Why not keep the grass greener on your side of the fence? The warm days of summer can stress your lawn significantly. These quick tips will help you keep it healthy all season...",
+      image:   "../images/landscaping/Lush-Green-Lawn.jpg",
+      body:    `<p>Why not keep the grass greener on your side of the fence this summer? The warm days of summer can have a significant impact on your lawn. These quick tips will help you keep it healthy all season.</p>
+<h3>How Often Do You Need to Water?</h3>
+<p>One of the biggest challenges your lawn faces during summer is drought. Generally lawns need at least one inch of water per week to stay in good shape.</p>
+<ul>
+  <li>Water deeply, and leave a reasonable interval between waterings to allow the grass to develop drought-resistant roots.</li>
+  <li>Do not wait until the lawn turns brown and then try to water it back to life &mdash; this does not work well. If you cannot water regularly, it can be safer to let the lawn go dormant until the weather changes.</li>
+  <li>Water during the cooler hours of the morning so the soil can fully absorb moisture before the heat of the day.</li>
+</ul>
+<h3>How Often Should You Mow?</h3>
+<p>Set your mower blades as high as possible during summer. Taller grass develops deeper roots, is more drought-resistant, and provides shade for the surrounding soil. Keep blades sharp to avoid tearing the grass and adding stress during warm temperatures.</p>
+<h3>Weeding</h3>
+<p>During summer, most weeds bloom and disperse their seeds. Remove weeds before they bloom to avoid dealing with them in the next season &mdash; it is easier to fight weeds in warm weather than in colder conditions.</p>
+<h3>Additional Tips</h3>
+<ul>
+  <li>Use a small straight-sided can to gauge the amount of water received during irrigation.</li>
+  <li>The best time to fertilize your grass is at the beginning of spring and at the end of fall.</li>
+  <li>Applying fertilizers or herbicides during summer can damage your grass &mdash; contact your local landscaper before attempting to apply any products.</li>
+</ul>
+<p>For more tips about summer lawn care, call us at <a href="tel:+18174577507">817-457-7507</a>.</p>`
+    },
+    {
+      dateStr: '2017-09-01',
+      source:  'hardcoded',
+      title:   "How Does a Water Fountain Work?",
+      meta:    "September 1, 2017 &nbsp;&middot;&nbsp; Water Features",
+      excerpt: "Water fountains are becoming more popular in Texas outdoor landscaping. They add art, relaxation, and financial value to your home. Here's how these amazing landscape features actually function...",
+      image:   "../images/water-features/Garden-Water-Fountain.jpg",
+      body:    `<p>Water fountains are becoming more popular as a feature in Texas outdoor landscaping. They add art, relaxation, and financial value to your home. This article explains how these amazing features work.</p>
+<p>While there are endless creative designs, most water fountains share three core components:</p>
+<ul>
+  <li><strong>A Water Source</strong></li>
+  <li><strong>A Water Pump</strong></li>
+  <li><strong>Delivery Channels</strong></li>
+</ul>
+<h3>The Water Source</h3>
+<p>Often called the water reservoir, the source is typically hidden. This is where water is drawn and where it returns, forming a continuous cycle that keeps the water bill manageable. Reservoirs come in multiple types, sizes, and shapes. On some properties, the fountain is part of a pond, which serves as the reservoir.</p>
+<h3>The Water Pump</h3>
+<p>The pump is submerged in the reservoir and pushes water out. It is chosen based on the volume of water it can move per hour &mdash; the pressure and speed determine the flow and visual effect of the fountain.</p>
+<h3>Delivery Channels</h3>
+<p>As water leaves the reservoir, the pump forces it into delivery channels, often called fountain heads. Most fountain heads have a small diameter to increase the spray distance. The diameter and number of nozzles create the dynamic spraying, splashing, and arching effects.</p>
+<h3>Fun Fact</h3>
+<p>On most residential properties, water fountains are placed near a bathroom or kitchen. When a fountain is added to an existing building, locating it close to an established water source lowers the cost of plumbing.</p>
+<h3>Caring for a Water Fountain</h3>
+<p>Water fountains are easy to maintain once you understand how they work. Since fountain heads use fine nozzles, a water filter helps prevent clogging. At Ideal Landscape Services, we have had great success helping homeowners install water features. <a href="../services/water-features/index.html">View our water feature work</a> or call us at <a href="tel:+18174577507">817-457-7507</a>.</p>`
+    },
+    {
+      dateStr: '2018-07-17',
+      source:  'hardcoded',
+      title:   "Drought Lawn Care",
+      meta:    "July 17, 2018 &nbsp;&middot;&nbsp; Lawn Care",
+      excerpt: "In Fort Worth, we like manicured green lawns. Managing drought conditions with water restrictions in place requires planning well before your lawn gets stressed. Here's what you need to know...",
+      image:   "../images/maintenance/Dry-River-Rock-Bed-with-Native-Grasses.jpg",
+      body:    `<p>In Fort Worth, we love manicured green lawns. But how do you maintain your lawn during a Texas drought with water restrictions in place? Proper watering is only part of the formula. With or without a sprinkler system, there are several things you can do to keep a healthy lawn that does not stress too much in a drought. Most of the work needs to be done <em>before</em> your lawn gets stressed.</p>
+<h3>Keeping Grass Green Before the Drought Hits</h3>
+<p>Keeping grass green has more to do with how it is maintained before the drought than how often it is watered during lean times. Lawns can survive long periods without water &mdash; they will often turn brown and go dormant, but after drought conditions lift they will bounce back within a few weeks.</p>
+<h3>Change Your Mowing Habits</h3>
+<p>Raise the lawn mower blade so you remove only the top third of each blade, keeping the grass at about 3 inches (7 centimeters). This gives roots increased shade, and more shade means less evaporation. Mulching also helps retain moisture &mdash; the simplest way is to leave grass clippings on the lawn after mowing. This may require mowing a little more often to avoid large clumping piles.</p>
+<h3>Planning Ahead</h3>
+<p>Fertilizing properly in spring and fall helps build a healthy root system that is essential for surviving drought. Lawns do not need as much water in winter since they go dormant, but if drought continues through winter the lawn should be watered occasionally.</p>
+<h3>The Environmental Benefit</h3>
+<p>Keeping your lawn green, mowed, and maintained is good for more than aesthetics. Turfgrasses release oxygen while trapping dust, dirt, and polluting gases such as carbon dioxide. They are also responsible for water filtration and help reduce erosion and runoff.</p>
+<p>Now that you know more about drought lawn care, you are ready for the next Texas dry spell. Questions? Call us at <a href="tel:+18174577507">817-457-7507</a>.</p>`
+    },
+    {
+      dateStr: '2018-10-15',
+      source:  'hardcoded',
+      title:   "3 Tips for Irrigating Your Home\u2019s Foundation",
+      meta:    "October 15, 2018 &nbsp;&middot;&nbsp; Irrigation",
+      excerpt: "Ensuring proper moisture levels in the soil around your foundation is critically important in Texas, where expansive clay soil conditions can cause costly foundation problems over time...",
+      image:   "../images/maintenance/Irrigation-Sage-Rosemary.jpg",
+      body:    `<p>Ensuring that the soil surrounding your home\u2019s foundation has the right moisture levels is especially important in Texas, where expansive clay soil conditions can cause serious structural problems. Foundation irrigation is not a widely taught practice, but it can help you avoid costly foundation repairs.</p>
+<p>Extended dry periods cause soil beneath your foundation to shrink, leading to uneven settling. When it rains, the clay swells and pushes up against the foundation. Over time, this cycle can crack your foundation, make doors and windows difficult to open, shift chimneys, and break pipes.</p>
+<h3>Tip 1: Create a Dedicated Irrigation Zone Around the House</h3>
+<p>If you have a watering system, create a dedicated irrigation zone for your foundation. Mixed zones are difficult to manage due to the unbalanced water requirements of different plants. A dedicated zone allows consistent, controlled watering. A drip watering system works best because it delivers water at a very slow, steady rate directly to the soil near the foundation.</p>
+<h3>Tip 2: Plant and Water Vegetation Around the Foundation</h3>
+<p>Plants surrounding the foundation help minimize soil erosion, moderate soil temperature, and shade the soil from excessive evaporation. If drought restrictions limit irrigation, make sure your sprinklers are working efficiently and set your controller to short cycles rather than long ones. Adding mulch under shrubs further reduces moisture loss.</p>
+<h3>Tip 3: Use a Soaker Hose or Drip Irrigation on an Outdoor Faucet with a Timer</h3>
+<p>If you do not have a dedicated irrigation system, a soaker hose or drip irrigation system connected to an outdoor faucet with a timer is an excellent option:</p>
+<ul>
+  <li><strong>Soaker hoses</strong> work best placed 8&ndash;18 inches from the foundation. Ensure the faucet has a backflow preventer to keep contaminated water from re-entering your household supply. Run water through the hose first to clear any debris, and operate at low pressure.</li>
+  <li><strong>Drip irrigation</strong> is available at garden centers and hardware stores. Like a soaker hose, ensure it includes a backflow preventer and an inline filter to prevent nozzle clogging. A battery-powered timer is a worthwhile investment so the system runs correctly whether or not you are home.</li>
+</ul>
+<h3>Before You Begin: Key Factors to Consider</h3>
+<ul>
+  <li>What will you use? A soaker hose, garden hose, or drip irrigation system?</li>
+  <li>What season are you in?</li>
+  <li>Does any part of your foundation receive more sun or shade than others?</li>
+  <li>What type of soil do you have? (In Texas, it is typically expansive clay.)</li>
+</ul>
+<p>A home\u2019s foundation is as essential as it sounds. To keep it solid and strong, proper irrigation is critical &mdash; especially here in Texas. Questions? Call us at <a href="tel:+18174577507">817-457-7507</a>.</p>`
+    }
+  ];
+
+  /* ── Modal state ─────────────────────────────────────────────── */
+  var ALL_POSTS = [];
+  var current   = 0;
+  var overlay   = document.getElementById('blogOverlay');
+  var modal     = document.getElementById('blogModal');
+  var bodyEl    = document.getElementById('blogModalBody');
+  var titleEl   = document.getElementById('blogModalTitle');
+  var metaEl    = document.getElementById('blogModalMeta');
+  var prevBtn   = document.getElementById('blogPrev');
+  var nextBtn   = document.getElementById('blogNext');
+  var grid      = document.getElementById('blog-grid');
+
+  function fmtDate(dateStr) {
+    // dateStr is YYYY-MM-DD
+    var d = new Date(dateStr + 'T12:00:00');
+    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+
+  function buildMeta(post) {
+    if (post.meta) return post.meta; // hardcoded have pre-built meta
+    return fmtDate(post.dateStr);
+  }
+
+  function renderGrid() {
+    grid.innerHTML = '';
+    ALL_POSTS.forEach(function (post, idx) {
+      var card = document.createElement('a');
+      card.className = 'blog-card animate-in visible';
+      card.href = 'javascript:void(0)';
+      card.setAttribute('data-blog', idx);
+
+      var imgStyle = post.image ? 'background-image: url(\'' + post.image + '\');' : 'background:#1a2a1a;';
+      card.innerHTML =
+        '<div class="blog-card-image" style="' + imgStyle + '"></div>' +
+        '<div class="blog-card-body">' +
+          '<p class="blog-card-meta">' + buildMeta(post) + '</p>' +
+          '<p class="blog-card-title">' + escHtml(post.title) + '</p>' +
+          '<p class="blog-card-excerpt">' + escHtml(post.excerpt || post.desc || '') + '</p>' +
+        '</div>';
+
+      card.addEventListener('click', function (e) {
+        e.preventDefault();
+        openModal(idx);
+      });
+      grid.appendChild(card);
+    });
+  }
+
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function render() {
+    var p = ALL_POSTS[current];
+    titleEl.textContent = p.title;
+    metaEl.innerHTML    = buildMeta(p);
+    // Dynamic posts: show description as body if no explicit body
+    bodyEl.innerHTML    = p.body || '<p>' + escHtml(p.desc || '') + '</p>';
+    prevBtn.disabled    = current === 0;
+    nextBtn.disabled    = current === ALL_POSTS.length - 1;
+    bodyEl.scrollTop    = 0;
+  }
+
+  function openModal(idx) {
+    current = idx;
+    render();
+    overlay.classList.remove('hidden');
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        overlay.classList.add('open');
+      });
+    });
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    overlay.classList.remove('open');
+    setTimeout(function () {
+      overlay.classList.add('hidden');
+      document.body.style.overflow = '';
+    }, 300);
+  }
+
+  document.getElementById('blogModalClose').addEventListener('click', closeModal);
+  overlay.addEventListener('click', function (e) {
+    if (e.target === overlay) closeModal();
+  });
+  prevBtn.addEventListener('click', function () { if (current > 0) { current--; render(); } });
+  nextBtn.addEventListener('click', function () { if (current < ALL_POSTS.length - 1) { current++; render(); } });
+  document.addEventListener('keydown', function (e) {
+    if (overlay.classList.contains('hidden')) return;
+    if (e.key === 'Escape') { closeModal(); return; }
+    if (e.key === 'ArrowLeft'  && current > 0)                    { current--; render(); }
+    if (e.key === 'ArrowRight' && current < ALL_POSTS.length - 1) { current++; render(); }
+  });
+  var touchStartX = 0;
+  modal.addEventListener('touchstart', function (e) { touchStartX = e.changedTouches[0].clientX; }, { passive: true });
+  modal.addEventListener('touchend', function (e) {
+    var dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 55) {
+      if (dx < 0 && current < ALL_POSTS.length - 1) { current++; render(); }
+      if (dx > 0 && current > 0)                    { current--; render(); }
+    }
+  }, { passive: true });
+
+  overlay.classList.add('hidden');
+
+  /* ── Fetch dynamic posts and merge ──────────────────────────── */
+  async function init() {
+    var dynamicPosts = [];
+    try {
+      var snap = await getDocs(collection(db, 'blogPosts'));
+      snap.forEach(function (d) {
+        var data = d.data();
+        if (data.published) {
+          dynamicPosts.push({
+            source:  'dynamic',
+            dateStr: data.dateStr || '',
+            title:   data.title   || '',
+            excerpt: data.desc    || '',
+            desc:    data.desc    || '',
+            image:   data.imageUrl || '',
+            meta:    null // will be built from dateStr
+          });
+        }
+      });
+    } catch (e) {
+      // If Firestore is unavailable, fall back to hardcoded only
+    }
+
+    // Sort: dynamic posts beat hardcoded on same date; otherwise newest first
+    ALL_POSTS = dynamicPosts.concat(HARDCODED);
+    ALL_POSTS.sort(function (a, b) {
+      if (b.dateStr !== a.dateStr) return b.dateStr.localeCompare(a.dateStr);
+      // Same date: dynamic comes first
+      if (a.source === 'dynamic' && b.source !== 'dynamic') return -1;
+      if (b.source === 'dynamic' && a.source !== 'dynamic') return  1;
+      return 0;
+    });
+
+    renderGrid();
+  }
+
+  init();
+  </script>
+
 </body>
 </html>

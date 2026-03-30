@@ -7,6 +7,7 @@ import { initializeApp }                              from "https://www.gstatic.
 import { getFirestore }                              from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 import { getAuth, signInWithEmailAndPassword,
          signOut, onAuthStateChanged }               from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+import { getStorage }                               from "https://www.gstatic.com/firebasejs/11.0.0/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey:            "AIzaSyDvtzjI5RCjkfVwLVZuP87S5BxQUNNovFc",
@@ -18,6 +19,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-export const db   = getFirestore(app);
-export const auth = getAuth(app);
+export const db      = getFirestore(app);
+export const auth    = getAuth(app);
+export const storage = getStorage(app);
 export { signInWithEmailAndPassword, signOut, onAuthStateChanged };
