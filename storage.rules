@@ -12,6 +12,13 @@ service firebase.storage {
                    && request.resource.size < 10 * 1024 * 1024; // 10 MB limit
     }
 
+    match /project-images/{fileName} {
+      allow read:  if true;
+      allow write: if request.auth != null
+                   && request.resource.contentType.matches('image/.*')
+                   && request.resource.size < 10 * 1024 * 1024;
+    }
+
     // ── Deny everything else ──────────────────────────────────────
     match /{allPaths=**} {
       allow read, write: if false;

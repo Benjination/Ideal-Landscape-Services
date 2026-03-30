@@ -446,6 +446,51 @@
     }
     .placeholder-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
     .placeholder-card p  { font-size: 13px; color: var(--text-muted); }
+    /* Projects admin */
+    .proj-coll-list { display: flex; flex-direction: column; gap: 8px; }
+    .proj-coll-row {
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+    }
+    .proj-coll-header {
+      display: flex; align-items: center; gap: 10px;
+      padding: 11px 16px; cursor: pointer; user-select: none; transition: background 140ms;
+    }
+    .proj-coll-header:hover { background: rgba(255,255,255,0.04); }
+    .proj-coll-name  { flex: 1; font-size: 14px; font-weight: 600; }
+    .proj-coll-count { font-size: 12px; color: var(--text-muted); }
+    .proj-coll-chevron { font-size: 11px; color: var(--text-muted); transition: transform 200ms; pointer-events: none; }
+    .proj-coll-row.open .proj-coll-chevron { transform: rotate(180deg); }
+    .proj-coll-body { display: none; padding: 14px 16px; border-top: 1px solid var(--border); }
+    .proj-coll-row.open .proj-coll-body { display: block; }
+    .proj-img-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(110px,1fr));
+      gap: 10px; margin-bottom: 16px;
+    }
+    .proj-img-tile { border-radius: 3px; overflow: hidden; background: var(--surface); border: 1px solid var(--border); }
+    .proj-img-tile img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
+    .proj-img-tile-footer { display: flex; align-items: center; gap: 6px; padding: 5px 7px; background: var(--surface); }
+    .proj-include-toggle { display: flex; align-items: center; gap: 5px; cursor: pointer; flex: 1; }
+    .proj-include-toggle input { accent-color: var(--accent-l); cursor: pointer; }
+    .proj-include-label { font-size: 11px; color: var(--text-muted); }
+    .proj-img-delbtn {
+      background: none; border: none; color: var(--text-muted);
+      font-size: 12px; cursor: pointer; padding: 2px 4px; line-height: 1; transition: color 140ms;
+    }
+    .proj-img-delbtn:hover { color: var(--danger); }
+    .proj-upload-section { border-top: 1px solid var(--border); padding-top: 14px; margin-top: 4px; }
+    .proj-upload-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 10px;
+    }
+    .proj-upload-file { font-size: 13px; color: var(--text-muted); width: 100%; margin-bottom: 8px; }
+    .proj-upload-file::file-selector-button {
+      background: var(--surface); border: 1px solid var(--border); color: var(--text-muted);
+      padding: 5px 10px; border-radius: var(--radius); cursor: pointer; font-size: 12px; margin-right: 8px;
+    }
+    .proj-include-all-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .proj-include-all-row label { font-size: 13px; color: var(--text-muted); cursor: pointer; }
+    .proj-include-all-row input { accent-color: var(--accent-l); }
   </style>
 </head>
 <body>
@@ -568,12 +613,26 @@
         </div>
       </div>
 
-      <!-- Placeholder: Projects -->
-      <div class="placeholder-card">
-        <span class="ph-icon">🌿</span>
-        <div>
+      <!-- Projects Module -->
+      <div class="admin-card" id="projects-card">
+        <div class="admin-card-header">
           <h3>Projects Gallery</h3>
-          <p>Coming soon — upload project photos and manage the gallery.</p>
+          <span class="badge on" id="projects-count-badge">0 images</span>
+        </div>
+
+        <div class="proj-coll-list" id="proj-coll-list">
+          <p class="blog-empty" id="proj-loading">Loading collections&hellip;</p>
+        </div>
+
+        <hr class="blog-form-divider">
+        <p style="font-size:11px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-muted); margin-bottom:12px;">Add New Project Collection</p>
+        <div class="field" style="margin-bottom:14px;">
+          <label for="proj-coll-name">Collection Name</label>
+          <input type="text" id="proj-coll-name" placeholder="e.g. Smith Residence 2024" maxlength="80">
+        </div>
+        <div class="save-row">
+          <button class="btn-save" id="proj-add-coll-btn">Add Collection</button>
+          <span class="save-status" id="proj-status"></span>
         </div>
       </div>
     </div>
@@ -609,6 +668,7 @@
         userEmailEl.textContent   = user.email;
         loadBannerConfig();
         loadBlogPosts();
+        loadProjects();
       } else {
         loginScreen.style.display = 'flex';
         dashboard.style.display   = 'none';
@@ -936,6 +996,330 @@
         uploadProgress.style.display = 'none';
         uploadBar.style.width = '0%';
       }
+    });
+
+    /* ── Projects module ─────────────────────────────────────── */
+    var PROJ_HARDCODED_IMAGES = [
+      { id:'hc-1',  src:'../images/landscaping/Front-Yard-Landscape-Design.jpg',        alt:'Front yard landscape design',          category:'landscape-design' },
+      { id:'hc-2',  src:'../images/landscaping/Colorful-Landscape.jpg',                 alt:'Colorful landscape planting',          category:'landscape-design' },
+      { id:'hc-3',  src:'../images/landscaping/Lush-Green-Lawn.jpg',                    alt:'Lush green lawn',                      category:'landscape-design' },
+      { id:'hc-4',  src:'../images/projects/Hardy-242.JPG',                             alt:'Project — Hardy residence',            category:'outdoor-living'   },
+      { id:'hc-5',  src:'../images/projects/Hardy-259.JPG',                             alt:'Project — Hardy residence',            category:'outdoor-living'   },
+      { id:'hc-6',  src:'../images/projects/clifford-001.jpg',                          alt:'Project — Clifford residence',         category:'landscape-design' },
+      { id:'hc-7',  src:'../images/projects/clifford-003.jpg',                          alt:'Project — Clifford residence',         category:'landscape-design' },
+      { id:'hc-8',  src:'../images/water-features/Garden-Water-Fountain.jpg',           alt:'Garden water fountain',                category:'water-features'   },
+      { id:'hc-9',  src:'../images/water-features/Waterfall-Rock-Boulders.jpg',         alt:'Waterfall with rock boulders',         category:'water-features'   },
+      { id:'hc-10', src:'../images/water-features/Rock-Creek-River-Bed-Pond.jpg',       alt:'Rock creek river bed pond',            category:'water-features'   },
+      { id:'hc-11', src:'../images/hardscapes/Flagstone-Patio.jpg',                     alt:'Flagstone patio',                      category:'hardscapes'       },
+      { id:'hc-12', src:'../images/hardscapes/Flagstone-Stepping-Stones.jpg',           alt:'Flagstone stepping stones',            category:'hardscapes'       },
+      { id:'hc-13', src:'../images/outdoor-living/Back-Patio-Pergola.jpg',              alt:'Back patio pergola',                   category:'outdoor-living'   },
+      { id:'hc-14', src:'../images/outdoor-living/Outdoor-Kitchen-and-Grill.jpg',       alt:'Outdoor kitchen and grill',            category:'outdoor-living'   },
+      { id:'hc-15', src:'../images/projects/ashley-002.jpg',                            alt:'Project — Ashley residence',           category:'landscape-design' },
+      { id:'hc-16', src:'../images/projects/ashley-044.jpg',                            alt:'Project — Ashley residence',           category:'landscape-design' },
+      { id:'hc-17', src:'../images/water-features/Pottery-Fountain.jpg',                alt:'Pottery fountain',                     category:'water-features'   },
+      { id:'hc-18', src:'../images/hardscapes/Rock-Retaining-Wall.jpg',                 alt:'Rock retaining wall',                  category:'hardscapes'       },
+      { id:'hc-19', src:'../images/hardscapes/Stamped-and-Stained-Concrete-Patio.jpg',  alt:'Stamped and stained concrete patio',   category:'hardscapes'       },
+      { id:'hc-20', src:'../images/outdoor-living/Outdoor-Living-Fire-Pit-Seating.jpg', alt:'Outdoor fire pit seating',             category:'outdoor-living'   },
+      { id:'hc-21', src:'../images/lighting/Landscape-Lighting.jpg',                    alt:'Landscape lighting',                   category:'lighting'         },
+      { id:'hc-22', src:'../images/lighting/Decorative-Lighting-Installation.jpg',      alt:'Decorative lighting installation',     category:'lighting'         },
+      { id:'hc-23', src:'../images/projects/JOE-TS-003.jpg',                            alt:'Project',                              category:'landscape-design' },
+      { id:'hc-24', src:'../images/water-features/Rock-Swimming-Pool-Waterfall.jpg',    alt:'Rock swimming pool waterfall',         category:'water-features'   },
+      { id:'hc-25', src:'../images/projects/P1010009-500x330.jpg',                      alt:'Project',                              category:'landscape-design' },
+      { id:'hc-26', src:'../images/projects/P1010044a-500x330.jpg',                     alt:'Project',                              category:'landscape-design' },
+      { id:'hc-27', src:'../images/hardscapes/Back-Yard-Pathways-River-Birch.jpg',      alt:'Back yard pathways with river birch',  category:'hardscapes'       },
+      { id:'hc-28', src:'../images/outdoor-living/Red-Cedar-Frame-Pergola.jpg',         alt:'Red cedar frame pergola',              category:'outdoor-living'   }
+    ];
+    var PROJ_HARDCODED_TABS = [
+      { id:'landscape-design', label:'Landscape Design' },
+      { id:'water-features',   label:'Water Features'   },
+      { id:'hardscapes',       label:'Hardscapes'       },
+      { id:'outdoor-living',   label:'Outdoor Living'   },
+      { id:'lighting',         label:'Lighting'         }
+    ];
+
+    var projSettings    = {};
+    var projDynImages   = [];
+    var projCollections = [];
+    const projCollList   = document.getElementById('proj-coll-list');
+    const projCountBadge = document.getElementById('projects-count-badge');
+    const projCollNameIn = document.getElementById('proj-coll-name');
+    const projAddCollBtn = document.getElementById('proj-add-coll-btn');
+    const projStatus     = document.getElementById('proj-status');
+
+    async function loadProjects() {
+      try {
+        const settSnap = await getDocs(collection(db, 'gallerySettings'));
+        projSettings = {};
+        settSnap.forEach(d => { projSettings[d.id] = d.data().includeInAll !== false; });
+
+        const collSnap = await getDocs(collection(db, 'projectCollections'));
+        projCollections = [];
+        collSnap.forEach(d => { projCollections.push({ id: d.id, ...d.data() }); });
+        projCollections.sort((a, b) => (a.createdAt?.seconds || 0) - (b.createdAt?.seconds || 0));
+
+        const imgSnap = await getDocs(collection(db, 'projectImages'));
+        projDynImages = [];
+        imgSnap.forEach(d => { projDynImages.push({ id: d.id, ...d.data() }); });
+
+        renderProjCollections();
+      } catch(err) {
+        projCollList.innerHTML = '<p class="blog-empty">Could not load projects.</p>';
+      }
+    }
+
+    function renderProjCollections() {
+      const totalImages = PROJ_HARDCODED_IMAGES.length + projDynImages.length;
+      projCountBadge.textContent = totalImages + ' image' + (totalImages !== 1 ? 's' : '');
+      projCollList.innerHTML = '';
+      PROJ_HARDCODED_TABS.forEach(tab => {
+        const hcImgs  = PROJ_HARDCODED_IMAGES.filter(i => i.category === tab.id);
+        const dynImgs = projDynImages.filter(i => i.collectionId === tab.id);
+        renderCollectionRow(tab.id, tab.label, hcImgs, dynImgs, false);
+      });
+      projCollections.forEach(coll => {
+        const dynImgs = projDynImages.filter(i => i.collectionId === coll.id);
+        renderCollectionRow(coll.id, coll.name, [], dynImgs, true, coll.published !== false);
+      });
+    }
+
+    function renderCollectionRow(collId, collName, hcImages, dynImages, isCustom, isPublished = true) {
+      const count  = hcImages.length + dynImages.length;
+      const row    = document.createElement('div');
+      row.className = 'proj-coll-row';
+
+      const header = document.createElement('div');
+      header.className = 'proj-coll-header';
+
+      const nameEl = document.createElement('span');
+      nameEl.className = 'proj-coll-name';
+      nameEl.textContent = collName;
+
+      const countEl = document.createElement('span');
+      countEl.className = 'proj-coll-count';
+      countEl.textContent = count + ' image' + (count !== 1 ? 's' : '');
+
+      header.appendChild(nameEl);
+      header.appendChild(countEl);
+
+      if (isCustom) {
+        const pubBtn = document.createElement('button');
+        pubBtn.className = 'btn-pub-toggle ' + (isPublished ? 'live' : 'draft');
+        pubBtn.textContent = isPublished ? 'Live' : 'Draft';
+        pubBtn.title = isPublished ? 'Click to unpublish' : 'Click to publish';
+        pubBtn.addEventListener('click', async e => {
+          e.stopPropagation();
+          const next = !isPublished;
+          try {
+            await updateDoc(doc(db, 'projectCollections', collId), { published: next });
+            isPublished = next;
+            pubBtn.className = 'btn-pub-toggle ' + (next ? 'live' : 'draft');
+            pubBtn.textContent = next ? 'Live' : 'Draft';
+            pubBtn.title = next ? 'Click to unpublish' : 'Click to publish';
+          } catch(err) {
+            projStatus.textContent = 'Error saving.';
+            setTimeout(() => { projStatus.textContent = ''; }, 3000);
+          }
+        });
+        header.appendChild(pubBtn);
+
+        const delBtn = document.createElement('button');
+        delBtn.className = 'btn-icon-delete';
+        delBtn.title = 'Delete collection';
+        delBtn.innerHTML = '&#x2715;';
+        delBtn.style.marginRight = '4px';
+        delBtn.addEventListener('click', async e => {
+          e.stopPropagation();
+          if (!confirm('Delete "' + collName + '"? All images in this collection will also be deleted.')) return;
+          try {
+            const docsToDelete = projDynImages.filter(i => i.collectionId === collId);
+            await Promise.all(docsToDelete.map(img => deleteDoc(doc(db, 'projectImages', img.id))));
+            await deleteDoc(doc(db, 'projectCollections', collId));
+            await loadProjects();
+          } catch(err) {
+            projStatus.textContent = 'Error deleting collection.';
+            setTimeout(() => { projStatus.textContent = ''; }, 3000);
+          }
+        });
+        header.appendChild(delBtn);
+      }
+
+      const chevron = document.createElement('span');
+      chevron.className = 'proj-coll-chevron';
+      chevron.textContent = '▼';
+      header.appendChild(chevron);
+
+      const body = document.createElement('div');
+      body.className = 'proj-coll-body';
+
+      const imgGrid = document.createElement('div');
+      imgGrid.className = 'proj-img-grid';
+      hcImages.forEach(img => { imgGrid.appendChild(makeHcTile(img)); });
+      dynImages.forEach(img => { imgGrid.appendChild(makeDynTile(img)); });
+      if (hcImages.length || dynImages.length) body.appendChild(imgGrid);
+
+      body.appendChild(makeUploadSection(collId));
+      row.appendChild(header);
+      row.appendChild(body);
+      projCollList.appendChild(row);
+
+      header.addEventListener('click', () => row.classList.toggle('open'));
+    }
+
+    function makeHcTile(imgData) {
+      const tile = document.createElement('div');
+      tile.className = 'proj-img-tile';
+      const img = document.createElement('img');
+      img.src = imgData.src; img.alt = imgData.alt; img.loading = 'lazy';
+      tile.appendChild(img);
+      return tile;
+    }
+
+    function makeDynTile(imgData) {
+      const tile = document.createElement('div');
+      tile.className = 'proj-img-tile';
+      const img = document.createElement('img');
+      img.src = imgData.url; img.alt = imgData.alt || ''; img.loading = 'lazy';
+      const footer = document.createElement('div');
+      footer.className = 'proj-img-tile-footer';
+
+      // Active toggle
+      const activeLbl = document.createElement('label');
+      activeLbl.className = 'proj-include-toggle';
+      const activeCb = document.createElement('input');
+      activeCb.type = 'checkbox'; activeCb.checked = imgData.active !== false;
+      const activeSpan = document.createElement('span');
+      activeSpan.className = 'proj-include-label'; activeSpan.textContent = 'Active';
+      activeLbl.appendChild(activeCb); activeLbl.appendChild(activeSpan);
+
+      // All toggle
+      const allLbl = document.createElement('label');
+      allLbl.className = 'proj-include-toggle';
+      const allCb = document.createElement('input');
+      allCb.type = 'checkbox'; allCb.checked = imgData.includeInAll !== false;
+      allCb.disabled = !activeCb.checked;
+      const allSpan = document.createElement('span');
+      allSpan.className = 'proj-include-label'; allSpan.textContent = 'All';
+      allLbl.appendChild(allCb); allLbl.appendChild(allSpan);
+
+      const delBtn = document.createElement('button');
+      delBtn.className = 'proj-img-delbtn'; delBtn.innerHTML = '&#x2715;';
+      delBtn.title = 'Delete image';
+
+      footer.appendChild(activeLbl); footer.appendChild(allLbl); footer.appendChild(delBtn);
+
+      let t;
+      function saveToggles() {
+        clearTimeout(t);
+        t = setTimeout(async () => {
+          try {
+            await updateDoc(doc(db, 'projectImages', imgData.id), {
+              active: activeCb.checked,
+              includeInAll: activeCb.checked ? allCb.checked : false
+            });
+          } catch(err) {
+            projStatus.textContent = 'Save error.';
+            setTimeout(() => { projStatus.textContent = ''; }, 3000);
+          }
+        }, 600);
+      }
+
+      activeCb.addEventListener('change', () => {
+        if (!activeCb.checked) { allCb.checked = false; allCb.disabled = true; }
+        else { allCb.disabled = false; }
+        saveToggles();
+      });
+      allCb.addEventListener('change', saveToggles);
+
+      delBtn.addEventListener('click', async () => {
+        if (!confirm('Delete this image?')) return;
+        try { await deleteDoc(doc(db, 'projectImages', imgData.id)); await loadProjects(); }
+        catch(err) { projStatus.textContent = 'Error deleting image.'; setTimeout(() => { projStatus.textContent = ''; }, 3000); }
+      });
+      tile.appendChild(img); tile.appendChild(footer);
+      return tile;
+    }
+
+    function makeUploadSection(collId) {
+      const wrap = document.createElement('div');
+      wrap.className = 'proj-upload-section';
+      const label = document.createElement('p');
+      label.className = 'proj-upload-label'; label.textContent = 'Add Images';
+      wrap.appendChild(label);
+      const fileIn = document.createElement('input');
+      fileIn.type = 'file'; fileIn.accept = 'image/*'; fileIn.multiple = true;
+      fileIn.className = 'proj-upload-file';
+      wrap.appendChild(fileIn);
+      const inclRow = document.createElement('div');
+      inclRow.className = 'proj-include-all-row';
+      const inclCb = document.createElement('input');
+      inclCb.type = 'checkbox'; inclCb.checked = true;
+      inclCb.id = 'proj-incl-' + collId;
+      inclCb.style.accentColor = 'var(--accent-l)';
+      const inclLbl = document.createElement('label');
+      inclLbl.htmlFor = 'proj-incl-' + collId;
+      inclLbl.textContent = 'Include in All Projects';
+      inclRow.appendChild(inclCb); inclRow.appendChild(inclLbl);
+      wrap.appendChild(inclRow);
+      const uploadBtn = document.createElement('button');
+      uploadBtn.className = 'btn-save';
+      uploadBtn.style.cssText = 'font-size:12px;padding:6px 16px;';
+      uploadBtn.textContent = 'Upload';
+      const uploadStatus = document.createElement('span');
+      uploadStatus.className = 'save-status';
+      uploadStatus.style.marginLeft = '10px';
+      const actRow = document.createElement('div');
+      actRow.style.cssText = 'display:flex;align-items:center;margin-top:8px;';
+      actRow.appendChild(uploadBtn); actRow.appendChild(uploadStatus);
+      wrap.appendChild(actRow);
+      uploadBtn.addEventListener('click', async () => {
+        const files = fileIn.files;
+        if (!files || files.length === 0) {
+          uploadStatus.textContent = 'Choose image(s) first.';
+          setTimeout(() => { uploadStatus.textContent = ''; }, 3000); return;
+        }
+        uploadBtn.disabled = true;
+        uploadStatus.textContent = 'Uploading…';
+        try {
+          for (const file of files) {
+            const fileName = Date.now() + '_' + file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+            const sRef = storageRef(storage, 'project-images/' + fileName);
+            const task = uploadBytesResumable(sRef, file);
+            const url = await new Promise((resolve, reject) => {
+              task.on('state_changed', null, reject, async () => {
+                resolve(await getDownloadURL(task.snapshot.ref));
+              });
+            });
+            await addDoc(collection(db, 'projectImages'), {
+              collectionId: collId, url, alt: '',
+              active: true,
+              includeInAll: inclCb.checked, createdAt: serverTimestamp()
+            });
+          }
+          uploadStatus.textContent = 'Uploaded ✓';
+          fileIn.value = '';
+          setTimeout(() => { uploadStatus.textContent = ''; }, 3000);
+          await loadProjects();
+        } catch(err) {
+          uploadStatus.textContent = 'Upload failed.';
+        } finally { uploadBtn.disabled = false; }
+      });
+      return wrap;
+    }
+
+    projAddCollBtn.addEventListener('click', async () => {
+      const name = projCollNameIn.value.trim();
+      if (!name) { projStatus.textContent = 'Name is required.'; return; }
+      projAddCollBtn.disabled = true;
+      projStatus.textContent = 'Adding…';
+      try {
+        await addDoc(collection(db, 'projectCollections'), { name, createdAt: serverTimestamp() });
+        projCollNameIn.value = '';
+        projStatus.textContent = 'Collection added ✓';
+        setTimeout(() => { projStatus.textContent = ''; }, 3000);
+        await loadProjects();
+      } catch(err) {
+        projStatus.textContent = 'Error — could not add.';
+      } finally { projAddCollBtn.disabled = false; }
     });
   </script>
 </body>

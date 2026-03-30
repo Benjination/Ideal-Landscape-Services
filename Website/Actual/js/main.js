@@ -170,6 +170,7 @@
       overlay.classList.add('lb-open');
       document.body.style.overflow = 'hidden';
     }
+    window.lbOpen = openAt;
 
     function close() {
       overlay.classList.remove('lb-open');
@@ -253,6 +254,8 @@
 
     /* Wire gallery-item images (projects page) — click on item or img */
     function wireGalleryItems() {
+      var grid = document.getElementById('gallery-grid');
+      if (grid && grid.dataset.managed) return; // handled by page-specific script
       var items = Array.prototype.slice.call(document.querySelectorAll('.gallery-item'));
       if (!items.length) return;
       var imageData = items.map(function (el) {
