@@ -214,6 +214,7 @@
   var allSettings   = {};   // { 'hc-id': bool } from gallerySettings
   var dynamicImages = [];   // projectImages docs
   var projectTabs   = [];   // projectCollections docs
+  var hardcodedKeywords = {}; // { 'hc-id': string[] } from hardcodedImageKeywords
   var activeTab     = 'all';
   var currentPage   = 1;
   var PAGE_SIZE     = 20;
@@ -237,18 +238,18 @@
         if (coll && coll.published === false) return false;
         return true;
       });
-      return hc.map(function(i)  { return { src: i.src, alt: i.alt }; })
-        .concat(dyn.map(function(i) { return { src: i.url, alt: i.alt || '' }; }));
+      return hc.map(function(i)  { return { src: i.src, alt: i.alt, keywords: hardcodedKeywords[i.id] || i.keywords || [], id: i.id }; })
+        .concat(dyn.map(function(i) { return { src: i.url, alt: i.alt || '', keywords: i.keywords || [], id: i.id }; }));
     }
     var isHardcoded = HARDCODED_TABS.some(function(t) { return t.id === tab; });
     if (isHardcoded) {
       var hcCat  = HARDCODED.filter(function(i) { return i.category === tab; });
       var dynCat = dynamicImages.filter(function(i) { return i.collectionId === tab && i.active !== false; });
-      return hcCat.map(function(i)  { return { src: i.src, alt: i.alt }; })
-        .concat(dynCat.map(function(i) { return { src: i.url, alt: i.alt || '' }; }));
+      return hcCat.map(function(i)  { return { src: i.src, alt: i.alt, keywords: hardcodedKeywords[i.id] || i.keywords || [], id: i.id }; })
+        .concat(dynCat.map(function(i) { return { src: i.url, alt: i.alt || '', keywords: i.keywords || [], id: i.id }; }));
     }
     return dynamicImages.filter(function(i) { return i.collectionId === tab && i.active !== false; })
-      .map(function(i) { return { src: i.url, alt: i.alt || '' }; });
+      .map(function(i) { return { src: i.url, alt: i.alt || '', keywords: i.keywords || [], id: i.id }; });
   }
 
   /* ── Render tab bar ─────────────────────────────────────────── */
@@ -283,6 +284,10 @@
 
     gridEl.innerHTML = '';
 
+    // Remove old JSON-LD schemas
+    var oldSchemas = document.querySelectorAll('script[data-image-schema]');
+    oldSchemas.forEach(function(s) { s.remove(); });
+
     if (total === 0) {
       var empty = document.createElement('p');
       empty.className = 'no-results';
@@ -302,11 +307,13 @@
 
       var div = document.createElement('div');
       div.className = 'gallery-item animate-in visible';
+      div.dataset.keywords = (item.keywords || []).join(', ');
 
       var img = document.createElement('img');
       img.src     = item.src;
       img.alt     = item.alt;
       img.loading = 'lazy';
+      img.className = 'service-gallery-item';
 
       var overlay = document.createElement('div');
       overlay.className = 'gallery-item-overlay';
@@ -319,6 +326,23 @@
       });
 
       gridEl.appendChild(div);
+
+      // Inject JSON-LD schema for this image (SEO for web crawlers)
+      if (item.keywords && item.keywords.length > 0) {
+        var schema = {
+          '@context': 'https://schema.org',
+          '@type': 'ImageObject',
+          'url': item.src,
+          'name': item.alt || 'Project image',
+          'keywords': item.keywords,
+          'description': 'Landscaping project - ' + (item.alt || 'Photo')
+        };
+        var scriptTag = document.createElement('script');
+        scriptTag.type = 'application/ld+json';
+        scriptTag.setAttribute('data-image-schema', '1');
+        scriptTag.textContent = JSON.stringify(schema);
+        document.head.appendChild(scriptTag);
+      }
     });
 
     renderPagination(total);
@@ -396,6 +420,15 @@
         if (!imgReady) { imgReady = true; clearTimeout(fallback); checkReady(); } else { rerender(); }
       },
       function() { imgReady = true; checkReady(); }
+    );
+
+    onSnapshot(collection(db, 'hardcodedImageKeywords'),
+      function(snap) {
+        hardcodedKeywords = {};
+        snap.forEach(function(d) { hardcodedKeywords[d.id] = d.data().keywords || []; });
+        rerender();
+      },
+      function() { /* silent fail */ }
     );
   }
 

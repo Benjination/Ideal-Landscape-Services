@@ -572,6 +572,87 @@
     .proj-include-all-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
     .proj-include-all-row label { font-size: 13px; color: var(--text-muted); cursor: pointer; }
     .proj-include-all-row input { accent-color: var(--accent-l); }
+
+    /* Keyword editor modal */
+    .keyword-editor-overlay {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+      z-index: 1000; align-items: center; justify-content: center; padding: 20px;
+    }
+    .keyword-editor-overlay.open { display: flex; }
+    .keyword-editor-modal {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); max-width: 520px; width: 100%;
+      padding: 28px; max-height: 80vh; overflow-y: auto;
+    }
+    .keyword-editor-modal h3 {
+      font-size: 18px; font-weight: 700; margin-bottom: 20px; color: var(--text);
+    }
+    .keyword-editor-image {
+      width: 100%; max-height: 240px; object-fit: cover; border-radius: var(--radius);
+      margin-bottom: 20px; border: 1px solid var(--border);
+    }
+    .keyword-editor-section {
+      margin-bottom: 20px;
+    }
+    .keyword-editor-label {
+      font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 10px; display: block;
+    }
+    .keyword-tags {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; min-height: 32px;
+    }
+    .keyword-tag {
+      background: rgba(77,138,90,0.18); color: var(--accent-l);
+      padding: 6px 12px; border-radius: 100px; font-size: 13px; font-weight: 500;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .keyword-tag button {
+      background: none; border: none; color: inherit; cursor: pointer;
+      font-size: 16px; padding: 0; line-height: 1; opacity: 0.7; transition: opacity 140ms;
+    }
+    .keyword-tag button:hover { opacity: 1; }
+    .keyword-input-row {
+      display: flex; gap: 8px;
+    }
+    .keyword-input {
+      flex: 1; background: var(--surface-2); border: 1px solid var(--border);
+      color: var(--text); font-family: inherit; font-size: 13px;
+      padding: 10px 12px; border-radius: var(--radius); outline: none;
+      transition: border-color 160ms;
+    }
+    .keyword-input:focus { border-color: var(--accent-l); }
+    .keyword-add-btn {
+      background: var(--accent); color: #fff; border: none;
+      font-size: 13px; font-weight: 600; padding: 10px 16px;
+      border-radius: var(--radius); cursor: pointer; transition: background 180ms;
+    }
+    .keyword-add-btn:hover { background: #2f5538; }
+    .keyword-add-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .keyword-editor-footer {
+      display: flex; gap: 10px; margin-top: 24px;
+    }
+    .keyword-editor-close {
+      flex: 1; background: none; border: 1px solid var(--border);
+      color: var(--text-muted); font-size: 13px; font-weight: 600;
+      padding: 12px 16px; border-radius: var(--radius); cursor: pointer;
+      transition: border-color 160ms, color 160ms;
+    }
+    .keyword-editor-close:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
+    .keyword-editor-save {
+      flex: 1; background: var(--accent); color: #fff;
+      font-size: 13px; font-weight: 600; padding: 12px 16px;
+      border: none; border-radius: var(--radius); cursor: pointer;
+      transition: background 180ms;
+    }
+    .keyword-editor-save:hover { background: #2f5538; }
+    .keyword-editor-save:disabled { opacity: 0.5; cursor: not-allowed; }
+    .proj-img-keyword-btn {
+      background: none; border: none; color: var(--text-muted);
+      font-size: 12px; cursor: pointer; padding: 2px 4px; line-height: 1;
+      transition: color 140ms; opacity: 0;
+    }
+    .proj-img-tile:hover .proj-img-keyword-btn { opacity: 1; }
+    .proj-img-keyword-btn:hover { color: var(--accent-l); }
   </style>
 </head>
 <body>
@@ -747,6 +828,36 @@
     </div>
   </div>
 
+  <!-- Keyword Editor Modal -->
+  <div class="keyword-editor-overlay" id="keyword-editor-overlay">
+    <div class="keyword-editor-modal">
+      <h3>Edit Image Keywords</h3>
+      <img class="keyword-editor-image" id="keyword-editor-image" alt="Image preview">
+      
+      <div class="keyword-editor-section">
+        <label class="keyword-editor-label">Current Keywords</label>
+        <div class="keyword-tags" id="keyword-tags"></div>
+      </div>
+
+      <div class="keyword-editor-section">
+        <label class="keyword-editor-label" for="keyword-input">Add New Keyword</label>
+        <div class="keyword-input-row">
+          <input type="text" id="keyword-input" class="keyword-input" 
+                 placeholder="e.g. rose, patio, flagstone" maxlength="50">
+          <button class="keyword-add-btn" id="keyword-add-btn">Add</button>
+        </div>
+        <p style="font-size:11px; color:var(--text-muted); margin-top:8px;">
+          Keywords help with SEO and search visibility.
+        </p>
+      </div>
+
+      <div class="keyword-editor-footer">
+        <button class="keyword-editor-close" id="keyword-editor-close">Cancel</button>
+        <button class="keyword-editor-save" id="keyword-editor-save">Save Keywords</button>
+      </div>
+    </div>
+  </div>
+
   <script type="module">
     import {
       db, auth, storage,
@@ -845,6 +956,7 @@
           updateBadge(!!active);
         }
       } catch (err) {
+        console.error('Error loading banner config:', err);
         saveStatus.textContent = 'Could not load banner data.';
       }
     }
@@ -960,6 +1072,7 @@
         posts.sort((a, b) => (b.dateStr || '').localeCompare(a.dateStr || ''));
         renderBlogList(posts);
       } catch (err) {
+        console.error('Error loading blog posts:', err);
         blogStatus.textContent = 'Could not load posts.';
       }
     }
@@ -1113,51 +1226,229 @@
 
     /* ── Projects module ─────────────────────────────────────── */
     var PROJ_HARDCODED_IMAGES = [
-      { id:'hc-1',  src:'../images/landscaping/Front-Yard-Landscape-Design.jpg',        alt:'Front yard landscape design',          category:'landscape-design' },
-      { id:'hc-2',  src:'../images/landscaping/Colorful-Landscape.jpg',                 alt:'Colorful landscape planting',          category:'landscape-design' },
-      { id:'hc-3',  src:'../images/landscaping/Lush-Green-Lawn.jpg',                    alt:'Lush green lawn',                      category:'landscape-design' },
-      { id:'hc-4',  src:'../images/projects/Hardy-242.JPG',                             alt:'Project — Hardy residence',            category:'outdoor-living'   },
-      { id:'hc-5',  src:'../images/projects/Hardy-259.JPG',                             alt:'Project — Hardy residence',            category:'outdoor-living'   },
-      { id:'hc-6',  src:'../images/projects/clifford-001.jpg',                          alt:'Project — Clifford residence',         category:'landscape-design' },
-      { id:'hc-7',  src:'../images/projects/clifford-003.jpg',                          alt:'Project — Clifford residence',         category:'landscape-design' },
-      { id:'hc-8',  src:'../images/water-features/Garden-Water-Fountain.jpg',           alt:'Garden water fountain',                category:'water-features'   },
-      { id:'hc-9',  src:'../images/water-features/Waterfall-Rock-Boulders.jpg',         alt:'Waterfall with rock boulders',         category:'water-features'   },
-      { id:'hc-10', src:'../images/water-features/Rock-Creek-River-Bed-Pond.jpg',       alt:'Rock creek river bed pond',            category:'water-features'   },
-      { id:'hc-11', src:'../images/hardscapes/Flagstone-Patio.jpg',                     alt:'Flagstone patio',                      category:'hardscapes'       },
-      { id:'hc-12', src:'../images/hardscapes/Flagstone-Stepping-Stones.jpg',           alt:'Flagstone stepping stones',            category:'hardscapes'       },
-      { id:'hc-13', src:'../images/outdoor-living/Back-Patio-Pergola.jpg',              alt:'Back patio pergola',                   category:'outdoor-living'   },
-      { id:'hc-14', src:'../images/outdoor-living/Outdoor-Kitchen-and-Grill.jpg',       alt:'Outdoor kitchen and grill',            category:'outdoor-living'   },
-      { id:'hc-15', src:'../images/projects/ashley-002.jpg',                            alt:'Project — Ashley residence',           category:'landscape-design' },
-      { id:'hc-16', src:'../images/projects/ashley-044.jpg',                            alt:'Project — Ashley residence',           category:'landscape-design' },
-      { id:'hc-17', src:'../images/water-features/Pottery-Fountain.jpg',                alt:'Pottery fountain',                     category:'water-features'   },
-      { id:'hc-18', src:'../images/hardscapes/Rock-Retaining-Wall.jpg',                 alt:'Rock retaining wall',                  category:'hardscapes'       },
-      { id:'hc-19', src:'../images/hardscapes/Stamped-and-Stained-Concrete-Patio.jpg',  alt:'Stamped and stained concrete patio',   category:'hardscapes'       },
-      { id:'hc-20', src:'../images/outdoor-living/Outdoor-Living-Fire-Pit-Seating.jpg', alt:'Outdoor fire pit seating',             category:'outdoor-living'   },
-      { id:'hc-21', src:'../images/lighting/Landscape-Lighting.jpg',                    alt:'Landscape lighting',                   category:'lighting'         },
-      { id:'hc-22', src:'../images/lighting/Decorative-Lighting-Installation.jpg',      alt:'Decorative lighting installation',     category:'lighting'         },
-      { id:'hc-23', src:'../images/projects/JOE-TS-003.jpg',                            alt:'Project',                              category:'landscape-design' },
-      { id:'hc-24', src:'../images/water-features/Rock-Swimming-Pool-Waterfall.jpg',    alt:'Rock swimming pool waterfall',         category:'water-features'   },
-      { id:'hc-25', src:'../images/projects/P1010009-500x330.jpg',                      alt:'Project',                              category:'landscape-design' },
-      { id:'hc-26', src:'../images/projects/P1010044a-500x330.jpg',                     alt:'Project',                              category:'landscape-design' },
-      { id:'hc-27', src:'../images/hardscapes/Back-Yard-Pathways-River-Birch.jpg',      alt:'Back yard pathways with river birch',  category:'hardscapes'       },
-      { id:'hc-28', src:'../images/outdoor-living/Red-Cedar-Frame-Pergola.jpg',         alt:'Red cedar frame pergola',              category:'outdoor-living'   }
+      { id:'hc-1',   src:'../images/landscaping/Amaranth-Cocks-Comb-Liriope.jpg',                                   alt:'Amaranth Cocks Comb Liriope',                     category:'landscape-design' },
+      { id:'hc-2',   src:'../images/landscaping/Anthony-Waters-Spirea-Crepe-Myrtles-Lantana.jpg',                   alt:'Anthony Waters Spirea Crepe Myrtles Lantana',     category:'landscape-design' },
+      { id:'hc-3',   src:'../images/landscaping/Blue-Salvia-Seasonal-Color-Native-Grasses.jpg',                     alt:'Blue Salvia Seasonal Color Native Grasses',       category:'landscape-design' },
+      { id:'hc-4',   src:'../images/landscaping/Colorful-Landscape.jpg',                                            alt:'Colorful Landscape',                              category:'landscape-design' },
+      { id:'hc-5',   src:'../images/landscaping/Flowering-Kale-Liriope-Dwarf-Yupon-Nandinas.jpg',                   alt:'Flowering Kale Liriope Dwarf Yupon Nandinas',     category:'landscape-design' },
+      { id:'hc-6',   src:'../images/landscaping/Front-Yard-Landscape-Design.jpg',                                   alt:'Front Yard Landscape Design',                     category:'landscape-design' },
+      { id:'hc-7',   src:'../images/landscaping/Juniper-Japanese-Maple-Japanese-Yew-Blue-Rug-Juniper-500x383@2x.jpg', alt:'Juniper Japanese Maple Japanese Yew Blue Rug Juniper', category:'landscape-design' },
+      { id:'hc-8',   src:'../images/landscaping/Juniper-Japanese-Maple-Japanese-Yew-Blue-Rug-Juniper.jpg',          alt:'Juniper Japanese Maple Japanese Yew Blue Rug Juniper', category:'landscape-design' },
+      { id:'hc-9',   src:'../images/landscaping/Knock-Out-Roses-Cana.jpg',                                          alt:'Knock Out Roses Cana',                            category:'landscape-design' },
+      { id:'hc-10',  src:'../images/landscaping/Lush-Green-Lawn.jpg',                                               alt:'Lush Green Lawn',                                 category:'landscape-design' },
+      { id:'hc-11',  src:'../images/landscaping/Palm-Trees-Banana-Trees-Yuccas.jpg',                                alt:'Palm Trees Banana Trees Yuccas',                  category:'landscape-design' },
+      { id:'hc-12',  src:'../images/landscaping/Pentas-and-Grasses-Sandstone-Boulder.jpg',                          alt:'Pentas and Grasses Sandstone Boulder',            category:'landscape-design' },
+      { id:'hc-13',  src:'../images/landscaping/Potato-Vine-Knock-Out-Roses-Japanese-Yard-Art.jpg',                 alt:'Potato Vine Knock Out Roses Japanese Yard Art',   category:'landscape-design' },
+      { id:'hc-14',  src:'../images/landscaping/Potted-Plants-Cactus-Flower-Softleaf-Yuccas.jpg',                   alt:'Potted Plants Cactus Flower Softleaf Yuccas',     category:'landscape-design' },
+      { id:'hc-15',  src:'../images/landscaping/Seasonal-Color-Commercial-Landscape-Decorative-Sandstone-Boulder.jpg', alt:'Seasonal Color Commercial Landscape Decorative Sandstone Boulder', category:'landscape-design' },
+      { id:'hc-16',  src:'../images/landscaping/Trailing-Rosemary-Knockout-Roses-Ornamental-Vase.jpg',              alt:'Trailing Rosemary Knockout Roses Ornamental Vase', category:'landscape-design' },
+      { id:'hc-17',  src:'../images/landscaping/Urn-Juniper-Lambs-Ear-Potted-Plants.jpg',                           alt:'Urn Juniper Lambs Ear Potted Plants',             category:'landscape-design' },
+      { id:'hc-18',  src:'../images/landscaping/Urns-Potted-Plants.jpg',                                            alt:'Urns Potted Plants',                              category:'landscape-design' },
+      { id:'hc-19',  src:'../images/landscaping/Wax-Myrtle-Edging-Color.jpg',                                       alt:'Wax Myrtle Edging Color',                         category:'landscape-design' },
+      { id:'hc-20',  src:'../images/landscaping/original_artificial-grass-garden-decor.jpg',                        alt:'original artificial grass garden decor',          category:'landscape-design' },
+      { id:'hc-21',  src:'../images/water-features/Basalt-Column-Water-Feature-and-Dry-River-Bed.jpg',              alt:'Basalt Column Water Feature and Dry River Bed',   category:'water-features' },
+      { id:'hc-22',  src:'../images/water-features/Basalt-Water-Feature-Dry-River-Bed.jpg',                         alt:'Basalt Water Feature Dry River Bed',              category:'water-features' },
+      { id:'hc-23',  src:'../images/water-features/Contemperarty-Water-Feature.jpg',                                alt:'Contemperarty Water Feature',                     category:'water-features' },
+      { id:'hc-24',  src:'../images/water-features/Garden-Water-Fountain.jpg',                                      alt:'Garden Water Fountain',                           category:'water-features' },
+      { id:'hc-25',  src:'../images/water-features/Hot-Tub-Swimming-Pool-Fountain.jpg',                             alt:'Hot Tub Swimming Pool Fountain',                  category:'water-features' },
+      { id:'hc-26',  src:'../images/water-features/Hot-Tub-Water-Fountain.jpg',                                     alt:'Hot Tub Water Fountain',                          category:'water-features' },
+      { id:'hc-27',  src:'../images/water-features/Invisible-Basin-Water-Feature.jpg',                              alt:'Invisible Basin Water Feature',                   category:'water-features' },
+      { id:'hc-28',  src:'../images/water-features/Irrigation-and-Pond-Maintenance.jpg',                            alt:'Irrigation and Pond Maintenance',                 category:'water-features' },
+      { id:'hc-29',  src:'../images/water-features/Leaky-Faucet-Water-Feature.jpg',                                 alt:'Leaky Faucet Water Feature',                      category:'water-features' },
+      { id:'hc-30',  src:'../images/water-features/Outdoor-Living-Tuscan-Multi-Basin-Fountain.jpg',                 alt:'Outdoor Living Tuscan Multi Basin Fountain',      category:'water-features' },
+      { id:'hc-31',  src:'../images/water-features/Pottery-Fountain.jpg',                                           alt:'Pottery Fountain',                                category:'water-features' },
+      { id:'hc-32',  src:'../images/water-features/Rock-Creek-River-Bed-Pond.jpg',                                  alt:'Rock Creek River Bed Pond',                       category:'water-features' },
+      { id:'hc-33',  src:'../images/water-features/Rock-Swimming-Pool-Waterfall.jpg',                               alt:'Rock Swimming Pool Waterfall',                    category:'water-features' },
+      { id:'hc-34',  src:'../images/water-features/Rock-Water-Fall-Swimming-Pool.jpg',                              alt:'Rock Water Fall Swimming Pool',                   category:'water-features' },
+      { id:'hc-35',  src:'../images/water-features/Rustic-Column-Water-Feature.jpg',                                alt:'Rustic Column Water Feature',                     category:'water-features' },
+      { id:'hc-36',  src:'../images/water-features/Rustic-Southern-Fountain.jpg',                                   alt:'Rustic Southern Fountain',                        category:'water-features' },
+      { id:'hc-37',  src:'../images/water-features/Southwest-Water-Fountain.jpg',                                   alt:'Southwest Water Fountain',                        category:'water-features' },
+      { id:'hc-38',  src:'../images/water-features/Spill-Over-Pottery-Water-Feature-with-Magnolias-and-Japanese-Maples-and-Flagstone-Pathway.jpg', alt:'Spill Over Pottery Water Feature with Magnolias and Japanese Maples and Flagstone Pathway', category:'water-features' },
+      { id:'hc-39',  src:'../images/water-features/Stream-with-bridge-1.jpg',                                       alt:'Stream with bridge 1',                            category:'water-features' },
+      { id:'hc-40',  src:'../images/water-features/Stream-with-bridge.jpg',                                         alt:'Stream with bridge',                              category:'water-features' },
+      { id:'hc-41',  src:'../images/water-features/Tower-fountains.jpg',                                            alt:'Tower fountains',                                 category:'water-features' },
+      { id:'hc-42',  src:'../images/water-features/Tuscan-Pottery-Fountain.jpg',                                    alt:'Tuscan Pottery Fountain',                         category:'water-features' },
+      { id:'hc-43',  src:'../images/water-features/Waterfall-Rock-Boulders.jpg',                                    alt:'Waterfall Rock Boulders',                         category:'water-features' },
+      { id:'hc-44',  src:'../images/hardscapes/Back-Yard-Pathways-River-Birch.jpg',                                 alt:'Back Yard Pathways River Birch',                  category:'hardscapes' },
+      { id:'hc-45',  src:'../images/hardscapes/Flagstone-Patio.jpg',                                                alt:'Flagstone Patio',                                 category:'hardscapes' },
+      { id:'hc-46',  src:'../images/hardscapes/Flagstone-Stepping-Stones.jpg',                                      alt:'Flagstone Stepping Stones',                       category:'hardscapes' },
+      { id:'hc-47',  src:'../images/hardscapes/Planter-Boxes.jpg',                                                  alt:'Planter Boxes',                                   category:'hardscapes' },
+      { id:'hc-48',  src:'../images/hardscapes/Rock-Boulders-Lantana-Pink-Muhley-Grasses-Patio.jpg',                alt:'Rock Boulders Lantana Pink Muhley Grasses Patio', category:'hardscapes' },
+      { id:'hc-49',  src:'../images/hardscapes/Rock-Retaining-Wall.jpg',                                            alt:'Rock Retaining Wall',                             category:'hardscapes' },
+      { id:'hc-50',  src:'../images/hardscapes/Stamped-and-Stained-Concrete-Patio.jpg',                             alt:'Stamped and Stained Concrete Patio',              category:'hardscapes' },
+      { id:'hc-51',  src:'../images/hardscapes/Stucco-Retaining-Wall.jpg',                                          alt:'Stucco Retaining Wall',                           category:'hardscapes' },
+      { id:'hc-52',  src:'../images/outdoor-living/Back-Patio-Pergola.jpg',                                         alt:'Back Patio Pergola',                              category:'outdoor-living' },
+      { id:'hc-53',  src:'../images/outdoor-living/Colonial-Column-Patio-Pergola-Patio-Furniture.jpg',              alt:'Colonial Column Patio Pergola Patio Furniture',   category:'outdoor-living' },
+      { id:'hc-54',  src:'../images/outdoor-living/Flagstone-Pathway-Pergola-Gazebo.jpg',                           alt:'Flagstone Pathway Pergola Gazebo',                category:'outdoor-living' },
+      { id:'hc-55',  src:'../images/outdoor-living/Flagstone-Pathway-Pergola.jpg',                                  alt:'Flagstone Pathway Pergola',                       category:'outdoor-living' },
+      { id:'hc-56',  src:'../images/outdoor-living/Outdoor-Kitchen-and-Grill.jpg',                                  alt:'Outdoor Kitchen and Grill',                       category:'outdoor-living' },
+      { id:'hc-57',  src:'../images/outdoor-living/Outdoor-Living-Fire-Pit-with-Stump-Chairs.jpg',                  alt:'Outdoor Living Fire Pit with Stump Chairs',       category:'outdoor-living' },
+      { id:'hc-58',  src:'../images/outdoor-living/Pool-House.jpg',                                                 alt:'Pool House',                                      category:'outdoor-living' },
+      { id:'hc-59',  src:'../images/outdoor-living/Red-Cedar-Frame-Pergola.jpg',                                    alt:'Red Cedar Frame Pergola',                         category:'outdoor-living' },
+      { id:'hc-60',  src:'../images/outdoor-living/Simple-Pergola-Seating-Dog-Park.jpg',                            alt:'Simple Pergola Seating Dog Park',                 category:'outdoor-living' },
+      { id:'hc-61',  src:'../images/outdoor-living/Stained-Concrete-Gazebo-Outdoor-Living.jpg',                     alt:'Stained Concrete Gazebo Outdoor Living',          category:'outdoor-living' },
+      { id:'hc-62',  src:'../images/outdoor-living/Stamped-and-Stained-Concrete-Patio-with-Cedar-Pergola.jpg',      alt:'Stamped and Stained Concrete Patio with Cedar Pergola', category:'outdoor-living' },
+      { id:'hc-63',  src:'../images/outdoor-living/Swimming-Pool-Knockout-Roses-Ivy.jpg',                           alt:'Swimming Pool Knockout Roses Ivy',                category:'outdoor-living' },
+      { id:'hc-64',  src:'../images/lighting/Christmas-Lights.jpg',                                                 alt:'Christmas Lights',                                category:'lighting' },
+      { id:'hc-65',  src:'../images/lighting/Decorative-Lighting-Installation.jpg',                                 alt:'Decorative Lighting Installation',                category:'lighting' },
+      { id:'hc-66',  src:'../images/lighting/Landscape-Lighting-Boulders.jpg',                                      alt:'Landscape Lighting Boulders',                     category:'lighting' },
+      { id:'hc-67',  src:'../images/lighting/Landscape-Lighting.jpg',                                               alt:'Landscape Lighting',                              category:'lighting' },
+      { id:'hc-68',  src:'../images/lighting/Winter-Wonderland-of-Lights.jpg',                                      alt:'Winter Wonderland of Lights',                     category:'lighting' },
+      { id:'hc-69',  src:'../images/maintenance/Before-Dry-Creek.jpg',                                              alt:'Before Dry Creek',                                category:'maintenance' },
+      { id:'hc-70',  src:'../images/maintenance/Dry-Creek-bed.jpg',                                                 alt:'Dry Creek bed',                                   category:'maintenance' },
+      { id:'hc-71',  src:'../images/maintenance/Dry-River-Rock-Bed-with-Native-Grasses.jpg',                        alt:'Dry River Rock Bed with Native Grasses',          category:'maintenance' },
+      { id:'hc-72',  src:'../images/maintenance/Dry-creek.jpg',                                                     alt:'Dry creek',                                       category:'maintenance' },
+      { id:'hc-73',  src:'../images/maintenance/French-Drain.jpg',                                                  alt:'French Drain',                                    category:'maintenance' },
+      { id:'hc-74',  src:'../images/maintenance/Irrigation-Sage-Rosemary-Grey-Santolina-Knock-Out-Roses.jpg',       alt:'Irrigation Sage Rosemary Grey Santolina Knock Out Roses', category:'maintenance' },
+      { id:'hc-75',  src:'../images/maintenance/Low-Maintenance-Landscape.jpg',                                     alt:'Low Maintenance Landscape',                       category:'maintenance' },
+      { id:'hc-76',  src:'../images/maintenance/Shrub-Trimming-Monkey-Grasses.jpg',                                 alt:'Shrub Trimming Monkey Grasses',                   category:'maintenance' },
+      { id:'hc-77',  src:'../images/maintenance/scalping.jpg',                                                      alt:'scalping',                                        category:'maintenance' },
+      { id:'hc-78',  src:'../images/maintenance/too-much.jpg',                                                      alt:'too much',                                        category:'maintenance' },
+      { id:'hc-79',  src:'../images/maintenance/waterway_drainage_water_foliage_path-9202.jpg',                     alt:'waterway drainage water foliage path 9202',       category:'maintenance' },
+      { id:'hc-80',  src:'../images/projects/8609.jpg',                                                             alt:'Project — 8609',                                  category:'landscape-design' },
+      { id:'hc-81',  src:'../images/projects/AR000502.jpg',                                                         alt:'Project — AR000502',                              category:'landscape-design' },
+      { id:'hc-82',  src:'../images/projects/AR001502.jpg',                                                         alt:'Project — AR001502',                              category:'landscape-design' },
+      { id:'hc-83',  src:'../images/projects/DSC01480.jpg',                                                         alt:'Project — DSC01480',                              category:'landscape-design' },
+      { id:'hc-84',  src:'../images/projects/Hardy-242-700x525.jpg',                                                alt:'Project — Hardy 242',                             category:'landscape-design' },
+      { id:'hc-85',  src:'../images/projects/Hardy-242.JPG',                                                        alt:'Project — Hardy 242',                             category:'landscape-design' },
+      { id:'hc-86',  src:'../images/projects/Hardy-259-700x525.jpg',                                                alt:'Project — Hardy 259',                             category:'landscape-design' },
+      { id:'hc-87',  src:'../images/projects/Hardy-259.JPG',                                                        alt:'Project — Hardy 259',                             category:'landscape-design' },
+      { id:'hc-88',  src:'../images/projects/JOE-TS-003.jpg',                                                       alt:'Project — JOE TS 003',                            category:'landscape-design' },
+      { id:'hc-89',  src:'../images/projects/JOE-TS-007.jpg',                                                       alt:'Project — JOE TS 007',                            category:'landscape-design' },
+      { id:'hc-90',  src:'../images/projects/P1010009-500x330.jpg',                                                 alt:'Project — P1010009',                              category:'landscape-design' },
+      { id:'hc-91',  src:'../images/projects/P1010044a-500x330.jpg',                                                alt:'Project — P1010044a',                             category:'landscape-design' },
+      { id:'hc-92',  src:'../images/projects/P1010168-e1531847922513.jpg',                                          alt:'Project — P1010168 e1531847922513',               category:'landscape-design' },
+      { id:'hc-93',  src:'../images/projects/P1010218.jpg',                                                         alt:'Project — P1010218',                              category:'landscape-design' },
+      { id:'hc-94',  src:'../images/projects/P1010219.jpg',                                                         alt:'Project — P1010219',                              category:'landscape-design' },
+      { id:'hc-95',  src:'../images/projects/P1130026.jpg',                                                         alt:'Project — P1130026',                              category:'landscape-design' },
+      { id:'hc-96',  src:'../images/projects/P2280077.jpg',                                                         alt:'Project — P2280077',                              category:'landscape-design' },
+      { id:'hc-97',  src:'../images/projects/P7150005rev-0.jpg',                                                    alt:'Project — P7150005rev 0',                         category:'landscape-design' },
+      { id:'hc-98',  src:'../images/projects/P7150006.jpg',                                                         alt:'Project — P7150006',                              category:'landscape-design' },
+      { id:'hc-99',  src:'../images/projects/PA090013.jpg',                                                         alt:'Project — PA090013',                              category:'landscape-design' },
+      { id:'hc-100', src:'../images/projects/PA090039.jpg',                                                         alt:'Project — PA090039',                              category:'landscape-design' },
+      { id:'hc-101', src:'../images/projects/PB160054.jpg',                                                         alt:'Project — PB160054',                              category:'landscape-design' },
+      { id:'hc-102', src:'../images/projects/PB160060.jpg',                                                         alt:'Project — PB160060',                              category:'landscape-design' },
+      { id:'hc-103', src:'../images/projects/PB160077.jpg',                                                         alt:'Project — PB160077',                              category:'landscape-design' },
+      { id:'hc-104', src:'../images/projects/Testimonials-4-001.jpg',                                               alt:'Project — Testimonials 4 001',                    category:'landscape-design' },
+      { id:'hc-105', src:'../images/projects/ashley-002.jpg',                                                       alt:'Project — ashley 002',                            category:'landscape-design' },
+      { id:'hc-106', src:'../images/projects/ashley-009.jpg',                                                       alt:'Project — ashley 009',                            category:'landscape-design' },
+      { id:'hc-107', src:'../images/projects/ashley-044.jpg',                                                       alt:'Project — ashley 044',                            category:'landscape-design' },
+      { id:'hc-108', src:'../images/projects/ashley-045.jpg',                                                       alt:'Project — ashley 045',                            category:'landscape-design' },
+      { id:'hc-109', src:'../images/projects/clifford-001.jpg',                                                     alt:'Project — clifford 001',                          category:'landscape-design' },
+      { id:'hc-110', src:'../images/projects/clifford-003.jpg',                                                     alt:'Project — clifford 003',                          category:'landscape-design' }
     ];
     var PROJ_HARDCODED_TABS = [
       { id:'landscape-design', label:'Landscape Design' },
       { id:'water-features',   label:'Water Features'   },
       { id:'hardscapes',       label:'Hardscapes'       },
       { id:'outdoor-living',   label:'Outdoor Living'   },
-      { id:'lighting',         label:'Lighting'         }
+      { id:'lighting',         label:'Lighting'         },
+      { id:'maintenance',      label:'Maintenance'      }
     ];
 
     var projSettings    = {};
     var projDynImages   = [];
+    var hardcodedKeywords = {};
     var projCollections = [];
     const projCollList   = document.getElementById('proj-coll-list');
     const projCountBadge = document.getElementById('projects-count-badge');
     const projCollNameIn = document.getElementById('proj-coll-name');
     const projAddCollBtn = document.getElementById('proj-add-coll-btn');
     const projStatus     = document.getElementById('proj-status');
+
+    /* ── Keyword Editor ─────────────────────────────────────── */
+    var currentEditingImage = null;
+    var currentEditingKeywords = [];
+    const keywordEditorOverlay = document.getElementById('keyword-editor-overlay');
+    const keywordEditorImage = document.getElementById('keyword-editor-image');
+    const keywordTags = document.getElementById('keyword-tags');
+    const keywordInput = document.getElementById('keyword-input');
+    const keywordAddBtn = document.getElementById('keyword-add-btn');
+    const keywordEditorSave = document.getElementById('keyword-editor-save');
+    const keywordEditorClose = document.getElementById('keyword-editor-close');
+
+    function openKeywordEditor(imgData) {
+      currentEditingImage = imgData;
+      currentEditingKeywords = (imgData.keywords || []).slice();
+      keywordEditorImage.src = imgData.url || imgData.src;
+      keywordInput.value = '';
+      renderKeywordTags();
+      keywordEditorOverlay.classList.add('open');
+      keywordInput.focus();
+    }
+
+    function closeKeywordEditor() {
+      keywordEditorOverlay.classList.remove('open');
+      currentEditingImage = null;
+      currentEditingKeywords = [];
+      keywordInput.value = '';
+    }
+
+    function renderKeywordTags() {
+      keywordTags.innerHTML = '';
+      currentEditingKeywords.forEach(kw => {
+        const tag = document.createElement('span');
+        tag.className = 'keyword-tag';
+        tag.textContent = kw + ' ';
+        const removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.title = 'Remove';
+        removeBtn.textContent = '×';
+        removeBtn.addEventListener('click', e => {
+          e.preventDefault();
+          currentEditingKeywords = currentEditingKeywords.filter(k => k !== kw);
+          renderKeywordTags();
+        });
+        tag.appendChild(removeBtn);
+        keywordTags.appendChild(tag);
+      });
+    }
+
+    function addKeyword() {
+      const kw = keywordInput.value.trim().toLowerCase();
+      if (!kw) return;
+      if (currentEditingKeywords.includes(kw)) {
+        keywordInput.value = '';
+        return;
+      }
+      if (currentEditingKeywords.length >= 15) {
+        alert('Maximum 15 keywords per image.');
+        return;
+      }
+      currentEditingKeywords.push(kw);
+      renderKeywordTags();
+      keywordInput.value = '';
+      keywordInput.focus();
+    }
+
+    async function saveKeywords() {
+      if (!currentEditingImage) return;
+      keywordEditorSave.disabled = true;
+      try {
+        if (currentEditingImage.isHardcoded) {
+          await setDoc(doc(db, 'hardcodedImageKeywords', currentEditingImage.id), {
+            keywords: currentEditingKeywords
+          });
+          hardcodedKeywords[currentEditingImage.id] = currentEditingKeywords.slice();
+        } else {
+          await updateDoc(doc(db, 'projectImages', currentEditingImage.id), {
+            keywords: currentEditingKeywords
+          });
+        }
+        closeKeywordEditor();
+        await loadProjects();
+      } catch(err) {
+        console.error('Failed to save keywords:', err);
+        alert('Failed to save keywords.');
+      } finally {
+        keywordEditorSave.disabled = false;
+      }
+    }
+
+    keywordInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); addKeyword(); } });
+    keywordAddBtn.addEventListener('click', addKeyword);
+    keywordEditorSave.addEventListener('click', saveKeywords);
+    keywordEditorClose.addEventListener('click', closeKeywordEditor);
 
     async function loadProjects() {
       try {
@@ -1174,8 +1465,13 @@
         projDynImages = [];
         imgSnap.forEach(d => { projDynImages.push({ id: d.id, ...d.data() }); });
 
+        const hcKeySnap = await getDocs(collection(db, 'hardcodedImageKeywords'));
+        hardcodedKeywords = {};
+        hcKeySnap.forEach(d => { hardcodedKeywords[d.id] = d.data().keywords || []; });
+
         renderProjCollections();
       } catch(err) {
+        console.error('Error loading projects:', err);
         projCollList.innerHTML = '<p class="blog-empty">Could not load projects.</p>';
       }
     }
@@ -1284,6 +1580,19 @@
       const img = document.createElement('img');
       img.src = imgData.src; img.alt = imgData.alt; img.loading = 'lazy';
       tile.appendChild(img);
+      
+      const footer = document.createElement('div');
+      footer.className = 'proj-img-tile-footer';
+      const kwBtn = document.createElement('button');
+      kwBtn.className = 'proj-img-keyword-btn';
+      kwBtn.textContent = '🏷️';
+      kwBtn.title = 'Edit keywords';
+      kwBtn.addEventListener('click', () => {
+        openKeywordEditor({ ...imgData, keywords: hardcodedKeywords[imgData.id] || [], isHardcoded: true });
+      });
+      footer.appendChild(kwBtn);
+      tile.appendChild(footer);
+      
       return tile;
     }
 
@@ -1314,11 +1623,21 @@
       allSpan.className = 'proj-include-label'; allSpan.textContent = 'All';
       allLbl.appendChild(allCb); allLbl.appendChild(allSpan);
 
+      // Keyword button
+      const keywordBtn = document.createElement('button');
+      keywordBtn.className = 'proj-img-keyword-btn';
+      keywordBtn.textContent = '🏷️';
+      keywordBtn.title = 'Edit keywords';
+      keywordBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        openKeywordEditor(imgData);
+      });
+
       const delBtn = document.createElement('button');
       delBtn.className = 'proj-img-delbtn'; delBtn.innerHTML = '&#x2715;';
       delBtn.title = 'Delete image';
 
-      footer.appendChild(activeLbl); footer.appendChild(allLbl); footer.appendChild(delBtn);
+      footer.appendChild(activeLbl); footer.appendChild(allLbl); footer.appendChild(keywordBtn); footer.appendChild(delBtn);
 
       let t;
       function saveToggles() {
@@ -1518,6 +1837,7 @@
         plantCountBadge.textContent = allPlants.length + ' plant' + (allPlants.length === 1 ? '' : 's');
         renderPlantList();
       } catch(err) {
+        console.error('Error loading plants:', err);
         plantListEl.innerHTML = '<p class="plant-empty">Could not load plants.</p>';
       }
     }
