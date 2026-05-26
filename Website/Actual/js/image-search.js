@@ -5,6 +5,12 @@
 
 import imageDB from './image-database.js';
 
+function resolveImageSrc(path) {
+  if (!path) return '';
+  if (/^(https?:)?\/\//i.test(path) || /^(data|blob):/i.test(path)) return path;
+  return path.startsWith('/') ? path : '/' + path;
+}
+
 /**
  * Create and initialize an image search interface
  * @param {Object} config - Configuration options
@@ -281,7 +287,7 @@ export async function createImageSearch(config = {}) {
       item.className = 'image-search-item';
       
       const imgEl = document.createElement('img');
-      imgEl.src = '/' + img.path;
+      imgEl.src = resolveImageSrc(img.path);
       imgEl.alt = img.alt;
       imgEl.loading = 'lazy';
       
@@ -312,7 +318,7 @@ export async function createImageSearch(config = {}) {
     lightbox.className = 'image-lightbox';
     
     const imgEl = document.createElement('img');
-    imgEl.src = '/' + img.path;
+    imgEl.src = resolveImageSrc(img.path);
     imgEl.alt = img.alt;
     
     lightbox.appendChild(imgEl);

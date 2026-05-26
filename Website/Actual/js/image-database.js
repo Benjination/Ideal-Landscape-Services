@@ -100,13 +100,15 @@ class ImageDatabase {
       
       snapshot.forEach(docSnap => {
         const data = docSnap.data();
+        const imagePath = data.url || data.imageUrl || '';
+        if (!imagePath) return;
         
         this.dynamicProjectImages.push({
           id: `project-${docSnap.id}`,
           firestoreId: docSnap.id,
-          filename: this._getFilenameFromUrl(data.imageUrl),
+          filename: this._getFilenameFromUrl(imagePath),
           category: 'projects',
-          path: data.imageUrl,
+          path: imagePath,
           keywords: data.keywords || [],
           alt: data.alt || this._generateAltFromKeywords(data.keywords),
           collectionId: data.collectionId,
