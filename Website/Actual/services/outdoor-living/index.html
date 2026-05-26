@@ -106,21 +106,7 @@
       </div>
 
       <!-- GALLERY -->
-      <div class="service-gallery" style="margin-top:56px;">
-        <img class="service-gallery-item animate-in" src="../../images/outdoor-living/Back-Patio-Pergola.jpg" alt="Back patio pergola">
-        <img class="service-gallery-item animate-in" src="../../images/outdoor-living/Stamped-and-Stained-Concrete-Patio-with-Cedar-Pergola.jpg" alt="Stamped concrete patio with cedar pergola">
-        <img class="service-gallery-item animate-in" src="../../images/outdoor-living/Outdoor-Kitchen-and-Grill.jpg" alt="Outdoor kitchen and grill">
-        <img class="service-gallery-item animate-in" src="../../images/outdoor-living/Red-Cedar-Frame-Pergola.jpg" alt="Red cedar frame pergola">
-        <img class="service-gallery-item animate-in" src="../../images/outdoor-living/Colonial-Column-Patio-Pergola-Patio-Furniture.jpg" alt="Colonial column patio pergola">
-        <img class="service-gallery-item animate-in" src="../../images/outdoor-living/Outdoor-Living-Fire-Pit-with-Stump-Chairs.jpg" alt="Outdoor fire pit with seating">
-        <img class="service-gallery-item gallery-overflow animate-in" src="../../images/outdoor-living/Flagstone-Pathway-Pergola-Gazebo.jpg" alt="Flagstone pathway with pergola and gazebo">
-        <img class="service-gallery-item gallery-overflow animate-in" src="../../images/outdoor-living/Flagstone-Pathway-Pergola.jpg" alt="Flagstone pathway and pergola">
-        <img class="service-gallery-item gallery-overflow animate-in" src="../../images/outdoor-living/Pool-House.jpg" alt="Outdoor pool house">
-        <img class="service-gallery-item gallery-overflow animate-in" src="../../images/outdoor-living/Simple-Pergola-Seating-Dog-Park.jpg" alt="Pergola with outdoor seating">
-        <img class="service-gallery-item gallery-overflow animate-in" src="../../images/outdoor-living/Stained-Concrete-Gazebo-Outdoor-Living.jpg" alt="Stained concrete gazebo outdoor living">
-        <img class="service-gallery-item gallery-overflow animate-in" src="../../images/outdoor-living/Swimming-Pool-Knockout-Roses-Ivy.jpg" alt="Swimming pool with knockout roses and ivy">
-      </div>
-      <button class="gallery-expand-btn" data-label="View All 12 Photos">View All 12 Photos</button>
+      <div id="outdoor-living-gallery" style="margin-top:56px;"></div>
     </div>
   </section>
 
@@ -206,5 +192,23 @@
 
   <script src="../../js/main.js"></script>
   <script type="module" src="../../js/plants-nav.js"></script>
+  <script type="module">
+    import { createImageSearch } from '../../js/image-search.js';
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      createImageSearch({
+        containerId: 'outdoor-living-gallery',
+        showSearch: false,
+        showCategoryFilter: false,
+        showBeforeAfter: false,
+        columnsDesktop: 4,
+        columnsTablet: 3,
+        columnsMobile: 2,
+        enableLightbox: true,
+        categories: ['outdoor-living'],
+        initialDisplayCount: 8
+      });
+    });
+  </script>
 </body>
 </html>

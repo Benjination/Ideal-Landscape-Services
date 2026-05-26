@@ -1002,6 +1002,38 @@
     // Auto-fill today's date
     blogDateIn.value = new Date().toISOString().slice(0, 10);
 
+    /**
+     * Extract keywords from blog title and description for SEO & search
+     * @param {string} text - Combined title + description
+     * @returns {Array<string>} Array of keywords
+     */
+    function extractBlogKeywords(text) {
+      if (!text) return [];
+      
+      // Common landscaping terms to extract
+      const landscapeTerms = [
+        'patio', 'pergola', 'flagstone', 'hardscape', 'landscape', 'lighting',
+        'fountain', 'water feature', 'outdoor kitchen', 'fire pit', 'gazebo',
+        'lawn', 'maintenance', 'irrigation', 'drainage', 'retaining wall',
+        'boulder', 'stone', 'concrete', 'cedar', 'pathway', 'walkway',
+        'pool', 'swimming pool', 'seasonal color', 'flowers', 'roses',
+        'native', 'xeriscape', 'drought', 'mulch', 'sod', 'turf',
+        'japanese maple', 'juniper', 'crepe myrtle', 'knockout roses',
+        'dry creek', 'water fountain', 'outdoor living', 'waterfall'
+      ];
+      
+      const textLower = text.toLowerCase();
+      const found = [];
+      
+      for (const term of landscapeTerms) {
+        if (textLower.includes(term) && !found.includes(term)) {
+          found.push(term);
+        }
+      }
+      
+      return found.slice(0, 10); // Max 10 keywords
+    }
+
     // Image preview
     blogImageIn.addEventListener('change', () => {
       const file = blogImageIn.files[0];
@@ -1200,14 +1232,17 @@
           });
         }
 
+        // Extract keywords from title and description
+        const keywords = extractBlogKeywords(`${title} ${desc}`);
+
         if (currentEditId) {
           await updateDoc(doc(db, 'blogPosts', currentEditId), {
-            title, dateStr: dateVal, desc, published: publish, imageUrl
+            title, dateStr: dateVal, desc, published: publish, imageUrl, keywords
           });
           blogStatus.textContent = 'Post updated ✓';
         } else {
           await addDoc(blogColRef, {
-            title, dateStr: dateVal, desc, published: publish, imageUrl,
+            title, dateStr: dateVal, desc, published: publish, imageUrl, keywords,
             createdAt: serverTimestamp()
           });
           blogStatus.textContent = 'Post added ✓';

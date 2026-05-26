@@ -105,14 +105,7 @@
       </div>
 
       <!-- GALLERY -->
-      <div class="service-gallery" style="margin-top:56px;">
-        <img class="service-gallery-item animate-in" src="../../images/lighting/Landscape-Lighting.jpg" alt="Landscape lighting installation">
-        <img class="service-gallery-item animate-in" src="../../images/lighting/Landscape-Lighting-Boulders.jpg" alt="Lighting on boulders">
-        <img class="service-gallery-item animate-in" src="../../images/lighting/Decorative-Lighting-Installation.jpg" alt="Decorative lighting installation">
-        <img class="service-gallery-item animate-in" src="../../images/lighting/Christmas-Lights.jpg" alt="Holiday lighting">
-        <img class="service-gallery-item animate-in" src="../../images/lighting/Winter-Wonderland-of-Lights.jpg" alt="Winter wonderland lights">
-        <img class="service-gallery-item animate-in" src="../../images/outdoor-living/Flagstone-Pathway-Pergola.jpg" alt="Lit flagstone pathway and pergola">
-      </div>
+      <div id="lighting-gallery" style="margin-top:56px;"></div>
     </div>
   </section>
 
@@ -198,5 +191,23 @@
 
   <script src="../../js/main.js"></script>
   <script type="module" src="../../js/plants-nav.js"></script>
+  <script type="module">
+    import { createImageSearch } from '../../js/image-search.js';
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      createImageSearch({
+        containerId: 'lighting-gallery',
+        showSearch: false,
+        showCategoryFilter: false,
+        showBeforeAfter: false,
+        columnsDesktop: 4,
+        columnsTablet: 3,
+        columnsMobile: 2,
+        enableLightbox: true,
+        categories: ['lighting'],
+        initialDisplayCount: 8
+      });
+    });
+  </script>
 </body>
 </html>

@@ -22,9 +22,9 @@ ul { list-style: none; }
   --slate-950:    #0D0D0D;   /* deep black — navbar, footer */
   --slate-900:    #111111;   /* dark alternating sections */
   --slate-800:    #1e1e1e;   /* cards, inputs, drawers */
-  --slate-700:    #2e2e2e;   /* neutral gray — "light" sections */
-  --slate-600:    #2e2e2e;   /* same as 700 (process / area sections) */
-  --slate-500:    #4a4a4a;
+  --slate-700:    #4a5665;   /* cool slate blue-gray — "light" sections */
+  --slate-600:    #4a5665;   /* same as 700 (process / area sections) */
+  --slate-500:    #6a6a6a;
   --slate-400:    #6a6a6a;
   --slate-300:    #9ab0bc;
   --slate-200:    #c4d4dc;
@@ -604,10 +604,10 @@ body {
 .service-tile-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(20,30,40,0.38);
+  background: rgba(0,0,0,0.05);
   transition: background 240ms;
 }
-.service-tile:hover .service-tile-overlay { background: rgba(20,30,40,0.62); }
+.service-tile:hover .service-tile-overlay { background: rgba(0,0,0,0.15); }
 .service-tile-content {
   position: absolute;
   inset: 0;

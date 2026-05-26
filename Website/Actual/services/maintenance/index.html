@@ -106,20 +106,7 @@
       </div>
 
       <!-- GALLERY -->
-      <div class="service-gallery" style="margin-top:56px;">
-        <img class="service-gallery-item animate-in" src="../../images/maintenance/Low-Maintenance-Landscape.jpg" alt="Low maintenance landscape">
-        <img class="service-gallery-item animate-in" src="../../images/maintenance/Shrub-Trimming-Monkey-Grasses.jpg" alt="Shrub trimming and monkey grasses">
-        <img class="service-gallery-item animate-in" src="../../images/maintenance/French-Drain.jpg" alt="French drain installation">
-        <img class="service-gallery-item animate-in" src="../../images/maintenance/Dry-Creek-bed.jpg" alt="Dry creek bed">
-        <img class="service-gallery-item animate-in" src="../../images/maintenance/Dry-River-Rock-Bed-with-Native-Grasses.jpg" alt="Dry river rock bed with native grasses">
-        <img class="service-gallery-item animate-in" src="../../images/maintenance/Before-Dry-Creek.jpg" alt="Backyard before dry creek installation">
-        <img class="service-gallery-item gallery-overflow animate-in" src="../../images/maintenance/Dry-creek.jpg" alt="Completed dry creek bed">
-        <img class="service-gallery-item gallery-overflow animate-in" src="../../images/maintenance/Irrigation-Sage-Rosemary-Grey-Santolina-Knock-Out-Roses.jpg" alt="Irrigation with sage rosemary and knockout roses">
-        <img class="service-gallery-item gallery-overflow animate-in" src="../../images/maintenance/scalping.jpg" alt="Lawn scalping service">
-        <img class="service-gallery-item gallery-overflow animate-in" src="../../images/maintenance/too-much.jpg" alt="Mulch bed maintenance">
-        <img class="service-gallery-item gallery-overflow animate-in" src="../../images/maintenance/waterway_drainage_water_foliage_path-9202.jpg" alt="Waterway drainage with foliage">
-      </div>
-      <button class="gallery-expand-btn" data-label="View All 11 Photos">View All 11 Photos</button>
+      <div id="maintenance-gallery" style="margin-top:56px;"></div>
     </div>
   </section>
 
@@ -205,5 +192,23 @@
 
   <script src="../../js/main.js"></script>
   <script type="module" src="../../js/plants-nav.js"></script>
+  <script type="module">
+    import { createImageSearch } from '../../js/image-search.js';
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      createImageSearch({
+        containerId: 'maintenance-gallery',
+        showSearch: false,
+        showCategoryFilter: false,
+        showBeforeAfter: false,
+        columnsDesktop: 4,
+        columnsTablet: 3,
+        columnsMobile: 2,
+        enableLightbox: true,
+        categories: ['maintenance'],
+        initialDisplayCount: 8
+      });
+    });
+  </script>
 </body>
 </html>

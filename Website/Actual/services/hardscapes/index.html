@@ -106,17 +106,7 @@
       </div>
 
       <!-- GALLERY -->
-      <div class="service-gallery" style="margin-top:56px;">
-        <img class="service-gallery-item animate-in" src="../../images/hardscapes/Flagstone-Patio.jpg" alt="Flagstone patio">
-        <img class="service-gallery-item animate-in" src="../../images/hardscapes/Flagstone-Stepping-Stones.jpg" alt="Flagstone stepping stones">
-        <img class="service-gallery-item animate-in" src="../../images/hardscapes/Rock-Retaining-Wall.jpg" alt="Rock retaining wall">
-        <img class="service-gallery-item animate-in" src="../../images/hardscapes/Stamped-and-Stained-Concrete-Patio.jpg" alt="Stamped and stained concrete patio">
-        <img class="service-gallery-item animate-in" src="../../images/hardscapes/Rock-Boulders-Lantana-Pink-Muhley-Grasses-Patio.jpg" alt="Rock boulders and patio with grasses">
-        <img class="service-gallery-item animate-in" src="../../images/hardscapes/Planter-Boxes.jpg" alt="Decorative planter boxes">
-        <img class="service-gallery-item gallery-overflow animate-in" src="../../images/hardscapes/Back-Yard-Pathways-River-Birch.jpg" alt="Backyard pathways with river birch">
-        <img class="service-gallery-item gallery-overflow animate-in" src="../../images/hardscapes/Stucco-Retaining-Wall.jpg" alt="Stucco retaining wall">
-      </div>
-      <button class="gallery-expand-btn" data-label="View All 8 Photos">View All 8 Photos</button>
+      <div id="hardscapes-gallery" style="margin-top:56px;"></div>
     </div>
   </section>
 
@@ -202,5 +192,23 @@
 
   <script src="../../js/main.js"></script>
   <script type="module" src="../../js/plants-nav.js"></script>
+  <script type="module">
+    import { createImageSearch } from '../../js/image-search.js';
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      createImageSearch({
+        containerId: 'hardscapes-gallery',
+        showSearch: false,
+        showCategoryFilter: false,
+        showBeforeAfter: false,
+        columnsDesktop: 4,
+        columnsTablet: 3,
+        columnsMobile: 2,
+        enableLightbox: true,
+        categories: ['hardscapes'],
+        initialDisplayCount: 8
+      });
+    });
+  </script>
 </body>
 </html>
