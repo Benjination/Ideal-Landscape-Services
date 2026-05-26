@@ -16,13 +16,29 @@ class ImageDatabase {
     this.categories = {};
     this.loaded = false;
     this.loadPromise = null;
+    this.loadOptions = { includeBlog: true, includeProjects: true };
   }
 
   /**
    * Load all image data (static + dynamic)
    * @returns {Promise<void>}
    */
-  async load() {
+  async load(options = {}) {
+    const includeBlog = options.includeBlog !== undefined ? !!options.includeBlog : true;
+    const includeProjects = options.includeProjects !== undefined ? !!options.includeProjects : true;
+
+    // If the caller changes load options, force a reload
+    const nextOptions = { includeBlog, includeProjects };
+    const optionsChanged =
+      this.loadOptions.includeBlog !== nextOptions.includeBlog ||
+      this.loadOptions.includeProjects !== nextOptions.includeProjects;
+
+    if (optionsChanged) {
+      this.loaded = false;
+      this.loadPromise = null;
+    }
+
+    this.loadOptions = nextOptions;
     if (this.loaded) return;
     if (this.loadPromise) return this.loadPromise;
 
@@ -34,11 +50,11 @@ class ImageDatabase {
         this.staticImages = data.images || [];
         this.categories = data.categories || {};
 
-        // Load dynamic blog images
-        await this._loadBlogImages();
-
-        // Load dynamic project images
-        await this._loadProjectImages();
+        // Load dynamic images (optional, in parallel)
+        const dynamicLoads = [];
+        if (includeBlog) dynamicLoads.push(this._loadBlogImages());
+        if (includeProjects) dynamicLoads.push(this._loadProjectImages());
+        await Promise.all(dynamicLoads);
 
         this.loaded = true;
         console.log(`✓ Image database loaded: ${this.getTotalCount()} images`);

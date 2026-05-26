@@ -38,3 +38,6 @@ LaTex/
 
 # ── Mockup / scratch work ─────────────────────────────────────────────────────
 Website/Mockup/
+
+# ── Image optimization backups (local only) ───────────────────────────────────
+Website/Actual/images/_originals/

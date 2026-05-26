@@ -27,13 +27,15 @@ export async function createImageSearch(config = {}) {
     columnsMobile = 2,                    // Grid columns on mobile
     enableLightbox = true,                // Enable image lightbox on click
     categories = null,                    // Array of category IDs to include (null = all)
+    includeBlog = true,                   // Include blog images from Firestore
+    includeProjects = true,               // Include project images from Firestore
     placeholder = 'Search by keyword (e.g., patio, roses, pergola)...',
     noResultsMessage = 'No images found matching your search.',
     initialDisplayCount = null            // Number of images to show initially (null = show all)
   } = config;
 
   // Load database
-  await imageDB.load();
+  await imageDB.load({ includeBlog, includeProjects });
 
   const container = document.getElementById(containerId);
   if (!container) {
@@ -290,6 +292,8 @@ export async function createImageSearch(config = {}) {
       imgEl.src = resolveImageSrc(img.path);
       imgEl.alt = img.alt;
       imgEl.loading = 'lazy';
+      imgEl.decoding = 'async';
+      try { imgEl.fetchPriority = 'low'; } catch {}
       
       item.appendChild(imgEl);
       
