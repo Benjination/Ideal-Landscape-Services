@@ -8,7 +8,9 @@ import imageDB from './image-database.js';
 function resolveImageSrc(path) {
   if (!path) return '';
   if (/^(https?:)?\/\//i.test(path) || /^(data|blob):/i.test(path)) return path;
-  return path.startsWith('/') ? path : '/' + path;
+  // Decode URL-encoded characters (e.g., %20 for spaces, %28 for parentheses)
+  const decodedPath = decodeURIComponent(path);
+  return decodedPath.startsWith('/') ? decodedPath : '/' + decodedPath;
 }
 
 /**
