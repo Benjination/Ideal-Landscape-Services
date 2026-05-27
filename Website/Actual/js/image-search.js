@@ -10,9 +10,19 @@ function resolveImageSrc(path) {
   if (/^(https?:)?\/\//i.test(path) || /^(data|blob):/i.test(path)) return path;
   // Decode URL-encoded characters (e.g., %20 for spaces, %28 for parentheses)
   const decodedPath = decodeURIComponent(path);
-  // Add /Website/Actual/ prefix if path is relative
+  // Convert relative paths to absolute from domain root
   if (!decodedPath.startsWith('/')) {
-    return '/Website/Actual/' + decodedPath;
+    // Get the base path (e.g., /Ideal-Landscape-Services/Website/Actual/ or /Website/Actual/)
+    const basePath = window.location.pathname.split('/').slice(0, -1).join('/');
+    // Go up to the Actual directory level
+    const pathSegments = basePath.split('/');
+    const actualIndex = pathSegments.lastIndexOf('Actual');
+    if (actualIndex !== -1) {
+      const baseToActual = pathSegments.slice(0, actualIndex + 1).join('/');
+      return baseToActual + '/' + decodedPath;
+    }
+    // Fallback: just prepend the base path
+    return basePath + '/../' + decodedPath;
   }
   return decodedPath;
 }
