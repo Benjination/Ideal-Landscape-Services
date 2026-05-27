@@ -44,8 +44,13 @@ class ImageDatabase {
 
     this.loadPromise = (async () => {
       try {
-        // Load static images from JSON (relative to this JS file)
-        const response = await fetch('../image-database.json');
+        // Load static images from JSON
+        // Use relative path that works from service subdirectories (../../) and main pages (../)
+        const currentPath = window.location.pathname;
+        const isInServiceSubdir = currentPath.includes('/services/') && currentPath.split('/services/')[1].includes('/');
+        const jsonPath = isInServiceSubdir ? '../../image-database.json' : '../image-database.json';
+        
+        const response = await fetch(jsonPath);
         const data = await response.json();
         this.staticImages = data.images || [];
         this.categories = data.categories || {};
