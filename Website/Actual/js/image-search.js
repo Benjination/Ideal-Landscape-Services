@@ -10,7 +10,11 @@ function resolveImageSrc(path) {
   if (/^(https?:)?\/\//i.test(path) || /^(data|blob):/i.test(path)) return path;
   // Decode URL-encoded characters (e.g., %20 for spaces, %28 for parentheses)
   const decodedPath = decodeURIComponent(path);
-  return decodedPath.startsWith('/') ? decodedPath : '/' + decodedPath;
+  // Add /Website/Actual/ prefix if path is relative
+  if (!decodedPath.startsWith('/')) {
+    return '/Website/Actual/' + decodedPath;
+  }
+  return decodedPath;
 }
 
 /**

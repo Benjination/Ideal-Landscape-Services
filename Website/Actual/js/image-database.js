@@ -45,7 +45,7 @@ class ImageDatabase {
     this.loadPromise = (async () => {
       try {
         // Load static images from JSON
-        const response = await fetch('image-database.json');
+        const response = await fetch('/Website/Actual/image-database.json');
         const data = await response.json();
         this.staticImages = data.images || [];
         this.categories = data.categories || {};
