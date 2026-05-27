@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="0; url=Website/Actual/index.html">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redirecting...</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #2d5016 0%, #4a7c2a 100%);
+      color: white;
+    }
+    .redirect-message {
+      text-align: center;
+    }
+    .spinner {
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top: 3px solid white;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+  <script>
+    // Redirect immediately via JavaScript as well
+    window.location.href = "Website/Actual/index.html";
+  </script>
+</head>
+<body>
+  <div class="redirect-message">
+    <div class="spinner"></div>
+    <h2>Redirecting to Ideal Landscape Services...</h2>
+    <p>If you are not redirected automatically, <a href="Website/Actual/index.html" style="color: #90EE90;">click here</a>.</p>
+  </div>
+</body>
+</html>
