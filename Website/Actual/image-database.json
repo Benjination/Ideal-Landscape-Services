@@ -1,17 +1,17 @@
 {
   "version": "1.0",
-  "lastUpdated": "2026-05-26T12:40:27.062482",
+  "lastUpdated": "2026-07-02T17:30:25.368Z",
   "categories": {
     "home-page": 7,
     "hardscapes": 31,
-    "landscaping": 41,
+    "landscaping": 40,
     "lighting": 11,
-    "maintenance": 20,
-    "outdoor-living": 20,
-    "water-features": 33,
-    "misc": 22,
+    "maintenance": 16,
+    "outdoor-living": 17,
+    "water-features": 30,
     "accolades": 4,
-    "about": 3
+    "about": 3,
+    "misc": 21
   },
   "images": [
     {
@@ -683,25 +683,6 @@
         "landscape design"
       ],
       "alt": "colorful seasonal color flowers landscape design - colorful landscape",
-      "projectName": null,
-      "beforeAfter": "after",
-      "notes": null,
-      "source": "static"
-    },
-    {
-      "id": "landscaping-dry-river-rock-bed-with-native-grasses",
-      "filename": "Dry-River-Rock-Bed-with-Native-Grasses.jpg",
-      "originalFilename": "Dry-River-Rock-Bed-with-Native-Grasses.jpg",
-      "newFilename": null,
-      "category": "landscaping",
-      "path": "images/landscaping/Dry-River-Rock-Bed-with-Native-Grasses.jpg",
-      "keywords": [
-        "dry river rock",
-        "creek bed",
-        "native grasses",
-        "drainage"
-      ],
-      "alt": "dry river rock creek bed native grasses drainage - dry river rock bed with native grasses",
       "projectName": null,
       "beforeAfter": "after",
       "notes": null,
@@ -1897,26 +1878,6 @@
       "source": "static"
     },
     {
-      "id": "outdoor-living-outdoor-kitchen-and-grill",
-      "filename": "Outdoor-Kitchen-and-Grill.jpg",
-      "originalFilename": "Outdoor-Kitchen-and-Grill.jpg",
-      "newFilename": null,
-      "category": "outdoor-living",
-      "path": "images/outdoor-living/Outdoor-Kitchen-and-Grill.jpg",
-      "keywords": [
-        "outdoor kitchen",
-        "grill",
-        "bbq",
-        "cooking",
-        "outdoor living"
-      ],
-      "alt": "outdoor kitchen grill bbq cooking - outdoor kitchen and grill",
-      "projectName": null,
-      "beforeAfter": "after",
-      "notes": null,
-      "source": "static"
-    },
-    {
       "id": "outdoor-living-outdoor-living-fire-pit-with-stump-chairs",
       "filename": "Outdoor-Living-Fire-Pit-with-Stump-Chairs.jpg",
       "originalFilename": "Outdoor-Living-Fire-Pit-with-Stump-Chairs.jpg",
@@ -2845,22 +2806,6 @@
       "source": "static"
     },
     {
-      "id": "maintenance-before-dry-creek",
-      "filename": "Before-Dry-Creek.jpg",
-      "originalFilename": "Before-Dry-Creek.jpg",
-      "newFilename": "",
-      "category": "maintenance",
-      "path": "images/maintenance/Before-Dry-Creek.jpg",
-      "keywords": [
-        "maintenance"
-      ],
-      "alt": "maintenance - Before Dry Creek",
-      "projectName": "",
-      "beforeAfter": "",
-      "notes": "Auto-added from directory scan",
-      "source": "static"
-    },
-    {
       "id": "maintenance-dry-creek",
       "filename": "Dry-creek.jpg",
       "originalFilename": "Dry-creek.jpg",
@@ -2871,24 +2816,6 @@
         "maintenance"
       ],
       "alt": "maintenance - Dry creek",
-      "projectName": "",
-      "beforeAfter": "",
-      "notes": "Auto-added from directory scan",
-      "source": "static"
-    },
-    {
-      "id": "maintenance-dry-river-rock-bed-with-native-grasses",
-      "filename": "Dry-River-Rock-Bed-with-Native-Grasses.jpg",
-      "originalFilename": "Dry-River-Rock-Bed-with-Native-Grasses.jpg",
-      "newFilename": "",
-      "category": "maintenance",
-      "path": "images/maintenance/Dry-River-Rock-Bed-with-Native-Grasses.jpg",
-      "keywords": [
-        "maintenance",
-        "rock",
-        "native"
-      ],
-      "alt": "maintenance, rock, native - Dry River Rock Bed with Native Grasses",
       "projectName": "",
       "beforeAfter": "",
       "notes": "Auto-added from directory scan",
@@ -2927,73 +2854,6 @@
       "source": "static"
     },
     {
-      "id": "maintenance-dry-creek-bed",
-      "filename": "Dry-Creek-bed.jpg",
-      "originalFilename": "Dry-Creek-bed.jpg",
-      "newFilename": "",
-      "category": "maintenance",
-      "path": "images/maintenance/Dry-Creek-bed.jpg",
-      "keywords": [
-        "maintenance"
-      ],
-      "alt": "maintenance - Dry Creek bed",
-      "projectName": "",
-      "beforeAfter": "",
-      "notes": "Auto-added from directory scan",
-      "source": "static"
-    },
-    {
-      "id": "maintenance-too-much",
-      "filename": "too-much.jpg",
-      "originalFilename": "too-much.jpg",
-      "newFilename": "",
-      "category": "maintenance",
-      "path": "images/maintenance/too-much.jpg",
-      "keywords": [
-        "maintenance"
-      ],
-      "alt": "maintenance - too much",
-      "projectName": "",
-      "beforeAfter": "",
-      "notes": "Auto-added from directory scan",
-      "source": "static"
-    },
-    {
-      "id": "outdoor-living-pool-house",
-      "filename": "Pool-House.jpg",
-      "originalFilename": "Pool-House.jpg",
-      "newFilename": "",
-      "category": "outdoor-living",
-      "path": "images/outdoor-living/Pool-House.jpg",
-      "keywords": [
-        "outdoor living",
-        "pool"
-      ],
-      "alt": "outdoor living, pool - Pool House",
-      "projectName": "",
-      "beforeAfter": "",
-      "notes": "Auto-added from directory scan",
-      "source": "static"
-    },
-    {
-      "id": "outdoor-living-swimming-pool-knockout-roses-ivy",
-      "filename": "Swimming-Pool-Knockout-Roses-Ivy.jpg",
-      "originalFilename": "Swimming-Pool-Knockout-Roses-Ivy.jpg",
-      "newFilename": "",
-      "category": "outdoor-living",
-      "path": "images/outdoor-living/Swimming-Pool-Knockout-Roses-Ivy.jpg",
-      "keywords": [
-        "outdoor living",
-        "pool",
-        "roses"
-      ],
-      "alt": "outdoor living, pool, roses - Swimming Pool Knockout Roses Ivy",
-      "projectName": "",
-      "beforeAfter": "",
-      "notes": "Auto-added from directory scan",
-      "source": "static"
-    },
-    {
       "id": "water-features-rustic-column-water-feature",
       "filename": "Rustic-Column-Water-Feature.jpg",
       "originalFilename": "Rustic-Column-Water-Feature.jpg",
@@ -3005,24 +2865,6 @@
         "water"
       ],
       "alt": "water features, water - Rustic Column Water Feature",
-      "projectName": "",
-      "beforeAfter": "",
-      "notes": "Auto-added from directory scan",
-      "source": "static"
-    },
-    {
-      "id": "water-features-rock-swimming-pool-waterfall",
-      "filename": "Rock-Swimming-Pool-Waterfall.jpg",
-      "originalFilename": "Rock-Swimming-Pool-Waterfall.jpg",
-      "newFilename": "",
-      "category": "water-features",
-      "path": "images/water-features/Rock-Swimming-Pool-Waterfall.jpg",
-      "keywords": [
-        "water features",
-        "rock",
-        "pool"
-      ],
-      "alt": "water features, rock, pool - Rock Swimming Pool Waterfall",
       "projectName": "",
       "beforeAfter": "",
       "notes": "Auto-added from directory scan",
@@ -3075,23 +2917,6 @@
         "fountain"
       ],
       "alt": "water features, water, fountain - Southwest Water Fountain",
-      "projectName": "",
-      "beforeAfter": "",
-      "notes": "Auto-added from directory scan",
-      "source": "static"
-    },
-    {
-      "id": "water-features-rock-creek-river-bed-pond",
-      "filename": "Rock-Creek-River-Bed-Pond.jpg",
-      "originalFilename": "Rock-Creek-River-Bed-Pond.jpg",
-      "newFilename": "",
-      "category": "water-features",
-      "path": "images/water-features/Rock-Creek-River-Bed-Pond.jpg",
-      "keywords": [
-        "water features",
-        "rock"
-      ],
-      "alt": "water features, rock - Rock Creek River Bed Pond",
       "projectName": "",
       "beforeAfter": "",
       "notes": "Auto-added from directory scan",
