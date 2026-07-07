@@ -34,8 +34,11 @@ exports.notifyNewContact = onDocumentCreated(
       : "Not specified";
 
     try {
-      await admin.firestore().collection("mail").add({
-        to: "info@ideallandscapeservices.com",
+        await admin.firestore().collection("mail").add({
+          to: [
+            "Kathy@ideallandscapeservices.com",
+            "David@ideallandscapeservices.com"
+          ],
         message: {
           subject: `New website lead: ${data.name}`,
           text: [

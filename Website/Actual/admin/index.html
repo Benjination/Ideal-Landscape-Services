@@ -1557,6 +1557,38 @@
         });
         header.appendChild(pubBtn);
 
+        const editBtn = document.createElement('button');
+        editBtn.className = 'btn-icon-edit';
+        editBtn.title = 'Rename collection';
+        editBtn.textContent = 'Rename';
+        editBtn.addEventListener('click', async e => {
+          e.stopPropagation();
+          const nextName = prompt('Rename collection', collName);
+          if (nextName === null) return;
+
+          const trimmedName = nextName.trim();
+          if (!trimmedName) {
+            projStatus.textContent = 'Name is required.';
+            setTimeout(() => { projStatus.textContent = ''; }, 3000);
+            return;
+          }
+          if (trimmedName === collName) return;
+
+          editBtn.disabled = true;
+          try {
+            await updateDoc(doc(db, 'projectCollections', collId), { name: trimmedName });
+            projStatus.textContent = 'Collection renamed ✓';
+            setTimeout(() => { projStatus.textContent = ''; }, 3000);
+            await loadProjects();
+          } catch(err) {
+            projStatus.textContent = 'Error renaming collection.';
+            setTimeout(() => { projStatus.textContent = ''; }, 3000);
+          } finally {
+            editBtn.disabled = false;
+          }
+        });
+        header.appendChild(editBtn);
+
         const delBtn = document.createElement('button');
         delBtn.className = 'btn-icon-delete';
         delBtn.title = 'Delete collection';
