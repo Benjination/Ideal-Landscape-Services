@@ -30,17 +30,25 @@ local-business schema, this explains the collapse in organic/local leads.
       the domain/hosting change (ownership verification can break on host swaps)
 - [ ] Confirm Google Analytics / GA4 tracking is installed and firing on the
       new site (compare traffic before/after launch date)
+      → **No GA4 found on site.** David to create a free GA4 property
+        (analytics.google.com → Admin → Create Property → Web stream →
+        copy Measurement ID) and send the `G-XXXXXXXXXX` ID; will wire in
+        the tracking snippet site-wide once received.
 
 ## 🟡 Medium priority — content/trust signals
 
-- [ ] Remove "Licensed" language if present anywhere (business is insured, not licensed)
-- [ ] Confirm "47 years" copy is applied site-wide (not old "35+")
+- [x] Remove "Licensed" language if present anywhere (business is insured, not licensed)
+- [x] Confirm "47 years" copy is applied site-wide (not old "35+")
 - [ ] Add alt text to all images per `SEO.txt` folder-by-folder guide
 - [ ] Add unique meta title/description per page per `SEO.txt` drafts
 - [ ] Verify contact form actually delivers leads:
-      - [ ] Firebase "Trigger Email from Firestore" extension configured with
-            David & Kathy's Gmail App Password (see `needs-from-client.txt`)
-      - [ ] Send a test submission end-to-end and confirm email arrives
+      - [x] Firebase "Trigger Email from Firestore" extension confirmed
+            installed and ACTIVE (`firestore-send-email`, last configured
+            2026-03-29) via `firebase ext:list`
+      - [ ] Send a test submission through the live `/contact/` form, then
+            check the `mail` collection doc's `delivery.state` in Firestore
+            (SUCCESS/ERROR) and confirm David/Kathy actually receive it
+            (check spam folder too)
 - [ ] Confirm DNS (GoDaddy) still points to GitHub Pages correctly and MX
       records were not touched (Gmail must stay independent of hosting)
 
