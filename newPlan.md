@@ -12,22 +12,11 @@ local-business schema, this explains the collapse in organic/local leads.
 - [x] Add `sitemap.xml` (`Website/Actual/sitemap.xml`)
 - [x] Add `LocalBusiness`/`LandscapingBusiness` JSON-LD schema to homepage
 - [x] Add canonical tag to homepage
-- [ ] **Fix GitHub Pages so the real site is served at the domain root, not the redirect stub:**
-  - Go to `github.com/Benjination/Ideal-Landscape-Services` → **Settings → Pages**
-  - Under "Build and deployment", change **Source** from "Deploy from a branch"
-    to **"GitHub Actions"** (the `deploy.yml` workflow already publishes
-    `Website/Actual` correctly — it's just not the active source yet)
-  - Push any commit (or manually run the "Deploy to GitHub Pages" workflow via
-    **Actions → Deploy to GitHub Pages → Run workflow**) to trigger a fresh deploy
-  - Verify: `curl -I https://ideallandscapeservices.com/` should return the real
-    homepage HTML, not "Redirecting…", and `/about/`, `/services/`, `/contact/`
-    etc. should resolve directly (no `/Website/Actual/` prefix)
-  - ⚠️ Do NOT move `Website/Actual` contents to the repo root as a workaround —
-    the repo root also contains private files (client notes, `functions/`
-    source, proposal docs) that would become publicly served if Pages
-    switches to legacy branch/root mode.
-- [ ] Add canonical tags + `robots.txt`/schema coverage to remaining key pages
-      (services subpages, about, contact) once homepage fix is verified
+- [x] **Fix GitHub Pages so the real site is served at the domain root, not the redirect stub:**
+      Source switched to "GitHub Actions", deploy ran successfully, verified live —
+      root serves real homepage, `/about/` resolves directly, no `/Website/Actual/` prefix.
+- [x] Add canonical tags to remaining key pages (services subpages, about,
+      contact, projects, gallery, blog, plants, privacy)
 
 ## 🟠 High priority — local SEO / lead pipeline
 
@@ -57,9 +46,9 @@ local-business schema, this explains the collapse in organic/local leads.
 
 ## 🟢 Verify after fixes are live
 
-- [ ] `curl -I https://ideallandscapeservices.com/` → 200, real homepage content
-- [ ] `https://ideallandscapeservices.com/robots.txt` → 200
-- [ ] `https://ideallandscapeservices.com/sitemap.xml` → 200
+- [x] `curl -I https://ideallandscapeservices.com/` → 200, real homepage content
+- [x] `https://ideallandscapeservices.com/robots.txt` → 200
+- [x] `https://ideallandscapeservices.com/sitemap.xml` → 200
 - [ ] Google Search Console: no crawl errors, sitemap processed
 - [ ] Submit a real test lead through the contact form and confirm email delivery
 - [ ] Monitor lead volume for 1–2 weeks post-fix
