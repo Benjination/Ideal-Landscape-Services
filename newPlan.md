@@ -39,8 +39,12 @@ local-business schema, this explains the collapse in organic/local leads.
 
 - [x] Remove "Licensed" language if present anywhere (business is insured, not licensed)
 - [x] Confirm "47 years" copy is applied site-wide (not old "35+")
-- [ ] Add alt text to all images per `SEO.txt` folder-by-folder guide
-- [ ] Add unique meta title/description per page per `SEO.txt` drafts
+- [x] Add alt text to all images per `SEO.txt` folder-by-folder guide
+      → Already present for all 182 gallery/project images via
+        `image-database.json` (keyword-generated). Not geo-tagged with city
+        names yet (nice-to-have enhancement, not blocking).
+- [x] Add unique meta title/description per page per `SEO.txt` drafts
+      → All 15 pages now have unique descriptions (gallery/ was missing one, added).
 - [ ] Verify contact form actually delivers leads:
       - [x] Firebase "Trigger Email from Firestore" extension confirmed
             installed and ACTIVE (`firestore-send-email`, last configured
