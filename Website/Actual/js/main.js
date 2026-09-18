@@ -8,6 +8,17 @@
   /* ── Navbar: scroll glass + homepage expand/collapse ───────── */
   const navbar     = document.getElementById('navbar');
   const isHomePage = document.body.classList.contains('page-home');
+  
+  /* ── Google Analytics 4 ─────────────────────────────────────── */
+  const googleAnalyticsId = 'G-ZROEJVPLFE';
+  const analyticsScript = document.createElement('script');
+  analyticsScript.async = true;
+  analyticsScript.src = `https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`;
+  document.head.appendChild(analyticsScript);
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', googleAnalyticsId);
 
   function updateNav() {
     const y = window.scrollY;
