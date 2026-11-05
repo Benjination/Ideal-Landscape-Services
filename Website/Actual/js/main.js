@@ -358,30 +358,3 @@ window.askCaptcha = function () {
     }).catch(function () { err.textContent = "Could not load verification. Please call 817-457-7507."; });
   });
 };
-
-// Runs the captcha, then calls go() once the server confirms it.
-function gated(go) {
-  window.askCaptcha().then(function (token) {
-    if (!token) return;
-    return window.callFn("verifyCaptcha", { token: token }).then(go);
-  }).catch(function () {
-    alert("Verification failed. Please try again or call 817-457-7507.");
-  });
-}
-
-// Pay Online: verify, then continue to Authorize.Net in this tab (avoids popup blockers).
-document.addEventListener("submit", function (e) {
-  var form = e.target;
-  if (!form.action || form.action.indexOf("authorize.net") === -1) return;
-  e.preventDefault();
-  gated(function () { form.target = "_self"; form.submit(); });
-});
-
-// Authorize.Net seal badge: same verification before opening the seal page.
-document.addEventListener("click", function (e) {
-  var link = e.target.closest && e.target.closest(".AuthorizeNetSeal a");
-  if (!link) return;
-  e.preventDefault();
-  e.stopPropagation();
-  gated(function () { window.location.href = link.href; });
-}, true);
