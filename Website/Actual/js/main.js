@@ -298,3 +298,74 @@
   });
 
 })();
+
+/* ── Cloudflare Turnstile captcha (contact form + Pay Online) ── */
+var TURNSTILE_SITE_KEY = "0x4AAAAAAF0HkDTIJzERMyVc";
+var FN_BASE = "https://us-central1-ideal-landscapes-services.cloudfunctions.net/";
+
+// Calls an HTTPS callable Cloud Function; resolves to its result or throws.
+window.callFn = function (name, data) {
+  return fetch(FN_BASE + name, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ data: data })
+  }).then(function (r) {
+    return r.json().then(function (j) {
+      if (!r.ok || j.error) throw new Error((j.error && j.error.message) || "Request failed");
+      return j.result;
+    });
+  });
+};
+
+var turnstileReady;
+function loadTurnstile() {
+  if (!turnstileReady) {
+    turnstileReady = new Promise(function (resolve, reject) {
+      var s = document.createElement("script");
+      s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+      s.async = true;
+      s.onload = resolve;
+      s.onerror = function () { turnstileReady = null; reject(new Error("Captcha failed to load")); };
+      document.head.appendChild(s);
+    });
+  }
+  return turnstileReady;
+}
+
+// Shows a verification dialog; resolves to a Turnstile token, or null if cancelled.
+window.askCaptcha = function () {
+  return new Promise(function (resolve) {
+    var overlay = document.createElement("div");
+    overlay.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:10000;display:flex;align-items:center;justify-content:center;padding:16px;";
+    overlay.innerHTML =
+      '<div role="dialog" aria-modal="true" aria-label="Security verification" style="background:#fff;border-radius:8px;padding:24px;max-width:340px;width:100%;text-align:center;font-family:inherit;">' +
+      '<p style="margin:0 0 4px;font-weight:600;font-size:17px;">Security Verification</p>' +
+      '<p style="margin:0 0 16px;font-size:14px;color:#555;">Please confirm you are not a robot.</p>' +
+      '<div class="cap-widget" style="min-height:65px;display:flex;justify-content:center;"></div>' +
+      '<p class="cap-err" style="color:#b00020;font-size:13px;margin:8px 0 0;min-height:1em;"></p>' +
+      '<button type="button" class="cap-cancel" style="margin-top:8px;padding:8px 14px;border:1px solid #ccc;background:#fff;border-radius:4px;cursor:pointer;">Cancel</button>' +
+      '</div>';
+    document.body.appendChild(overlay);
+    var err = overlay.querySelector(".cap-err");
+    function done(token) { overlay.remove(); resolve(token); }
+    overlay.querySelector(".cap-cancel").addEventListener("click", function () { done(null); });
+    loadTurnstile().then(function () {
+      window.turnstile.render(overlay.querySelector(".cap-widget"), {
+        sitekey: TURNSTILE_SITE_KEY,
+        callback: function (token) { done(token); },
+        "error-callback": function () { err.textContent = "Verification error. Please try again."; }
+      });
+    }).catch(function () { err.textContent = "Could not load verification. Please call 817-457-7507."; });
+  });
+};
+
+// Pay Online: verify server-side before sending the visitor to Authorize.Net.
+document.addEventListener("submit", function (e) {
+  var form = e.target;
+  if (!form.action || form.action.indexOf("authorize.net") === -1) return;
+  e.preventDefault();
+  window.askCaptcha().then(function (token) {
+    if (!token) return;
+    return window.callFn("verifyCaptcha", { token: token }).then(function () { form.submit(); });
+  }).catch(function () { alert("Verification failed. Please try again or call 817-457-7507."); });
+});

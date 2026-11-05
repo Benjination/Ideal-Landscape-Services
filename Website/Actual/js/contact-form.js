@@ -1,15 +1,8 @@
 /* ═══════════════════════════════════════════════════════════════
-   Contact Form → Firebase Firestore
+   Contact Form → Cloud Function (Turnstile-verified) → Firestore
    Loaded as <script type="module"> on contact/index.html only.
    Path is relative to THIS file (js/), not the HTML page.
    ═══════════════════════════════════════════════════════════════ */
-
-import { db } from "./firebase-init.js";
-import {
-  collection,
-  addDoc,
-  serverTimestamp
-} from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 
 const form     = document.getElementById("contact-form");
 const statusEl = document.getElementById("form-status");
@@ -23,6 +16,12 @@ if (form) {
       form.reportValidity();
       return;
     }
+
+    // Honeypot: bots fill hidden field
+    if (form.elements["website"]?.value) return;
+
+    const captchaToken = await window.askCaptcha();
+    if (!captchaToken) return;
 
     const submitBtn = form.querySelector('[type="submit"]');
     submitBtn.disabled    = true;
@@ -45,12 +44,11 @@ if (form) {
       neighborhood: sanitize(form.elements["neighborhood"]?.value ?? ""),
       heardAbout:   form.elements["heard_about"]?.value  ?? "",
       timeline:     form.elements["timeline"]?.value     ?? "",
-      submittedAt:  serverTimestamp(),
-      source:       "website-contact-form"
+      captchaToken
     };
 
     try {
-      await addDoc(collection(db, "contact-submissions"), payload);
+      await window.callFn("submitContact", payload);
       form.reset();
       showStatus("Thanks! We'll reach out within one business day.", "success");
       submitBtn.textContent = "Message Sent ✓";

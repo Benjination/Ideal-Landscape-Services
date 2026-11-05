@@ -2,6 +2,63 @@ const { onDocumentCreated }  = require("firebase-functions/v2/firestore");
 const { setGlobalOptions }   = require("firebase-functions/v2");
 const logger                 = require("firebase-functions/logger");
 const admin                  = require("firebase-admin");
+const { onCall, HttpsError } = require("firebase-functions/v2/https");
+const { defineSecret }       = require("firebase-functions/params");
+
+const TURNSTILE_SECRET = defineSecret("TURNSTILE_SECRET");
+
+async function verifyTurnstile(token, ip) {
+  if (typeof token !== "string" || !token || token.length > 2048) {
+    throw new HttpsError("invalid-argument", "Missing captcha token.");
+  }
+  const body = new URLSearchParams({ secret: TURNSTILE_SECRET.value(), response: token });
+  if (ip) body.set("remoteip", ip);
+  const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", { method: "POST", body });
+  const out = await res.json();
+  if (!out.success) throw new HttpsError("permission-denied", "Captcha verification failed.");
+}
+
+const clip = (v, n) => String(v ?? "").trim().slice(0, n);
+
+// Pay Online gate: confirms the visitor passed the captcha.
+exports.verifyCaptcha = onCall(
+  { secrets: [TURNSTILE_SECRET], maxInstances: 5 },
+  async (req) => {
+    await verifyTurnstile(req.data?.token, req.rawRequest?.ip);
+    return { ok: true };
+  }
+);
+
+// Contact form: verifies the captcha, then writes the submission server-side.
+exports.submitContact = onCall(
+  { secrets: [TURNSTILE_SECRET], maxInstances: 5 },
+  async (req) => {
+    const d = req.data || {};
+    await verifyTurnstile(d.captchaToken, req.rawRequest?.ip);
+
+    const doc = {
+      name:         clip(d.name, 120),
+      phone:        clip(d.phone, 30),
+      email:        clip(d.email, 254),
+      address:      clip(d.address, 200),
+      city:         clip(d.city, 100),
+      zip:          clip(d.zip, 10),
+      comment:      clip(d.comment, 2000),
+      neighborhood: clip(d.neighborhood, 200),
+      heardAbout:   clip(d.heardAbout, 100),
+      timeline:     clip(d.timeline, 100),
+      projectTypes: Array.isArray(d.projectTypes)
+        ? d.projectTypes.slice(0, 10).map((t) => clip(t, 60)) : [],
+      submittedAt:  admin.firestore.FieldValue.serverTimestamp(),
+      source:       "website-contact-form",
+    };
+    if (!doc.name || !doc.phone || !/^[^@\s]+@[^@\s]+$/.test(doc.email)) {
+      throw new HttpsError("invalid-argument", "Missing or invalid fields.");
+    }
+    await admin.firestore().collection("contact-submissions").add(doc);
+    return { ok: true };
+  }
+);
 
 admin.initializeApp();
 

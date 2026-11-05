@@ -11,11 +11,10 @@ service cloud.firestore {
     }
 
     // ── Contact form submissions ──────────────────────────────────────
-    // Public can CREATE (submit a form). Nobody can read/edit/delete
-    // from the client — review submissions in the Firebase Console.
+    // Written only by the submitContact Cloud Function (captcha-verified).
+    // Review submissions in the Firebase Console.
     match /contact-submissions/{docId} {
-      allow create: if isValidContact(request.resource.data);
-      allow read, update, delete: if false;
+      allow read, write: if false;
     }
 
     // ── Blog posts ───────────────────────────────────────────────────
