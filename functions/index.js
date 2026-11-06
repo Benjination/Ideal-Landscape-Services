@@ -2,10 +2,12 @@ const { onDocumentCreated }  = require("firebase-functions/v2/firestore");
 const { setGlobalOptions }   = require("firebase-functions/v2");
 const logger                 = require("firebase-functions/logger");
 const admin                  = require("firebase-admin");
+const crypto                 = require("node:crypto");
 const { onCall, HttpsError } = require("firebase-functions/v2/https");
 const { defineSecret }       = require("firebase-functions/params");
 
 const TURNSTILE_SECRET = defineSecret("TURNSTILE_SECRET");
+const PAYMENT_LINK_ID = defineSecret("PAYMENT_LINK_ID");
 
 async function verifyTurnstile(token, ip) {
   if (typeof token !== "string" || !token || token.length > 2048) {
@@ -15,17 +17,46 @@ async function verifyTurnstile(token, ip) {
   if (ip) body.set("remoteip", ip);
   const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", { method: "POST", body });
   const out = await res.json();
-  if (!out.success) throw new HttpsError("permission-denied", "Captcha verification failed.");
+  const allowedHosts = ["ideallandscapeservices.com", "www.ideallandscapeservices.com"];
+  if (!out.success || !allowedHosts.includes(String(out.hostname || "").toLowerCase())) {
+    throw new HttpsError("permission-denied", "Captcha verification failed.");
+  }
 }
 
 const clip = (v, n) => String(v ?? "").trim().slice(0, n);
 
-// Pay Online gate: confirms the visitor passed the captcha.
-exports.verifyCaptcha = onCall(
-  { secrets: [TURNSTILE_SECRET], maxInstances: 5 },
+async function enforcePaymentLinkRateLimit(ip) {
+  const ipHash = crypto.createHash("sha256").update(ip || "unknown").digest("hex");
+  const ref = admin.firestore().collection("_privateRateLimits").doc(ipHash);
+  const now = Date.now();
+  const windowMs = 15 * 60 * 1000;
+  await admin.firestore().runTransaction(async (tx) => {
+    const snapshot = await tx.get(ref);
+    const recent = (snapshot.data()?.paymentLinkRequests || []).filter((time) =>
+      Number.isFinite(time) && now - time < windowMs
+    );
+    if (recent.length >= 5) {
+      throw new HttpsError("resource-exhausted", "Too many payment-link requests. Try again later.");
+    }
+    tx.set(ref, {
+      paymentLinkRequests: [...recent, now],
+      expiresAt: admin.firestore.Timestamp.fromMillis(now + 24 * 60 * 60 * 1000),
+    });
+  });
+}
+
+// Returns the reusable checkout ID only after one-use captcha verification and rate limiting.
+exports.getPaymentLink = onCall(
+  { secrets: [TURNSTILE_SECRET, PAYMENT_LINK_ID], maxInstances: 5 },
   async (req) => {
-    await verifyTurnstile(req.data?.token, req.rawRequest?.ip);
-    return { ok: true };
+    const ip = req.rawRequest?.ip || "unknown";
+    await verifyTurnstile(req.data?.token, ip);
+    await enforcePaymentLinkRateLimit(ip);
+    const linkId = PAYMENT_LINK_ID.value().trim();
+    if (!/^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$/i.test(linkId)) {
+      throw new HttpsError("internal", "Payment link is not configured.");
+    }
+    return { linkId };
   }
 );
 

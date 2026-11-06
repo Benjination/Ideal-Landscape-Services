@@ -358,3 +358,89 @@ window.askCaptcha = function () {
     }).catch(function () { err.textContent = "Could not load verification. Please call 817-457-7507."; });
   });
 };
+
+function addPaymentControls() {
+  var nav = document.querySelector(".nav-links");
+  if (nav && !nav.querySelector("[data-pay-online]")) {
+    var navItem = document.createElement("li");
+    var navButton = document.createElement("button");
+    navButton.type = "button";
+    navButton.className = "nav-pay-btn";
+    navButton.dataset.payOnline = "true";
+    navButton.textContent = "Pay Online";
+    navItem.appendChild(navButton);
+    nav.appendChild(navItem);
+  }
+
+  var drawer = document.querySelector(".mobile-drawer");
+  if (drawer && !drawer.querySelector("[data-pay-online]")) {
+    var mobileButton = document.createElement("button");
+    mobileButton.type = "button";
+    mobileButton.className = "mobile-pay-btn";
+    mobileButton.dataset.payOnline = "true";
+    mobileButton.textContent = "Pay Online";
+    var cta = drawer.querySelector(".btn-primary");
+    drawer.insertBefore(mobileButton, cta || null);
+  }
+
+  var contactTitle = Array.from(document.querySelectorAll(".footer-col-title"))
+    .find(function (title) { return title.textContent.trim().toLowerCase() === "contact"; });
+  if (contactTitle) {
+    var footerColumn = contactTitle.parentElement;
+    if (!footerColumn.querySelector("[data-pay-online]")) {
+      var footerButton = document.createElement("button");
+      footerButton.type = "button";
+      footerButton.className = "footer-pay-btn";
+      footerButton.dataset.payOnline = "true";
+      footerButton.textContent = "Pay Invoice Online →";
+      var buttonRow = document.createElement("p");
+      buttonRow.className = "footer-contact-item";
+      buttonRow.appendChild(footerButton);
+      footerColumn.appendChild(buttonRow);
+    }
+
+    if (!footerColumn.querySelector(".AuthorizeNetSeal")) {
+      var seal = document.createElement("div");
+      seal.className = "AuthorizeNetSeal";
+      seal.style.marginTop = "12px";
+      window.ANS_customer_id = "816114e4-ae4e-439c-addd-64b4aa6bbd2b";
+      var sealScript = document.createElement("script");
+      sealScript.src = "https://verify.authorize.net:443/anetseal/seal.js";
+      seal.appendChild(sealScript);
+      footerColumn.appendChild(seal);
+    }
+  }
+}
+
+addPaymentControls();
+
+document.addEventListener("click", async function (event) {
+  var button = event.target.closest("[data-pay-online]");
+  if (!button) return;
+
+  var originalText = button.textContent;
+  button.disabled = true;
+  button.textContent = "Verifying…";
+  try {
+    var token = await window.askCaptcha();
+    if (!token) return;
+    var result = await window.callFn("getPaymentLink", { token: token });
+    var form = document.createElement("form");
+    form.method = "post";
+    form.action = "https://Simplecheckout.authorize.net/payment/CatalogPayment.aspx";
+    form.target = "_self";
+    var linkInput = document.createElement("input");
+    linkInput.type = "hidden";
+    linkInput.name = "LinkId";
+    linkInput.value = result.linkId;
+    form.appendChild(linkInput);
+    document.body.appendChild(form);
+    form.submit();
+  } catch (error) {
+    console.error("Payment verification failed:", error);
+    alert("We couldn't verify your request. Please try again or call 817-457-7507.");
+  } finally {
+    button.disabled = false;
+    button.textContent = originalText;
+  }
+});
