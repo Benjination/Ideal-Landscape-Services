@@ -387,6 +387,7 @@ function addPaymentControls() {
     .find(function (title) { return title.textContent.trim().toLowerCase() === "contact"; });
   if (contactTitle) {
     var footerColumn = contactTitle.parentElement;
+    var seal = footerColumn.querySelector(".AuthorizeNetSeal");
     if (!footerColumn.querySelector("[data-pay-online]")) {
       var footerButton = document.createElement("button");
       footerButton.type = "button";
@@ -396,18 +397,7 @@ function addPaymentControls() {
       var buttonRow = document.createElement("p");
       buttonRow.className = "footer-contact-item";
       buttonRow.appendChild(footerButton);
-      footerColumn.appendChild(buttonRow);
-    }
-
-    if (!footerColumn.querySelector(".AuthorizeNetSeal")) {
-      var seal = document.createElement("div");
-      seal.className = "AuthorizeNetSeal";
-      seal.style.marginTop = "12px";
-      window.ANS_customer_id = "816114e4-ae4e-439c-addd-64b4aa6bbd2b";
-      var sealScript = document.createElement("script");
-      sealScript.src = "https://verify.authorize.net:443/anetseal/seal.js";
-      seal.appendChild(sealScript);
-      footerColumn.appendChild(seal);
+      footerColumn.insertBefore(buttonRow, seal || null);
     }
   }
 }

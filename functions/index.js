@@ -16,11 +16,21 @@ async function verifyTurnstile(token, ip) {
   const body = new URLSearchParams({ secret: TURNSTILE_SECRET.value(), response: token });
   if (ip) body.set("remoteip", ip);
   const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", { method: "POST", body });
+  if (!res.ok) {
+    logger.error("Turnstile Siteverify HTTP failure", { status: res.status });
+    throw new HttpsError("internal", "Captcha verification service unavailable.");
+  }
   const out = await res.json();
   const allowedHosts = ["ideallandscapeservices.com", "www.ideallandscapeservices.com"];
   if (!out.success || !allowedHosts.includes(String(out.hostname || "").toLowerCase())) {
+    logger.warn("Turnstile rejected request", {
+      success: Boolean(out.success),
+      hostname: String(out.hostname || ""),
+      errorCodes: Array.isArray(out["error-codes"]) ? out["error-codes"] : [],
+    });
     throw new HttpsError("permission-denied", "Captcha verification failed.");
   }
+  logger.info("Turnstile verified", { hostname: String(out.hostname).toLowerCase() });
 }
 
 const clip = (v, n) => String(v ?? "").trim().slice(0, n);
@@ -50,13 +60,26 @@ exports.getPaymentLink = onCall(
   { secrets: [TURNSTILE_SECRET, PAYMENT_LINK_ID], maxInstances: 5 },
   async (req) => {
     const ip = req.rawRequest?.ip || "unknown";
-    await verifyTurnstile(req.data?.token, ip);
-    await enforcePaymentLinkRateLimit(ip);
-    const linkId = PAYMENT_LINK_ID.value().trim();
-    if (!/^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$/i.test(linkId)) {
-      throw new HttpsError("internal", "Payment link is not configured.");
+    let stage = "turnstile";
+    try {
+      await verifyTurnstile(req.data?.token, ip);
+      stage = "rate-limit";
+      await enforcePaymentLinkRateLimit(ip);
+      stage = "secret";
+      const linkId = PAYMENT_LINK_ID.value().trim();
+      if (!/^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$/i.test(linkId)) {
+        throw new HttpsError("internal", "Payment link is not configured.");
+      }
+      logger.info("Payment-link request accepted");
+      return { linkId };
+    } catch (error) {
+      logger.error("Payment-link request failed", {
+        stage,
+        code: error.code || "unknown",
+        message: error.message || "Unknown error",
+      });
+      throw error;
     }
-    return { linkId };
   }
 );
 
